@@ -5,6 +5,7 @@
 [Bb]uilds/
 Assets/AssetStoreTools*
 _[Ee]xternalAssets/
+[Aa]ssetBundles/
 
 # Visual Studio 2015 cache directory
 /.vs/
