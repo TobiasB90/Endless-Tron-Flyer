@@ -12,12 +12,45 @@
         MinWidth="1280" 
         MinHeight="720"
         SaveWindowPosition="True"
+        d:DesignWidth="1280"
+        d:DesignHeight="720"
         ShowTitleBar="False"
         ResizeMode="CanResizeWithGrip" 
         IsWindowDraggable="True" MouseLeftButtonDown="MainWindow_OnMouseLeftButtonDown" Background="#16191e">
     <mah:MetroWindow.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converter:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter" />
+        <converter:PathToImageConverter x:Key="PathToImageConverter" />
+        <local:InstallBarTemplateSelector x:Key="InstallBarTemplateSelector" />
+        <DataTemplate x:Key="NotInstalled">
+            <Button Height="80" Width="220" Content="INSTALL" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Installed">
+            <Button Height="80" Width="220" Content="PLAY" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Updating">
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="240" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Grid.RowSpan="3" Height="80" Width="220" Content="Updating..." FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0" IsEnabled="False"/>
+                <TextBlock Grid.Column="2" Grid.Row="0" Text="Downloading." TextAlignment="Left" VerticalAlignment="Bottom" />
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="45.21 MB/s" TextAlignment="Left" VerticalAlignment="Center" />
+                <Border Grid.Column="2" Grid.Row="2" Margin="0 0 20 0" BorderThickness="1" BorderBrush="White">
+                    <ProgressBar Minimum="0" Maximum="100" Value="40" />
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="Dummy">
+            <Button Height="80" Width="220" Content="DUMMY" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0"/>
+        </DataTemplate>
     </mah:MetroWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -27,8 +60,8 @@
         <Image Grid.RowSpan="2" Source="../Images/141340.png" Width="1280" Height="720" VerticalAlignment="Top" HorizontalAlignment="Center" />
         <Border Background="#A1000000" Height="70">
             <StackPanel Orientation="Horizontal">
-                <Border Width="40" Height="40" Background="White" Margin="20 5 0 0" />
-                <TextBlock Margin="10 5 0 0"  Text="DEER GAMES" Foreground="White" FontSize="36" VerticalAlignment="Center"></TextBlock>
+                <Image Source="../Images/deergame_logo/deergame_logo_name_200x80.png" Margin="20 5 0 0" SnapsToDevicePixels="True"/>
+                <!--<TextBlock Margin="10 5 0 0"  Text="DEER GAMES" Foreground="White" FontSize="36" VerticalAlignment="Center"></TextBlock>-->
             </StackPanel>
         </Border>
         <Grid Grid.Row="1">
@@ -58,7 +91,7 @@
                                                     </Style>
                                                 </Border.Style>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Images/examples/gamelogo.png" Width="32" Height="32" Margin="20 0 0 0" VerticalAlignment="Center" />
+                                                    <Image Source="{Binding LogoSmall, Converter={StaticResource PathToImageConverter}}" Width="32" Height="32" Margin="20 0 0 0" VerticalAlignment="Center" />
                                                     <TextBlock Margin="10 0 0 0"  Text="{Binding Name}" Foreground="#DDDDDD" FontSize="12" VerticalAlignment="Center" />
                                                 </StackPanel>
                                             </Border>
@@ -78,7 +111,7 @@
                                                             </Style>
                                                         </Border.Style>
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Image Source="../Images/examples/gamelogo.png" Width="32" Height="32" Margin="20 0 0 0" VerticalAlignment="Center" />
+                                                            <Image Source="{Binding LogoSmall, Converter={StaticResource PathToImageConverter}}" Width="32" Height="32" Margin="20 0 0 0" VerticalAlignment="Center" />
                                                             <TextBlock Margin="10 0 0 0"  Text="{Binding Name}" Foreground="White" FontSize="12" VerticalAlignment="Center" />
                                                         </StackPanel>
                                                     </Border>
@@ -129,7 +162,7 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding Name}" Foreground="Wheat" FontSize="24" Grid.Row="0" />
-                    <Image Source="../Images/examples/tron_game.png" Grid.Row="1" Width="320" Height="120" Margin="0 20 0 0" HorizontalAlignment="Left" />
+                    <Image Source="{Binding LogoBig, Converter={StaticResource PathToImageConverter}}" Grid.Row="1" Width="320" Height="120" Margin="0 20 0 0" HorizontalAlignment="Left" />
                     <StackPanel Orientation="Horizontal" Grid.Row="2" >
                         <Border CornerRadius="5,5,5,5" Background="#2F2F2F" Height="320" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 20 0 0" BorderThickness="1" BorderBrush="White">
                             <Grid>
@@ -208,10 +241,12 @@ Nam facilisis mauris vitae nisl porta, vel vehicula leo malesuada. Sed purus odi
                 </Grid>
 
                 <Grid Grid.Row="2">
-                    <Button Height="80" Width="220" Content="INSTALL" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0"/>
+                    <ContentControl ContentTemplateSelector="{StaticResource InstallBarTemplateSelector}" Content="{Binding SelectedGame}" />
                 </Grid>
             </Grid>
         </Grid>
     </Grid>
 </mah:MetroWindow>
+
+
 

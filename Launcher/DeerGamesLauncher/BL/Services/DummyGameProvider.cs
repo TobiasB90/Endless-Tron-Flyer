@@ -29,6 +29,8 @@ namespace DeerGamesLauncher.BL.Services
             var flyer = new RankedGame();
 
             flyer.Name = "Tron Flyer";
+            flyer.SmallLogo = "tron.png";
+            flyer.BigLogo = "tron.png";
             flyer.InstallState = InstallState.Installed;
 
             flyer.Rankings = new List<Ranking>();
@@ -46,7 +48,7 @@ namespace DeerGamesLauncher.BL.Services
             var rndgame1 = new UnrankedGame();
 
             rndgame1.Name = "New Game 1";
-            rndgame1.InstallState = InstallState.UpdateRequired;
+            rndgame1.InstallState = InstallState.Updating;
 
             var rndgame2 = new UnrankedGame();
 

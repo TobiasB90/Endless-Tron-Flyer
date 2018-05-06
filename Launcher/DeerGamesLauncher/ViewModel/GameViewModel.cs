@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using DeerGamesLauncher.Enums;
 using DeerGamesLauncher.Helper;
 using DeerGamesLauncher.Models;
 
@@ -44,6 +47,56 @@ namespace DeerGamesLauncher.ViewModel
                 }
 
                 return _rankings;
+            }
+        }
+
+        public InstallState InstallState
+        {
+            get { return this._model.InstallState; }
+            set
+            {
+                this._model.InstallState = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public string LogoSmall
+        {
+            get
+            {
+                string iconPath = @"Resources\gameicons\";
+
+                if (!string.IsNullOrEmpty(this._model.SmallLogo))
+                {
+                    iconPath += this._model.SmallLogo;
+                }
+                else
+                {
+                    iconPath += "default-game-icon.png";
+                }
+
+                return Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, iconPath);
+
+            }
+        }
+
+        public string LogoBig
+        {
+            get
+            {
+                string logoPath = @"Resources\gamelogos\";
+
+                if (!string.IsNullOrEmpty(this._model.BigLogo))
+                {
+                    logoPath += this._model.BigLogo;
+                }
+                else
+                {
+                    logoPath += "default-game-logo.png";
+                }
+
+                return Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, logoPath);
+
             }
         }
     }

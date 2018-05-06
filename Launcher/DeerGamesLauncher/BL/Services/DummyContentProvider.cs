@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeerGamesLauncher.Enums
+namespace DeerGamesLauncher.BL.Services
 {
-    public enum InstallState
+    public class DummyContentProvider
     {
-        NotInstalled,
-        Installed,
-        Updating
     }
 }

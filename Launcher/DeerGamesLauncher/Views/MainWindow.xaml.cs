@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DeerGamesLauncher.Enums;
 using DeerGamesLauncher.ViewModel;
 using MahApps.Metro.Controls;
 
@@ -31,5 +32,43 @@ namespace DeerGamesLauncher
         {
             this.DragMove();
         }
+    }
+
+    public class InstallBarTemplateSelector : DataTemplateSelector
+    {
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        {
+            GameViewModel viewModel = item as GameViewModel;
+
+            if (viewModel != null)
+            {
+                InstallState installState = viewModel.InstallState;
+                Window win = Application.Current.MainWindow;
+
+
+                // Select one of the DataTemplate objects, based on the 
+                // value of the selected item in the ComboBox.
+                if (installState == InstallState.NotInstalled)
+                {
+                    return win.FindResource("NotInstalled") as DataTemplate;
+                }
+                else if (installState == InstallState.Installed)
+                {
+                    return win.FindResource("Installed") as DataTemplate;
+                }
+                else if (installState == InstallState.Updating)
+                {
+                    return win.FindResource("Updating") as DataTemplate;
+                }
+                else
+                {
+                    return win.FindResource("Dummy") as DataTemplate;
+
+                }
+            }
+
+            return null;
+        }
+
     }
 }
