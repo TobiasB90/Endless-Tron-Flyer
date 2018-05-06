@@ -19,6 +19,8 @@ namespace DeerGamesLauncher.ViewModel
             var games = _dummyGameProvider.GetLocalGames();
 
             this.Games = new ObservableCollection<GameViewModel>(games.Select(x => new GameViewModel(x)));
+
+            this.SelectedGame = this.Games.FirstOrDefault();
         }
 
         public ObservableCollection<GameViewModel> Games { get; set; }

@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:DeerGamesLauncher"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:viewModel="clr-namespace:DeerGamesLauncher.ViewModel"
+        xmlns:converter="clr-namespace:DeerGamesLauncher.Converter"
         mc:Ignorable="d"
         Title="MainWindow" 
         MinWidth="1280" 
@@ -15,31 +16,8 @@
         ResizeMode="CanResizeWithGrip" 
         IsWindowDraggable="True" MouseLeftButtonDown="MainWindow_OnMouseLeftButtonDown" Background="#16191e">
     <mah:MetroWindow.Resources>
-        <Style TargetType="{x:Type Button}" x:Key="MenuButton">
-            <Setter Property="Background" Value="#33808080" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Height" Value="40" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border HorizontalAlignment="Stretch"
-                                Background="{TemplateBinding Background}"
-                                Height="{TemplateBinding Height}">
-                            <StackPanel Orientation="Horizontal">
-                                <Border Width="32" Height="32" Background="White" Margin="20 0 0 0" VerticalAlignment="Center" />
-                                <TextBlock Margin="10 0 0 0"  Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" VerticalAlignment="Center" />
-                            </StackPanel>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#11A9A9A9" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converter:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter" />
     </mah:MetroWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -80,7 +58,7 @@
                                                     </Style>
                                                 </Border.Style>
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Border Width="32" Height="32" Background="White" Margin="20 0 0 0" VerticalAlignment="Center" />
+                                                    <Image Source="../Images/examples/gamelogo.png" Width="32" Height="32" Margin="20 0 0 0" VerticalAlignment="Center" />
                                                     <TextBlock Margin="10 0 0 0"  Text="{Binding Name}" Foreground="#DDDDDD" FontSize="12" VerticalAlignment="Center" />
                                                 </StackPanel>
                                             </Border>
@@ -100,7 +78,7 @@
                                                             </Style>
                                                         </Border.Style>
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Border Width="32" Height="32" Background="White" Margin="20 0 0 0" VerticalAlignment="Center" />
+                                                            <Image Source="../Images/examples/gamelogo.png" Width="32" Height="32" Margin="20 0 0 0" VerticalAlignment="Center" />
                                                             <TextBlock Margin="10 0 0 0"  Text="{Binding Name}" Foreground="White" FontSize="12" VerticalAlignment="Center" />
                                                         </StackPanel>
                                                     </Border>
@@ -151,7 +129,82 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <TextBlock Text="{Binding Name}" Foreground="Wheat" FontSize="24" Grid.Row="0" />
-                    <Border Width="320" Height="120" Background="White" Grid.Row="1" HorizontalAlignment="Left" Margin="0 20 0 0"/>
+                    <Image Source="../Images/examples/tron_game.png" Grid.Row="1" Width="320" Height="120" Margin="0 20 0 0" HorizontalAlignment="Left" />
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" >
+                        <Border CornerRadius="5,5,5,5" Background="#2F2F2F" Height="320" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 20 0 0" BorderThickness="1" BorderBrush="White">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Source="../Images/examples/maxresdefault (1).jpg" Grid.RowSpan="3" VerticalAlignment="Top" Margin="1 1 1 0" />
+                                <Border Background="#77000000" Grid.Row="0" Height="20">
+                                    <TextBlock Text="News" Margin="5 1 0 0" FontWeight="Bold"></TextBlock>
+                                </Border>
+                                <Border Background="#77000000" Grid.Row="2" Height="160">
+                                    <StackPanel>
+                                        <TextBlock Text="Patch News 1" Margin="5 1 0 0" FontSize="24" />
+                                        <TextBlock 
+                                            Margin="5 1 5 40" TextWrapping="Wrap"
+                                            Width="288"
+                                            Height="120"
+                                            TextTrimming="CharacterEllipsis"
+                                            Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id bibendum sapien. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec eleifend interdum lacus, id porta diam congue pharetra. Nullam ut aliquam dolor. Suspendisse in lorem lobortis leo venenatis vulputate. Nulla facilisi. Maecenas tempus tempus ultrices. Integer et lorem convallis, commodo quam ut, lobortis risus. Aenean suscipit faucibus dolor ut iaculis. In auctor rhoncus sapien a fermentum. Suspendisse tincidunt auctor sollicitudin. Duis scelerisque iaculis venenatis.
+
+Phasellus gravida ornare auctor. Etiam congue blandit nisl nec tempus. Nam velit tellus, ornare id ligula in, imperdiet accumsan sem. Aenean vitae nunc at magna imperdiet pellentesque. Duis fermentum a erat et dignissim. Fusce ut mi venenatis, gravida tortor non, lobortis felis. Mauris accumsan molestie metus, et vulputate justo tincidunt ac. Fusce urna orci, sollicitudin nec consectetur id, gravida in turpis.
+
+Praesent pulvinar eros urna, vitae condimentum ligula auctor nec. Quisque feugiat orci nisi, sit amet sagittis dui fringilla in. Nam rhoncus sed sapien accumsan sollicitudin. Curabitur dignissim pellentesque urna, quis imperdiet lectus ullamcorper a. Nam in molestie enim. Sed vel risus eget odio facilisis pretium ut nec lorem. Duis ac ante ac lectus viverra tempus. Sed mauris dolor, pellentesque auctor viverra cursus, condimentum non lacus. Proin in consequat ligula, sed aliquam neque.
+
+Nam facilisis mauris vitae nisl porta, vel vehicula leo malesuada. Sed purus odio, vehicula in purus ultrices, sagittis congue massa. Nulla vel magna in nulla euismod elementum. Etiam nibh libero, auctor vitae risus eu, vulputate facilisis urna. Aenean ac tristique magna. Sed eget ex suscipit, consequat arcu ut, dictum turpis. Phasellus hendrerit commodo odio, non dapibus urna ullamcorper in. Proin fermentum neque sed sem pulvinar blandit. Donec eget dolor a nisi venenatis congue non non ipsum. In sit amet turpis at dolor tempor pellentesque. Mauris eget rutrum mi. Duis malesuada purus sapien, non pretium purus malesuada sit amet. Sed vel mi eu tortor vestibulum hendrerit at et ex." />
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border CornerRadius="5,5,5,5" Background="#2F2F2F" Height="320" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 20 0 0" BorderThickness="1" BorderBrush="White" Visibility="{Binding IsRankedGame, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Border Background="#77000000" Grid.Row="0" Height="20">
+                                    <TextBlock Text="Rankings" FontWeight="Bold" Margin="5 1 0 0"></TextBlock>
+                                </Border>
+                                <DataGrid Grid.Row="1" 
+                                          Margin="1 0 1 1" 
+                                          BorderThickness="0" 
+                                          ItemsSource="{Binding Rankings}" 
+                                          AutoGenerateColumns="False" 
+                                          HorizontalScrollBarVisibility="Hidden" 
+                                          VerticalScrollBarVisibility="Disabled" 
+                                          AlternatingRowBackground="#11808080"
+                                          CanUserAddRows="False"
+                                          CanUserReorderColumns="False"
+                                          CanUserResizeRows="False"
+                                          CanUserSortColumns="False"
+                                          CanUserDeleteRows="False"
+                                          CanUserResizeColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Rank}"  Header="Rank" Width="55" CanUserSort="False" CanUserReorder="False" CanUserResize="False" IsReadOnly="True">
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding PlayerName}"  Header="Name" Width="*" CanUserSort="False" CanUserReorder="False" CanUserResize="False" IsReadOnly="True" />
+                                        <DataGridTextColumn Binding="{Binding Score}" Header="Score" Width="100" CanUserSort="False" CanUserReorder="False" CanUserResize="False" IsReadOnly="True">
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
                 </Grid>
 
                 <Grid Grid.Row="2">

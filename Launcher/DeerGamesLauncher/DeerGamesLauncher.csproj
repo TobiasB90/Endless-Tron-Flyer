@@ -73,6 +73,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BL\Services\DummyGameProvider.cs" />
+    <Compile Include="Converter\NegativeBooleanToVisibilityConverter.cs" />
     <Compile Include="Enums\InstallState.cs" />
     <Compile Include="Helper\NotifyPropertyChangedImpl.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
@@ -121,6 +122,12 @@
   <ItemGroup>
     <Resource Include="Images\141340.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\examples\gamelogo.png" />
+    <Resource Include="Images\examples\tron_game.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\examples\maxresdefault %281%29.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
