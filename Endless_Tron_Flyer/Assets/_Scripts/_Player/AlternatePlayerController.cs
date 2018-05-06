@@ -23,7 +23,6 @@ public class AlternatePlayerController : MonoBehaviour
     private Quaternion originalRotation;
     private Quaternion originalPlayerModelRotation;
 
-
     public void Update()
     {
         if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)

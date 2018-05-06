@@ -55,19 +55,19 @@ MonoBehaviour:
       reflection:
         blendType: 0
         reflectionQuality: 0
-        maxDistance: 100
-        iterationCount: 212
-        stepSize: 3
-        widthModifier: 4.53
-        reflectionBlur: 5.43
+        maxDistance: 70
+        iterationCount: 256
+        stepSize: 1
+        widthModifier: 0.5
+        reflectionBlur: 1
         reflectBackfaces: 1
       intensity:
         reflectionMultiplier: 1
-        fadeDistance: 0
+        fadeDistance: 100
         fresnelFade: 1
-        fresnelFadePower: 0.1
+        fresnelFadePower: 1
       screenEdgeMask:
-        intensity: 0.24
+        intensity: 0.03
   depthOfField:
     m_Enabled: 1
     m_Settings:
@@ -104,7 +104,7 @@ MonoBehaviour:
         threshold: 1
         softKnee: 0.5
         radius: 4
-        antiFlicker: 1
+        antiFlicker: 0
       lensDirt:
         texture: {fileID: 0}
         intensity: 3
