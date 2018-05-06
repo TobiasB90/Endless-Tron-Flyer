@@ -1,0 +1,252 @@
+﻿<mah:MetroWindow  x:Class="DeerGamesLauncher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DeerGamesLauncher"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:viewModel="clr-namespace:DeerGamesLauncher.ViewModel"
+        xmlns:converter="clr-namespace:DeerGamesLauncher.Converter"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        MinWidth="1280" 
+        MinHeight="720"
+        SaveWindowPosition="True"
+        d:DesignWidth="1280"
+        d:DesignHeight="720"
+        ShowTitleBar="False"
+        ResizeMode="CanResizeWithGrip" 
+        IsWindowDraggable="True" MouseLeftButtonDown="MainWindow_OnMouseLeftButtonDown" Background="#16191e">
+    <mah:MetroWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converter:NegativeBooleanToVisibilityConverter x:Key="NegativeBooleanToVisibilityConverter" />
+        <converter:PathToImageConverter x:Key="PathToImageConverter" />
+        <local:InstallBarTemplateSelector x:Key="InstallBarTemplateSelector" />
+        <DataTemplate x:Key="NotInstalled">
+            <Button Height="80" Width="220" Content="INSTALL" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Installed">
+            <Button Height="80" Width="220" Content="PLAY" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0"/>
+        </DataTemplate>
+        <DataTemplate x:Key="Updating">
+            <Grid VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="240" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Grid.RowSpan="3" Height="80" Width="220" Content="Updating..." FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0" IsEnabled="False"/>
+                <TextBlock Grid.Column="2" Grid.Row="0" Text="Downloading." TextAlignment="Left" VerticalAlignment="Bottom" />
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="45.21 MB/s" TextAlignment="Left" VerticalAlignment="Center" />
+                <Border Grid.Column="2" Grid.Row="2" Margin="0 0 20 0" BorderThickness="1" BorderBrush="White">
+                    <ProgressBar Minimum="0" Maximum="100" Value="40" />
+                </Border>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="Dummy">
+            <Button Height="80" Width="220" Content="DUMMY" FontSize="28" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20 0 0 0"/>
+        </DataTemplate>
+    </mah:MetroWindow.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Image Grid.RowSpan="2" Source="../Images/141340.png" Width="1280" Height="720" VerticalAlignment="Top" HorizontalAlignment="Center" />
+        <Border Background="#A1000000" Height="70">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="../Images/deergame_logo/deergame_logo_name_200x80.png" Margin="20 5 0 0" SnapsToDevicePixels="True"/>
+                <!--<TextBlock Margin="10 5 0 0"  Text="DEER GAMES" Foreground="White" FontSize="36" VerticalAlignment="Center"></TextBlock>-->
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="#AA000000" BorderBrush="Gray" BorderThickness="0 0 1 0">
+                <StackPanel Margin="0 5">
+                    <ListView ItemsSource="{Binding Games}" SelectedItem="{Binding SelectedGame}" BorderThickness="0" Background="Transparent">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <Border HorizontalAlignment="Stretch">
+                                                <Border.Style>
+                                                    <Style>
+                                                        <Setter Property="Border.Background" Value="#00808080" />
+                                                        <Setter Property="Border.Height" Value="40" />
+                                                        <Style.Triggers>
+                                                            <Trigger Property="Border.IsMouseOver" Value="True">
+                                                                <Setter Property="Border.Background" Value="#11A9A9A9" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="{Binding LogoSmall, Converter={StaticResource PathToImageConverter}}" Width="32" Height="32" Margin="20 0 0 0" VerticalAlignment="Center" />
+                                                    <TextBlock Margin="10 0 0 0"  Text="{Binding Name}" Foreground="#DDDDDD" FontSize="12" VerticalAlignment="Center" />
+                                                </StackPanel>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                    <Border HorizontalAlignment="Stretch">
+                                                        <Border.Style>
+                                                            <Style>
+                                                                <Setter Property="Border.Background" Value="#33808080" />
+                                                                <Setter Property="Border.Height" Value="40" />
+                                                            </Style>
+                                                        </Border.Style>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Image Source="{Binding LogoSmall, Converter={StaticResource PathToImageConverter}}" Width="32" Height="32" Margin="20 0 0 0" VerticalAlignment="Center" />
+                                                            <TextBlock Margin="10 0 0 0"  Text="{Binding Name}" Foreground="White" FontSize="12" VerticalAlignment="Center" />
+                                                        </StackPanel>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                </Style.Triggers>
+
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border HorizontalAlignment="Stretch">
+                                    <Border.Style>
+                                        <Style>
+                                            <Setter Property="Border.Background" Value="#33808080" />
+                                            <Setter Property="Border.Height" Value="40" />
+                                            <Style.Triggers>
+                                                <Trigger Property="Border.IsMouseOver" Value="True">
+                                                    <Setter Property="Border.Background" Value="#11A9A9A9" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border Width="32" Height="32" Background="White" Margin="20 0 0 0" VerticalAlignment="Center" />
+                                        <TextBlock Margin="10 0 0 0"  Text="{Binding Name}" Foreground="White" FontSize="12" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </Border>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="120" />
+                </Grid.RowDefinitions>
+                <Border Background="Gray" Height="1" Grid.Row="0" />
+
+                <Grid DataContext="{Binding SelectedGame}" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20 10 0 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Name}" Foreground="Wheat" FontSize="24" Grid.Row="0" />
+                    <Image Source="{Binding LogoBig, Converter={StaticResource PathToImageConverter}}" Grid.Row="1" Width="320" Height="120" Margin="0 20 0 0" HorizontalAlignment="Left" />
+                    <StackPanel Orientation="Horizontal" Grid.Row="2" >
+                        <Border CornerRadius="5,5,5,5" Background="#2F2F2F" Height="320" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 20 0 0" BorderThickness="1" BorderBrush="White">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Image Source="../Images/examples/maxresdefault (1).jpg" Grid.RowSpan="3" VerticalAlignment="Top" Margin="1 1 1 0" />
+                                <Border Background="#77000000" Grid.Row="0" Height="20">
+                                    <TextBlock Text="News" Margin="5 1 0 0" FontWeight="Bold"></TextBlock>
+                                </Border>
+                                <Border Background="#77000000" Grid.Row="2" Height="160">
+                                    <StackPanel>
+                                        <TextBlock Text="Patch News 1" Margin="5 1 0 0" FontSize="24" />
+                                        <TextBlock 
+                                            Margin="5 1 5 40" TextWrapping="Wrap"
+                                            Width="288"
+                                            Height="120"
+                                            TextTrimming="CharacterEllipsis"
+                                            Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id bibendum sapien. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec eleifend interdum lacus, id porta diam congue pharetra. Nullam ut aliquam dolor. Suspendisse in lorem lobortis leo venenatis vulputate. Nulla facilisi. Maecenas tempus tempus ultrices. Integer et lorem convallis, commodo quam ut, lobortis risus. Aenean suscipit faucibus dolor ut iaculis. In auctor rhoncus sapien a fermentum. Suspendisse tincidunt auctor sollicitudin. Duis scelerisque iaculis venenatis.
+
+Phasellus gravida ornare auctor. Etiam congue blandit nisl nec tempus. Nam velit tellus, ornare id ligula in, imperdiet accumsan sem. Aenean vitae nunc at magna imperdiet pellentesque. Duis fermentum a erat et dignissim. Fusce ut mi venenatis, gravida tortor non, lobortis felis. Mauris accumsan molestie metus, et vulputate justo tincidunt ac. Fusce urna orci, sollicitudin nec consectetur id, gravida in turpis.
+
+Praesent pulvinar eros urna, vitae condimentum ligula auctor nec. Quisque feugiat orci nisi, sit amet sagittis dui fringilla in. Nam rhoncus sed sapien accumsan sollicitudin. Curabitur dignissim pellentesque urna, quis imperdiet lectus ullamcorper a. Nam in molestie enim. Sed vel risus eget odio facilisis pretium ut nec lorem. Duis ac ante ac lectus viverra tempus. Sed mauris dolor, pellentesque auctor viverra cursus, condimentum non lacus. Proin in consequat ligula, sed aliquam neque.
+
+Nam facilisis mauris vitae nisl porta, vel vehicula leo malesuada. Sed purus odio, vehicula in purus ultrices, sagittis congue massa. Nulla vel magna in nulla euismod elementum. Etiam nibh libero, auctor vitae risus eu, vulputate facilisis urna. Aenean ac tristique magna. Sed eget ex suscipit, consequat arcu ut, dictum turpis. Phasellus hendrerit commodo odio, non dapibus urna ullamcorper in. Proin fermentum neque sed sem pulvinar blandit. Donec eget dolor a nisi venenatis congue non non ipsum. In sit amet turpis at dolor tempor pellentesque. Mauris eget rutrum mi. Duis malesuada purus sapien, non pretium purus malesuada sit amet. Sed vel mi eu tortor vestibulum hendrerit at et ex." />
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <Border CornerRadius="5,5,5,5" Background="#2F2F2F" Height="320" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20 20 0 0" BorderThickness="1" BorderBrush="White" Visibility="{Binding IsRankedGame, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Border Background="#77000000" Grid.Row="0" Height="20">
+                                    <TextBlock Text="Rankings" FontWeight="Bold" Margin="5 1 0 0"></TextBlock>
+                                </Border>
+                                <DataGrid Grid.Row="1" 
+                                          Margin="1 0 1 1" 
+                                          BorderThickness="0" 
+                                          ItemsSource="{Binding Rankings}" 
+                                          AutoGenerateColumns="False" 
+                                          HorizontalScrollBarVisibility="Hidden" 
+                                          VerticalScrollBarVisibility="Disabled" 
+                                          AlternatingRowBackground="#11808080"
+                                          CanUserAddRows="False"
+                                          CanUserReorderColumns="False"
+                                          CanUserResizeRows="False"
+                                          CanUserSortColumns="False"
+                                          CanUserDeleteRows="False"
+                                          CanUserResizeColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Rank}"  Header="Rank" Width="55" CanUserSort="False" CanUserReorder="False" CanUserResize="False" IsReadOnly="True">
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                        <DataGridTextColumn Binding="{Binding PlayerName}"  Header="Name" Width="*" CanUserSort="False" CanUserReorder="False" CanUserResize="False" IsReadOnly="True" />
+                                        <DataGridTextColumn Binding="{Binding Score}" Header="Score" Width="100" CanUserSort="False" CanUserReorder="False" CanUserResize="False" IsReadOnly="True">
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="HorizontalAlignment" Value="Center" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <ContentControl ContentTemplateSelector="{StaticResource InstallBarTemplateSelector}" Content="{Binding SelectedGame}" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</mah:MetroWindow>
+
+
+

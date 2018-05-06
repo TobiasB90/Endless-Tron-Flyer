@@ -64,7 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -72,12 +72,26 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="BL\Services\DummyGameProvider.cs" />
+    <Compile Include="BL\Services\DummyContentProvider.cs" />
+    <Compile Include="Converter\NegativeBooleanToVisibilityConverter.cs" />
+    <Compile Include="Converter\PathToImageConverter.cs" />
+    <Compile Include="Enums\InstallState.cs" />
+    <Compile Include="Helper\NotifyPropertyChangedImpl.cs" />
+    <Compile Include="Helper\RelayCommand.cs" />
+    <Compile Include="ViewModel\GameViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\IGame.cs" />
+    <Compile Include="Models\RankedGame.cs" />
+    <Compile Include="Models\Ranking.cs" />
+    <Compile Include="Models\UnrankedGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -109,6 +123,29 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\141340.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\gameicons\tron.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\gamelogos\default-game-logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\gamelogos\tron.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\examples\maxresdefault %281%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\deergame_logo\deergame_logo_40x65.png" />
+    <Resource Include="Images\deergame_logo\deergame_logo_name_200x80.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\gameicons\default-game-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
