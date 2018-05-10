@@ -403,7 +403,7 @@ MonoBehaviour:
   - {fileID: 1621752604559510, guid: b71ab6232c59fad468d284406fa9709d, type: 2}
   Environment: {fileID: 558082834}
   FlyingObject: {fileID: 934184957}
-  TunnelInAdvance: 10
+  TunnelInAdvance: 5
 --- !u!1 &934184957
 GameObject:
   m_ObjectHideFlags: 0
