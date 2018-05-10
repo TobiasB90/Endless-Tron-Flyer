@@ -1,16 +1,17 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectBuilder : MonoBehaviour {
 
-    public GameObject[] TunnelSystems;
-    public GameObject Environment;
-    public GameObject FlyingObject;
-    public GameObject _EndlessObjs;
-    public int LastTunnel = 0;
-    public int NextTunnel = 0;
-    public float TunnelLength = 900;
+    [Tooltip("Insert TunnelSystems with ObjectInformation.cs script attached to it.")][SerializeField] private GameObject[] TunnelSystems;
+    [Tooltip("Insert the 'Environment' GameObject from the Scene.")] [SerializeField] private GameObject Environment;
+    [Tooltip("Insert the 'FlyingObject' (Player) from the Scene.")] [SerializeField] private GameObject FlyingObject;
+    [Tooltip("Insert the parent from this object from the Scene.")] [SerializeField] private GameObject _EndlessObjs;
+    private int LastTunnel = 0;
+    private int NextTunnel = 0;
+
+    [Tooltip("How many 'TunnelSystems' should be built in advance at the start of the game?")] [SerializeField] private int TunnelInAdvance = 0;
+    private float TunnelLength = 900;
     public float timesbuilt = 0;
 
     // Use this for initialization
