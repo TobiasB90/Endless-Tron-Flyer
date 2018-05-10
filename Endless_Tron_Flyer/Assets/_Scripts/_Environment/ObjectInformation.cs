@@ -5,6 +5,8 @@ using UnityEngine;
 public class ObjectInformation : MonoBehaviour {
 
     public float length;
+    public float width;
+    public float pivotlength;
     public bool goingLeft;
     public bool goingRight;
     public bool goingUp;
