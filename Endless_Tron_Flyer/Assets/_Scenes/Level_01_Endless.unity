@@ -398,12 +398,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TunnelSystems:
-  - {fileID: 1092080756429010, guid: 1e74beae47f5f8440a0e371fbce98ec2, type: 2}
+  - {fileID: 1149294775674620, guid: 5bac6050955041d40b3682b13ad80fe3, type: 2}
   - {fileID: 1674123048503250, guid: 5e6c58eb2518e3b41b7b0c3a21263939, type: 2}
   - {fileID: 1621752604559510, guid: b71ab6232c59fad468d284406fa9709d, type: 2}
+  - {fileID: 1734164097041162, guid: d3cb9b5b8fed7a24d83f7709a6a20b40, type: 2}
+  - {fileID: 1754356990687016, guid: c0cba6ff66ddf9b46ad0407e3c3462dd, type: 2}
   Environment: {fileID: 558082834}
   FlyingObject: {fileID: 934184957}
-  TunnelInAdvance: 5
+  defaulttunnelchance: 1
+  TunnelInAdvance: 100
 --- !u!1 &934184957
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,14 +436,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerModel: {fileID: 780286094}
-  flyingspeed: 150
+  flyingspeed: 50
   rotationspeed: 0.5
   sensitivityX: 1
   sensitivityY: 0.25
   minimumX: -80
   maximumX: 80
-  minimumY: -45
-  maximumY: 45
+  minimumY: -80
+  maximumY: 80
   rotationX: 0
   rotationY: 0
 --- !u!114 &934184959
@@ -470,7 +473,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 934184957}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 7.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 780286096}
@@ -582,13 +585,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1062286073}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.119092494, y: -0, z: -0, w: 0.9928832}
+  m_LocalPosition: {x: 0, y: 8, z: -19}
+  m_LocalScale: {x: 1, y: 0.97203636, z: 1.0559275}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 13.679001, y: 0, z: 0}
 --- !u!114 &1062286078
 MonoBehaviour:
   m_ObjectHideFlags: 0
