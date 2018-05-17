@@ -38,4 +38,6 @@ public class PlayerController : MonoBehaviour
         transform.position += transform.forward * step;
         // EndlessBuilderDestroyer.transform.position = new Vector3(0, 0, transform.position.z);
     }
+
+    
 }
