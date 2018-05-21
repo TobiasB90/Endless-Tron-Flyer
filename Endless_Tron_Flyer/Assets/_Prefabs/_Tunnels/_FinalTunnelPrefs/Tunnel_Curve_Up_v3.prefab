@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4698751438103328}
   - component: {fileID: 114810475948904738}
+  - component: {fileID: 65919956471519162}
   m_Layer: 0
   m_Name: Tunnel_Curve_Up_v3
   m_TagString: Untagged
@@ -38,6 +39,7 @@ GameObject:
   - component: {fileID: 33117219938155698}
   - component: {fileID: 23995335586282438}
   - component: {fileID: 95344159484416838}
+  - component: {fileID: 64034149393286986}
   m_Layer: 0
   m_Name: tunnel_UP_pref
   m_TagString: Untagged
@@ -113,6 +115,32 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1697551344238948}
   m_Mesh: {fileID: 4300000, guid: 26dc22f907c6bd94682f01c6d4f17f7f, type: 3}
+--- !u!64 &64034149393286986
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1697551344238948}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 26dc22f907c6bd94682f01c6d4f17f7f, type: 3}
+--- !u!65 &65919956471519162
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1534701961156898}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 120, y: 68, z: 1}
+  m_Center: {x: 0, y: 34, z: 300}
 --- !u!95 &95344159484416838
 Animator:
   serializedVersion: 3
@@ -150,3 +178,4 @@ MonoBehaviour:
   goingUp: 1
   goingDown: 0
   goingForward: 0
+  TunnelDir: 9

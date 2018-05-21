@@ -33,7 +33,8 @@ public class CameraController : MonoBehaviour
         float bias = 0.96f;
         MainCamera.transform.position = MainCamera.transform.position * bias + moveCamTo * (1.0f-bias);
         // MainCamera.transform.position = moveCamTo;
-        MainCamera.transform.LookAt(target.position + target.forward * 5);
+        // MainCamera.transform.LookAt(target.position + target.forward * 5);
+        MainCamera.transform.rotation = PlayerModel.transform.rotation;
         // MainCamera.transform.RotateAround(target.position, Vector3.up, currentYaw);
         if (RotationWithCam)
         {

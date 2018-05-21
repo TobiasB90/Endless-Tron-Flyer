@@ -305,6 +305,68 @@ public class ObjectBuilder : MonoBehaviour
             transform.Rotate(90, 0, 0);
         }
 
+
+        // TunnelDirection for rotationchange
+        // Up
+        if(LastTunnel == 0)
+        {
+            if (directioncounterUpDown == 1 && directioncounterLeftRight == 0)
+            {
+                ObjectInformation NTunnel = NewTunnel.GetComponent<ObjectInformation>();
+                NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Up;
+            }
+            // UpRight
+            else if (directioncounterUpDown == 1 && directioncounterLeftRight == 1)
+            {
+                ObjectInformation NTunnel = NewTunnel.GetComponent<ObjectInformation>();
+                NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRight;
+            }
+            // UpLeft
+            else if (directioncounterUpDown == 1 && directioncounterLeftRight == -1)
+            {
+                ObjectInformation NTunnel = NewTunnel.GetComponent<ObjectInformation>();
+                NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpLeft;
+            }
+            // Down
+            else if (directioncounterUpDown == -1 && directioncounterLeftRight == 0)
+            {
+                ObjectInformation NTunnel = NewTunnel.GetComponent<ObjectInformation>();
+                NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Down;
+            }
+            // DownRight
+            else if (directioncounterUpDown == -1 && directioncounterLeftRight == 1)
+            {
+                ObjectInformation NTunnel = NewTunnel.GetComponent<ObjectInformation>();
+                NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRight;
+            }
+            // DownLeft
+            else if (directioncounterUpDown == -1 && directioncounterLeftRight == -1)
+            {
+                ObjectInformation NTunnel = NewTunnel.GetComponent<ObjectInformation>();
+                NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownLeft;
+            }
+            // Right
+            else if (directioncounterLeftRight == 1 && directioncounterUpDown == 0)
+            {
+                ObjectInformation NTunnel = NewTunnel.GetComponent<ObjectInformation>();
+                NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Right;
+            }
+            // Left
+            else if (directioncounterLeftRight == -1 && directioncounterUpDown == 0)
+            {
+                ObjectInformation NTunnel = NewTunnel.GetComponent<ObjectInformation>();
+                NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Left;
+            }
+
+            // Forward
+            else
+            {
+                ObjectInformation NTunnel = NewTunnel.GetComponent<ObjectInformation>();
+                NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Forward;
+            }
+        }
+        
+
         // Use the Environment object as parent for instantiated tunnelsystems
         NewTunnel.transform.parent = Environment.transform;
         timesbuilt += 1;
