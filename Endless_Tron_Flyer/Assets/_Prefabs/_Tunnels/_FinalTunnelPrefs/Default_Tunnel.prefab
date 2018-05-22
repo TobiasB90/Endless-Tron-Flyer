@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4244610457005392}
   - component: {fileID: 33697819186370414}
   - component: {fileID: 23461546069709208}
-  - component: {fileID: 95423145537516600}
   - component: {fileID: 64354149971645558}
   m_Layer: 0
   m_Name: Tunnel_gerade
@@ -114,7 +113,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1007322811845360}
-  m_Mesh: {fileID: 4300000, guid: 3f308175876bfd94cb2115053ad72b6c, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 18b0717e7560a4c419a38ced6ed9988f, type: 3}
 --- !u!64 &64354149971645558
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -128,7 +127,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: 3f308175876bfd94cb2115053ad72b6c, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 18b0717e7560a4c419a38ced6ed9988f, type: 3}
 --- !u!65 &65500378454910736
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -141,23 +140,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 120, y: 68, z: 5}
   m_Center: {x: 0, y: 34, z: -297.5}
---- !u!95 &95423145537516600
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1007322811845360}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 3f308175876bfd94cb2115053ad72b6c, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114674717364121080
 MonoBehaviour:
   m_ObjectHideFlags: 1
