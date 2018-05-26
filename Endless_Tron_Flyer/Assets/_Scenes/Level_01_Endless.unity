@@ -743,7 +743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TunnelSystems:
-  - {fileID: 1149294775674620, guid: 5bac6050955041d40b3682b13ad80fe3, type: 2}
+  - {fileID: 1640907969016700, guid: 567c0275f2b87304f8e806ac3d26b1d8, type: 2}
   - {fileID: 1552684820024992, guid: cf9075a43c76b1f4aa3bb536122947a4, type: 2}
   - {fileID: 1132185472128220, guid: f0147d11d70d5da4bb7b7b4f033094f4, type: 2}
   - {fileID: 1534701961156898, guid: 23e54c6c8ac8aac46a8ba5567dc75c75, type: 2}
@@ -751,7 +751,7 @@ MonoBehaviour:
   Environment: {fileID: 558082834}
   FlyingObject: {fileID: 934184957}
   defaulttunnelchance: 50
-  TunnelInAdvance: 50
+  TunnelInAdvance: 0
 --- !u!1 &934184957
 GameObject:
   m_ObjectHideFlags: 0

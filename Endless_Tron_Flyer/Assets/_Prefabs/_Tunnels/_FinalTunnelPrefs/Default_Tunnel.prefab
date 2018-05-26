@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameManager: {fileID: 0}
-  TunnelNumber: 51
+  TunnelNumber: 0
   length: 600
   width: 0
   pivotlength: 300
