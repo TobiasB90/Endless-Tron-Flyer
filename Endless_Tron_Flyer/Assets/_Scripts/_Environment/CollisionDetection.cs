@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CollisionDetection : MonoBehaviour {
 
     [Tooltip("Insert PlayerObject Here.")] public GameObject Player;
     [Tooltip("Insert PlayerModelObject Here.")] public GameObject PlayerModel;
 
+    [Tooltip("Insert Layer the Player is dying to here.")] public LayerMask LMask;
     public Mesh PlayerMesh;
     public GameObject CubePrefab;
     public GameObject Parent;
@@ -22,23 +21,27 @@ public class CollisionDetection : MonoBehaviour {
 		
 	}
 
-    public void OnCollisionEnter(Collision collision)
+    public void OnTriggerEnter(Collider c)
     {
-        Debug.Log("COLLISION");
-        Vector3[] verts = PlayerMesh.vertices;
-
-        Parent.transform.position = PlayerModel.transform.position;
-        for (int i = 0; i < verts.Length; i++)
+        if ((LMask & 1 << c.gameObject.layer) == 1 << c.gameObject.layer)
         {
-            GameObject PlayerCube = Instantiate(CubePrefab, verts[i] + transform.position, PlayerModel.transform.rotation);
-            PlayerCube.transform.parent = Parent.transform;
-            Rigidbody rbody = PlayerCube.GetComponent<Rigidbody>();
-            rbody.AddRelativeForce(Vector3.forward * 500);
+            Debug.Log("PlayerCollision - Game Over");
+            Vector3[] verts = PlayerMesh.vertices;
+
+            Parent.transform.position = PlayerModel.transform.position;
+            for (int i = 0; i < verts.Length; i++)
+            {
+                GameObject PlayerCube = Instantiate(CubePrefab, verts[i] + transform.position, PlayerModel.transform.rotation);
+                PlayerCube.transform.parent = Parent.transform;
+                Rigidbody rbody = PlayerCube.GetComponent<Rigidbody>();
+                rbody.AddRelativeForce(Vector3.forward * 500);
+            }
+
+            Parent.transform.rotation = PlayerModel.transform.rotation;
+            Destroy(Player.gameObject);
+            ifacemng.RetryButton.SetActive(true);
         }
-        
-        Parent.transform.rotation = PlayerModel.transform.rotation;
-        Destroy(Player.gameObject);
-        ifacemng.RetryButton.SetActive(true);
+            
     }
 
     public void ChangeDir(ObjectInformation.TunnelDirection TunnelDirx)

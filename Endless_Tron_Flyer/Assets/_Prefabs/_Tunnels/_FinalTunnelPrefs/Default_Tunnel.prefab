@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33697819186370414}
   - component: {fileID: 23461546069709208}
   - component: {fileID: 64354149971645558}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tunnel_gerade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4061284980484242}
   - component: {fileID: 114674717364121080}
   - component: {fileID: 65500378454910736}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Default_Tunnel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367d8406703c82742bce434b1a07e6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameManager: {fileID: 0}
+  TunnelNumber: 51
   length: 600
   width: 0
   pivotlength: 300
@@ -161,3 +163,6 @@ MonoBehaviour:
   goingDown: 0
   goingForward: 1
   TunnelDir: 0
+  LMask:
+    serializedVersion: 2
+    m_Bits: 256

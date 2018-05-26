@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4027812233842736}
   - component: {fileID: 95997799095586700}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tunnel_Curve_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4081121720241412}
   - component: {fileID: 114392815475344784}
   - component: {fileID: 65706428511835244}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tunnel_Curve_Right_v3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 33876495581558054}
   - component: {fileID: 23181444060342150}
   - component: {fileID: 64262293876619234}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh_pCube32
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,6 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367d8406703c82742bce434b1a07e6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameManager: {fileID: 0}
+  TunnelNumber: 46
   length: 130
   width: 130
   pivotlength: -300
@@ -208,3 +210,6 @@ MonoBehaviour:
   goingDown: 0
   goingForward: 0
   TunnelDir: 9
+  LMask:
+    serializedVersion: 2
+    m_Bits: 256
