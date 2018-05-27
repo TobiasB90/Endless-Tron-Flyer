@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 
 public class CollisionDetection : MonoBehaviour {
 
@@ -14,7 +15,22 @@ public class CollisionDetection : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         ifacemng = InterfaceManager.GetComponent<IFaceMng>();
-	}
+
+        Vector3[] verts = PlayerMesh.vertices;
+
+        Parent.transform.position = PlayerModel.transform.position;
+        for (int i = 0; i < verts.Length; i++)
+        {
+            if (i % 2 == 0)
+            {
+                GameObject PlayerCube = Instantiate(CubePrefab, verts[i] + transform.position, PlayerModel.transform.rotation);
+                PlayerCube.transform.parent = Parent.transform;
+            }
+            
+        }
+
+        // Parent.transform.rotation = PlayerModel.transform.rotation;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -26,18 +42,30 @@ public class CollisionDetection : MonoBehaviour {
         if ((LMask & 1 << c.gameObject.layer) == 1 << c.gameObject.layer)
         {
             Debug.Log("PlayerCollision - Game Over");
-            Vector3[] verts = PlayerMesh.vertices;
+            //Vector3[] verts = PlayerMesh.vertices;
 
+            //Parent.transform.position = PlayerModel.transform.position;
+            //for (int i = 0; i < verts.Length; i++)
+            //{
+            //    GameObject PlayerCube = Instantiate(CubePrefab, verts[i] + transform.position, PlayerModel.transform.rotation);
+            //    PlayerCube.transform.parent = Parent.transform;
+            //    Rigidbody rbody = PlayerCube.GetComponent<Rigidbody>();
+            //    rbody.AddRelativeForce(Vector3.forward * 500);
+            //}
             Parent.transform.position = PlayerModel.transform.position;
-            for (int i = 0; i < verts.Length; i++)
-            {
-                GameObject PlayerCube = Instantiate(CubePrefab, verts[i] + transform.position, PlayerModel.transform.rotation);
-                PlayerCube.transform.parent = Parent.transform;
-                Rigidbody rbody = PlayerCube.GetComponent<Rigidbody>();
-                rbody.AddRelativeForce(Vector3.forward * 500);
-            }
-
             Parent.transform.rotation = PlayerModel.transform.rotation;
+            Parent.SetActive(true);
+            foreach (Transform child in Parent.transform)
+            {
+                Rigidbody rbody = child.GetComponent<Rigidbody>();
+                int i = Random.Range(1, 100);
+                if (i < 70)
+                {
+                    rbody.AddRelativeForce(Vector3.forward * 1000);
+                }
+                else if (i > 70) rbody.AddRelativeForce(Vector3.up * 200);
+                child.transform.DOScale(new Vector3(0.25f, 0.25f, 0.25f), 3f);
+            }
             Destroy(Player.gameObject);
             ifacemng.RetryButton.SetActive(true);
         }

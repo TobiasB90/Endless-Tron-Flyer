@@ -180,6 +180,7 @@ MonoBehaviour:
   goingUp: 1
   goingDown: 0
   goingForward: 0
+  NoDirectionalChange: 0
   TunnelDir: 9
   LMask:
     serializedVersion: 2

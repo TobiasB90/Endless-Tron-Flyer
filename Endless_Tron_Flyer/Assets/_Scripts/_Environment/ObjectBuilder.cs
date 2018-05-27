@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class ObjectBuilder : MonoBehaviour
 {
 
-    [Tooltip("Insert TunnelSystems with ObjectInformation.cs script attached to it. ([0] has to be default, [1] LeftCure and [2] RightCurve.")] [SerializeField] private GameObject[] TunnelSystems;
+    [Tooltip("Insert TunnelSystems with ObjectInformation.cs script attached to it. ([0] has to be default or dogetunnel, [1] LeftCure, [2] RightCurve, [3] UpCurve and [4] Downcurve.")] [SerializeField] private GameObject[] TunnelSystems;
+    [Tooltip("Insert TunnelDogeSystems.")] [SerializeField] private GameObject[] DogeTunnelSystems;
     [Tooltip("Insert the 'Environment' GameObject from the Scene.")] [SerializeField] private GameObject Environment;
     [Tooltip("Insert the 'FlyingObject' (Player) from the Scene.")] [SerializeField] private GameObject FlyingObject;
     private enum Direction { Zero, Ninety, OneEighty, TwoSeventy};
@@ -17,9 +20,14 @@ public class ObjectBuilder : MonoBehaviour
     private ObjectInformation NextTunnelInfo;
     private float directioncounterLeftRight = 0;
     private float directioncounterUpDown = 0;
-
-
-
+    private int currentHeight;
+    private int currentLeftRight;
+    private bool NextTunnelChosen = false;
+    private ObjectInformation NTunnel;
+    private GameObject NewTunnel;
+    [Tooltip("Insert the maximum height (upwards) of the TunnelSystems. (working a little bit)")] public int maxUpHeight;
+    [Tooltip("Insert the maximum height (downwards) of the TunnelSystems. (working a little bit)")] public int maxDownHeight;
+    [Tooltip("Insert the maximum Left & Right direction possible. (not working yet)")] public int maxLeftRight;
     [Tooltip("How many 'TunnelSystems' should be built in advance at the start of the game?")] [SerializeField] private int TunnelInAdvance = 0;
     private int timesbuilt = 0;
 
@@ -29,6 +37,7 @@ public class ObjectBuilder : MonoBehaviour
         // Get InformationScripts of Last and Next TunnelSystem
         LastTunnelInfo = TunnelSystems[LastTunnel].GetComponent<ObjectInformation>();
         NextTunnelInfo = TunnelSystems[NextTunnel].GetComponent<ObjectInformation>();
+        NTunnel = TunnelSystems[NextTunnel].GetComponent<ObjectInformation>();
 
         // Build amount of Tunnels at Start of Game (Set 'TunnelInAdvance' value in inspector)
         while(TunnelInAdvance > 0)
@@ -74,7 +83,6 @@ public class ObjectBuilder : MonoBehaviour
                         transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.length, transform.localPosition.y + LastTunnelInfo.width, transform.localPosition.z);
                         break;
                     }
-                    //DONE
                     else if (directioncounterUpDown == -1)
                     {
                         transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.length, transform.localPosition.y - LastTunnelInfo.width, transform.localPosition.z);
@@ -116,15 +124,41 @@ public class ObjectBuilder : MonoBehaviour
         {
             switch (dUpDown)
             {
-                //DONE
                 case UpDownDirection.Zero:
+                    if (directioncounterLeftRight == 1)
+                    {
+                        transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.length, transform.localPosition.y - LastTunnelInfo.width, transform.localPosition.z);
+                        break;
+                    }
+                    else if (directioncounterLeftRight == -1)
+                    {
+                        transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.length, transform.localPosition.y - LastTunnelInfo.width, transform.localPosition.z);
+                        break;
+                    }
                     transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - LastTunnelInfo.width, transform.localPosition.z + LastTunnelInfo.length);
                     break;
-                //DONE
                 case UpDownDirection.Ninety:
+                    if (directioncounterLeftRight == 1)
+                    {
+                        transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.width, transform.localPosition.y + LastTunnelInfo.length, transform.localPosition.z);
+                        break;
+                    }
+                    else if (directioncounterLeftRight == -1)
+                    {
+                        transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.width, transform.localPosition.y + LastTunnelInfo.length, transform.localPosition.z);
+                        break;
+                    }
                     transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + LastTunnelInfo.length, transform.localPosition.z + LastTunnelInfo.width);
                     break;
                 case UpDownDirection.MinusNinety:
+                    if (directioncounterLeftRight == 1)
+                    {
+                        break;
+                    }
+                    else if (directioncounterLeftRight == -1)
+                    {
+                        break;
+                    }
                     transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z + LastTunnelInfo.width);
                     break;
             }
@@ -133,15 +167,41 @@ public class ObjectBuilder : MonoBehaviour
         {
             switch (dUpDown)
             {
-                //DONE
                 case UpDownDirection.Zero:
+                    if (directioncounterLeftRight == 1)
+                    {
+                        transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.width, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.length);
+                        break;
+                    }
+                    else if (directioncounterLeftRight == -1)
+                    {
+                        transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.width, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.length);
+                        break;
+                    }
                     transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + LastTunnelInfo.width, transform.localPosition.z + LastTunnelInfo.length);
                     break;
-                //DONE
                 case UpDownDirection.Ninety:
+                    if (directioncounterLeftRight == 1)
+                    {
+                        break;
+                    }
+                    else if (directioncounterLeftRight == -1)
+                    {
+                        break;
+                    }
                     transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + LastTunnelInfo.length, transform.localPosition.z + LastTunnelInfo.width);
                     break;
                 case UpDownDirection.MinusNinety:
+                    if (directioncounterLeftRight == 1)
+                    {
+                        transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.width, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z);
+                        break;
+                    }
+                    else if (directioncounterLeftRight == -1)
+                    {
+                        transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.width, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z);
+                        break;
+                    }
                     transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z + LastTunnelInfo.width);
                     break;
             }
@@ -151,86 +211,59 @@ public class ObjectBuilder : MonoBehaviour
     public void InstantiateTunnel()
     {
         // Change the position of the builder to the position, where the object has to be instantiated, using NextTunnelInfo.pivotlength
-        switch (d)
+        Vector3 OldPosition = transform.localPosition;
+        Vector3 NewPosition = new Vector3(0, 0, 0);
+       
+        if (directioncounterUpDown == 1 && directioncounterLeftRight == 0 || directioncounterUpDown == 1 && directioncounterLeftRight == -1 && LastTunnelInfo.goingUp || directioncounterUpDown == 1 && directioncounterLeftRight == 1 && LastTunnelInfo.goingUp)
         {
-            case Direction.Zero:
-                if (directioncounterUpDown == 1)
-                {
-                    transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + NextTunnelInfo.pivotlength, transform.localPosition.z);
-                    break;
-                }
-                else if (directioncounterUpDown == -1)
-                {
-                    transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - NextTunnelInfo.pivotlength, transform.localPosition.z);
-                    break;
-                }
-                transform.localPosition = new Vector3(transform.localPosition.x + NextTunnelInfo.pivotwidth, transform.localPosition.y, transform.localPosition.z + NextTunnelInfo.pivotlength);
-                break;
-            case Direction.Ninety:
-                if (directioncounterUpDown == 1)
-                {
-                    transform.localPosition = new Vector3(transform.localPosition.x + NextTunnelInfo.pivotlength, transform.localPosition.y, transform.localPosition.z);
-                    break;
-                }
-                //DONE
-                else if (directioncounterUpDown == -1)
-                {
-                    transform.localPosition = new Vector3(transform.localPosition.x + NextTunnelInfo.pivotlength, transform.localPosition.y, transform.localPosition.z);
-                    break;
-                }
-                transform.localPosition = new Vector3(transform.localPosition.x + NextTunnelInfo.pivotlength, transform.localPosition.y, transform.localPosition.z - NextTunnelInfo.pivotwidth);
-                break;
-            case Direction.OneEighty:
-                transform.localPosition = new Vector3(transform.localPosition.x - NextTunnelInfo.pivotwidth, transform.localPosition.y, transform.localPosition.z - NextTunnelInfo.pivotlength);
-                break;
-            case Direction.TwoSeventy:
-                transform.localPosition = new Vector3(transform.localPosition.x - NextTunnelInfo.pivotlength, transform.localPosition.y, transform.localPosition.z + NextTunnelInfo.pivotwidth);
-                break;
+            //FACING UP
+            NewPosition = new Vector3(0, NextTunnelInfo.pivotlength, 0);
+            transform.Translate(NewPosition, Space.World);
+        }
+        else if (directioncounterUpDown == -1 && directioncounterLeftRight == 0 || directioncounterUpDown == -1 && directioncounterLeftRight == -1 && LastTunnelInfo.goingDown || directioncounterUpDown == -1 && directioncounterLeftRight == 1 && LastTunnelInfo.goingDown)
+        {
+            //FACING DOWN
+            NewPosition = new Vector3(0, -NextTunnelInfo.pivotlength, 0);
+            transform.Translate(NewPosition, Space.World);
+        }
+        else if (directioncounterUpDown == 1 && directioncounterLeftRight == 1 && LastTunnelInfo.goingRight || directioncounterUpDown == -1 && directioncounterLeftRight == 1 && LastTunnelInfo.goingRight || directioncounterLeftRight == 1 && directioncounterUpDown == 0 || NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpRight || NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownRight)
+        {
+            //FACING RIGHT
+            NewPosition = new Vector3(NextTunnelInfo.pivotlength, 0, 0);
+            transform.Translate(NewPosition, Space.World);
+        }
+        else if (directioncounterUpDown == 1 && directioncounterLeftRight == -1 && LastTunnelInfo.goingLeft || directioncounterUpDown == -1 && directioncounterLeftRight == -1 && LastTunnelInfo.goingLeft || directioncounterLeftRight == -1 && directioncounterUpDown == 0 || NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpLeft || NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownLeft)
+        {
+            //FACING LEFT
+            NewPosition = new Vector3(-NextTunnelInfo.pivotlength, 0, 0);
+            transform.Translate(NewPosition, Space.World);
+        }
+        else
+        {
+            //FACING FORWARD
+            NewPosition = new Vector3(0, 0, NextTunnelInfo.pivotlength);
+            transform.Translate(NewPosition, Space.World);
         }
 
         // Instantiating the TunnelSystem
-        GameObject NewTunnel = Instantiate(TunnelSystems[NextTunnel], new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
-
-        // Revert the position of the builder to the position, where the object has to be instantiated, using NextTunnelInfo.pivotlength
-        switch (d)
+        if(NextTunnel != 0)
         {
-            case Direction.Zero:
-                if (directioncounterUpDown == 1)
-                {
-                    transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - NextTunnelInfo.pivotlength, transform.localPosition.z);
-                    break;
-                }
-                else if (directioncounterUpDown == -1)
-                {
-                    transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + NextTunnelInfo.pivotlength, transform.localPosition.z);
-                    break;
-                }
-                transform.localPosition = new Vector3(transform.localPosition.x - NextTunnelInfo.pivotwidth, transform.localPosition.y, transform.localPosition.z - NextTunnelInfo.pivotlength);
-                break;
-            case Direction.Ninety:
-                if (directioncounterUpDown == 1)
-                {
-                    transform.localPosition = new Vector3(transform.localPosition.x - NextTunnelInfo.pivotlength, transform.localPosition.y, transform.localPosition.z);
-                    break;
-                }
-                //DONE
-                else if (directioncounterUpDown == -1)
-                {
-                    transform.localPosition = new Vector3(transform.localPosition.x - NextTunnelInfo.pivotlength, transform.localPosition.y, transform.localPosition.z);
-                    break;
-                }
-                transform.localPosition = new Vector3(transform.localPosition.x - NextTunnelInfo.pivotlength, transform.localPosition.y, transform.localPosition.z + NextTunnelInfo.pivotwidth);
-                break;
-            case Direction.OneEighty:
-                transform.localPosition = new Vector3(transform.localPosition.x + NextTunnelInfo.pivotwidth, transform.localPosition.y, transform.localPosition.z + NextTunnelInfo.pivotlength);
-                break;
-            case Direction.TwoSeventy:
-                transform.localPosition = new Vector3(transform.localPosition.x + NextTunnelInfo.pivotlength, transform.localPosition.y, transform.localPosition.z - NextTunnelInfo.pivotwidth);
-                break;
+            NewTunnel = Instantiate(TunnelSystems[NextTunnel], transform.localPosition, transform.localRotation);
+            LastTunnel = NextTunnel;
+            LastTunnelInfo = TunnelSystems[LastTunnel].GetComponent<ObjectInformation>();
+        }
+        else if (NextTunnel == 0)
+        {
+            int i = Random.Range(0, DogeTunnelSystems.Length);
+            NewTunnel = Instantiate(DogeTunnelSystems[i], transform.localPosition, transform.localRotation);
+            LastTunnel = NextTunnel;
+            LastTunnelInfo = DogeTunnelSystems[i].GetComponent<ObjectInformation>();
         }
 
-        LastTunnel = NextTunnel;
-        LastTunnelInfo = TunnelSystems[LastTunnel].GetComponent<ObjectInformation>();
+        NextTunnelChosen = false;
+
+        // Revert the positionchange to prepare for the next tunnel
+        transform.Translate(-NewPosition, Space.World);
 
         // If the TunnelSystem is changing the general direction, change the Direction-enum and rotate the object
         if (LastTunnelInfo.goingRight)
@@ -308,46 +341,54 @@ public class ObjectBuilder : MonoBehaviour
 
         // TunnelDirection for rotationchange
         // Up
-        ObjectInformation NTunnel = NewTunnel.GetComponent<ObjectInformation>();
-        if (LastTunnel == 0)
+        NTunnel = NewTunnel.GetComponent<ObjectInformation>();
+        if (NTunnel.NoDirectionalChange)
         {
             if (directioncounterUpDown == 1 && directioncounterLeftRight == 0)
             {
                 NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Up;
+                currentHeight++;
             }
             // UpRight
             else if (directioncounterUpDown == 1 && directioncounterLeftRight == 1)
             {
+                currentLeftRight++;
                 NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRight;
             }
             // UpLeft
             else if (directioncounterUpDown == 1 && directioncounterLeftRight == -1)
             {
+                currentLeftRight--;
                 NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpLeft;
             }
             // Down
             else if (directioncounterUpDown == -1 && directioncounterLeftRight == 0)
             {
                 NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Down;
+                currentHeight--;
             }
             // DownRight
             else if (directioncounterUpDown == -1 && directioncounterLeftRight == 1)
             {
+                currentLeftRight++;
                 NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRight;
             }
             // DownLeft
             else if (directioncounterUpDown == -1 && directioncounterLeftRight == -1)
             {
+                currentLeftRight--;
                 NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownLeft;
             }
             // Right
             else if (directioncounterLeftRight == 1 && directioncounterUpDown == 0)
             {
+                currentLeftRight++;
                 NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Right;
             }
             // Left
             else if (directioncounterLeftRight == -1 && directioncounterUpDown == 0)
             {
+                currentLeftRight--;
                 NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Left;
             }
             // Forward
@@ -373,37 +414,116 @@ public class ObjectBuilder : MonoBehaviour
         // Choose the next tunnel based on settings given here
 
         NextTunnel = Random.Range(0, TunnelSystems.Length);
+
+        // Don't build in yourself!
+        if (directioncounterLeftRight == 1 && !NextTunnelChosen)
+        {
+            int i = Random.Range(1, 100);
+            if (i < defaulttunnelchance)
+            {
+                NextTunnel = 0;
+            }
+            else
+            {
+                NextTunnel = 1;
+            }
+            NextTunnelChosen = true;
+        }
+        else if (directioncounterLeftRight == -1 && !NextTunnelChosen)
+        {
+            int i = Random.Range(1, 100);
+            if (i < defaulttunnelchance)
+            {
+                NextTunnel = 0;
+            }
+            else
+            {
+                NextTunnel = 2;
+            }
+            NextTunnelChosen = true;
+        }
+        else if (directioncounterUpDown == 1 && !NextTunnelChosen)
+        {
+            NextTunnel = RandomExcept(0, TunnelSystems.Length, 3);
+            NextTunnelChosen = true;
+        }
+        else if (directioncounterUpDown == -1 && !NextTunnelChosen)
+        {
+            NextTunnel = RandomExcept(0, TunnelSystems.Length, 4);
+            NextTunnelChosen = true;
+        }
         
-
-        if (directioncounterLeftRight == 1)
-        {
-            NextTunnel = 1;
-        }
-        else if (directioncounterLeftRight == -1)
-        {
-            NextTunnel = 2;
-        }
-        else if (directioncounterUpDown == 1)
-        {
-            while(NextTunnel == 3)
-            {
-                NextTunnel = Random.Range(0, TunnelSystems.Length);
-            }
-        }
-        else if (directioncounterUpDown == -1)
-        {
-            while (NextTunnel == 4)
-            {
-                NextTunnel = Random.Range(0, TunnelSystems.Length);
-            }
-        }
-
-        int i = Random.Range(1, 100);
-        if (i < defaulttunnelchance)
+        
+        // Control height of tunnels
+        if (NTunnel.NoDirectionalChange == false && !NextTunnelChosen)
         {
             NextTunnel = 0;
+            NextTunnelChosen = true;
+        }
+        else if (currentHeight >= maxUpHeight && directioncounterUpDown == 1 && directioncounterLeftRight == 0 && !NextTunnelChosen)
+        {
+            NextTunnel = 4;
+            NextTunnelChosen = true;
+        }
+        else if (currentHeight >= maxUpHeight && directioncounterUpDown == 1 && directioncounterLeftRight == 1 && !NextTunnelChosen)
+        {
+            NextTunnel = 2;
+            NextTunnelChosen = true;
+        }
+        else if (currentHeight >= maxUpHeight && directioncounterUpDown == 1 && directioncounterLeftRight == -1 && !NextTunnelChosen)
+        {
+            NextTunnel = 1;
+            NextTunnelChosen = true;
+        }
+        else if (currentHeight >= maxDownHeight && directioncounterUpDown == -1 && directioncounterLeftRight == 0 && !NextTunnelChosen)
+        {
+            NextTunnel = 3;
+            NextTunnelChosen = true;
+        }
+        else if (currentHeight <= maxDownHeight && directioncounterUpDown == -1 && directioncounterLeftRight == 1 && !NextTunnelChosen)
+        {
+            NextTunnel = 2;
+            NextTunnelChosen = true;
+        }
+        else if (currentHeight <= maxDownHeight && directioncounterUpDown == -1 && directioncounterLeftRight == -1 && !NextTunnelChosen)
+        {
+            NextTunnel = 1;
+            NextTunnelChosen = true;
+        }
+        else if (currentHeight <= maxDownHeight && directioncounterUpDown == 0 && directioncounterLeftRight == 0 && !NextTunnelChosen)
+        {
+            NextTunnel = 3;
+            NextTunnelChosen = true;
+        }
+        else if (currentHeight >= maxUpHeight && directioncounterUpDown == 0 && directioncounterLeftRight == 0 && !NextTunnelChosen)
+        {
+            NextTunnel = 4;
+            NextTunnelChosen = true;
+        }
+        
+
+        if (!NextTunnelChosen)
+        {
+            int i = Random.Range(1, 100);
+            if (i < defaulttunnelchance)
+            {
+                NextTunnel = 0;
+
+            }            
+            NextTunnelChosen = true;
+        }
+        NextTunnelInfo = TunnelSystems[NextTunnel].GetComponent<ObjectInformation>();
+    }
+
+    public int RandomExcept(int fromNr, int exclusiveToNr, int exceptNr)
+    {
+        int randomNr = exceptNr;
+
+        while (randomNr == exceptNr)
+        {
+            randomNr = Random.Range(fromNr, exclusiveToNr);
         }
 
-        NextTunnelInfo = TunnelSystems[NextTunnel].GetComponent<ObjectInformation>();
+        return randomNr;
     }
 }

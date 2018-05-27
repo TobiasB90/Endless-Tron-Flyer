@@ -14,6 +14,7 @@ public class ObjectInformation : MonoBehaviour {
     public bool goingUp;
     public bool goingDown;
     public bool goingForward;
+    public bool NoDirectionalChange;
     public enum TunnelDirection { Forward, Up, Down, Left, Right, UpRight, UpLeft, DownRight, DownLeft, DoNothing };
     public TunnelDirection TunnelDir;
     [Tooltip("Insert Layer of the PlayerObject.")] [SerializeField] public LayerMask LMask;
