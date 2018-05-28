@@ -1,28 +1,23 @@
 fileFormatVersion: 2
-guid: 66c5e01e9f3095f42aac5ff822631a23
-timeCreated: 1527546220
+guid: d02361939d382894c87ece35b6d58411
+timeCreated: 1527509940
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
-    100002: pCylinder12
-    100004: pCylinder16
-    100006: pSphere2
-    100008: transform53
-    100010: transform54
     400000: //RootNode
-    400002: pCylinder12
-    400004: pCylinder16
-    400006: pSphere2
-    400008: transform53
-    400010: transform54
     2100000: lambert1
-    2300000: pCylinder16
-    3300000: pCylinder16
-    4300000: pCylinder16
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: pCylinder9
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: a4f5c66fc05a7054aadb077eea1a49a3, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -71,7 +66,7 @@ ModelImporter:
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
