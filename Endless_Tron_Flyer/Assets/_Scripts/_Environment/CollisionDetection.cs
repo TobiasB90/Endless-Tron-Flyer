@@ -11,10 +11,10 @@ public class CollisionDetection : MonoBehaviour {
     public GameObject CubePrefab;
     public GameObject Parent;
     public GameObject InterfaceManager;
-    IFaceMng ifacemng;
+    IFaceMng_Limitless ifacemng;
 	// Use this for initialization
 	void Start () {
-        ifacemng = InterfaceManager.GetComponent<IFaceMng>();
+        ifacemng = InterfaceManager.GetComponent<IFaceMng_Limitless>();
 
         Vector3[] verts = PlayerMesh.vertices;
 
@@ -42,16 +42,7 @@ public class CollisionDetection : MonoBehaviour {
         if ((LMask & 1 << c.gameObject.layer) == 1 << c.gameObject.layer)
         {
             Debug.Log("PlayerCollision - Game Over");
-            //Vector3[] verts = PlayerMesh.vertices;
 
-            //Parent.transform.position = PlayerModel.transform.position;
-            //for (int i = 0; i < verts.Length; i++)
-            //{
-            //    GameObject PlayerCube = Instantiate(CubePrefab, verts[i] + transform.position, PlayerModel.transform.rotation);
-            //    PlayerCube.transform.parent = Parent.transform;
-            //    Rigidbody rbody = PlayerCube.GetComponent<Rigidbody>();
-            //    rbody.AddRelativeForce(Vector3.forward * 500);
-            //}
             Parent.transform.position = PlayerModel.transform.position;
             Parent.transform.rotation = PlayerModel.transform.rotation;
             Parent.SetActive(true);
@@ -67,7 +58,7 @@ public class CollisionDetection : MonoBehaviour {
                 child.transform.DOScale(new Vector3(0.25f, 0.25f, 0.25f), 3f);
             }
             Destroy(Player.gameObject);
-            ifacemng.RetryButton.SetActive(true);
+            ifacemng.ScoreScreen();
         }
             
     }

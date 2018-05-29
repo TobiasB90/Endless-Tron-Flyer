@@ -29,6 +29,8 @@ public class ObjectBuilder : MonoBehaviour
     [Tooltip("Insert the maximum height (downwards) of the TunnelSystems. (working a little bit)")] public int maxDownHeight;
     [Tooltip("Insert the maximum Left & Right direction possible. (not working yet)")] public int maxLeftRight;
     [Tooltip("How many 'TunnelSystems' should be built in advance at the start of the game?")] [SerializeField] private int TunnelInAdvance = 0;
+    [Tooltip("How many 'DefaultTunnels' should be built at the start?")] [SerializeField] private int DefaultTunnelInAdvance = 0;
+
     private int timesbuilt = 0;
 
     // Use this for initialization
@@ -39,8 +41,16 @@ public class ObjectBuilder : MonoBehaviour
         NextTunnelInfo = TunnelSystems[NextTunnel].GetComponent<ObjectInformation>();
         NTunnel = TunnelSystems[NextTunnel].GetComponent<ObjectInformation>();
 
+        // Build amount of Tunnels at Start of Game(Set 'TunnelInAdvance' value in inspector)
+        while (DefaultTunnelInAdvance > 0)
+        {
+            NextTunnel = 0;
+            InstantiateDefaultTunnel();
+            DefaultTunnelInAdvance--;
+        }
+
         // Build amount of Tunnels at Start of Game (Set 'TunnelInAdvance' value in inspector)
-        while(TunnelInAdvance > 0)
+        while (TunnelInAdvance > 0)
         {
             InstantiateTunnel();
             TunnelInAdvance--;
@@ -246,13 +256,13 @@ public class ObjectBuilder : MonoBehaviour
         }
 
         // Instantiating the TunnelSystem
-        if(NextTunnel != 0)
+        if (NextTunnel != 0)
         {
             NewTunnel = Instantiate(TunnelSystems[NextTunnel], transform.localPosition, transform.localRotation);
             LastTunnel = NextTunnel;
             LastTunnelInfo = TunnelSystems[LastTunnel].GetComponent<ObjectInformation>();
         }
-        else if (NextTunnel == 0)
+        else if (NextTunnel == 0 && DefaultTunnelInAdvance == 0)
         {
             int i = Random.Range(0, DogeTunnelSystems.Length);
             NewTunnel = Instantiate(DogeTunnelSystems[i], transform.localPosition, transform.localRotation);
@@ -261,6 +271,8 @@ public class ObjectBuilder : MonoBehaviour
         }
 
         NextTunnelChosen = false;
+        
+
 
         // Revert the positionchange to prepare for the next tunnel
         transform.Translate(-NewPosition, Space.World);
@@ -515,6 +527,18 @@ public class ObjectBuilder : MonoBehaviour
         NextTunnelInfo = TunnelSystems[NextTunnel].GetComponent<ObjectInformation>();
     }
 
+    public void InstantiateDefaultTunnel()
+    {
+        Vector3 NewPosition;
+        NewPosition = new Vector3(0, 0, NextTunnelInfo.pivotlength);
+        transform.Translate(NewPosition, Space.World);
+        NewTunnel = Instantiate(TunnelSystems[NextTunnel], transform.localPosition, transform.localRotation);
+        timesbuilt++;
+        NewTunnel.transform.parent = Environment.transform;
+        transform.Translate(-NewPosition, Space.World);
+        transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.width, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.length);
+    }
+
     public int RandomExcept(int fromNr, int exclusiveToNr, int exceptNr)
     {
         int randomNr = exceptNr;
@@ -526,4 +550,6 @@ public class ObjectBuilder : MonoBehaviour
 
         return randomNr;
     }
+
+    
 }

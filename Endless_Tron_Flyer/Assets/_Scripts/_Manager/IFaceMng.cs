@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
-using UnityEngine.PostProcessing;
 using UnityEngine.PostProcessing.Utilities;
 
 
 public class IFaceMng : MonoBehaviour {
 
-    public GameObject RetryButton;
     public GameObject MainMenu_Obj;
     public GameObject MainMenu_Play_Obj;
     public GameObject MainMenu_HighScore_Obj;
@@ -42,7 +40,7 @@ public class IFaceMng : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKey(KeyCode.Escape) && BackButtonAvailable)
+        if (Input.GetKeyDown(KeyCode.Escape) && BackButtonAvailable)
         {
             MainMenu_BackButton();
         }
@@ -70,11 +68,6 @@ public class IFaceMng : MonoBehaviour {
         PlayerModel_Hover.Append(Player.transform.DOMoveY(17.2f, 1f).SetEase(Ease.OutSine));
         PlayerModel_Hover.Append(Player.transform.DOMoveY(17f, 1f).SetEase(Ease.InOutSine));
         PlayerModel_Hover.SetLoops(-1, LoopType.Restart);
-    }
-    public void RetryGame()
-    {
-        SceneManager.LoadScene("Level_01_Endless");
-        RetryButton.SetActive(false);
     }
 
     public void EnterEndlessFlyerScene()
