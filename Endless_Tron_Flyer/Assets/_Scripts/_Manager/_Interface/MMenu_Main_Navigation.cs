@@ -22,7 +22,16 @@ public class MMenu_Main_Navigation : MonoBehaviour, IPointerEnterHandler, IPoint
     void Start()
     {
         if(LerpImageColor) startingColor = UI_Image.color;
+        SoundMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
     }
+
+
+    void Awake()
+    {
+        SoundMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
+    }
+
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (LerpImageColor)

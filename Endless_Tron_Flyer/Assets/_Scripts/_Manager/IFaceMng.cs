@@ -36,6 +36,13 @@ public class IFaceMng : MonoBehaviour {
         PPController = Camera.main.GetComponent<PostProcessingController>();
         MainCameraBasePosition = Camera.main.transform.position;
         MainCameraBaseRotation = Camera.main.transform.localEulerAngles;
+
+        SoundMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
+    }
+
+    private void Awake()
+    {
+        SoundMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
     }
 
     // Update is called once per frame
@@ -156,7 +163,7 @@ public class IFaceMng : MonoBehaviour {
         if (Blurred && BlurringNow == false)
         {
             SoundMng.MMenu_ReverseSwoosh();
-            StartCoroutine(LerpBlur(0.5f));
+            StartCoroutine(LerpBlur(1.5f));
         }
     }
 
@@ -171,7 +178,7 @@ public class IFaceMng : MonoBehaviour {
     {
         if (!BlurringNow)
         {
-            StartCoroutine(LerpBlur(0.5f));
+            StartCoroutine(LerpBlur(1.5f));
         }
     }
 

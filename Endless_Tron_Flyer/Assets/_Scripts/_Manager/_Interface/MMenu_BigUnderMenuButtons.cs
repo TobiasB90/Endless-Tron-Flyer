@@ -5,9 +5,19 @@ using DG.Tweening;
 
 public class MMenu_BigUnderMenuButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
 
-    public SoundManager SoundMng;
+    private SoundManager SoundMng;
     public float ScaleValue;
     public float ScalingDuration;
+
+    void start()
+    {
+        SoundMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
+    }
+
+    void Awake()
+    {
+        SoundMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {

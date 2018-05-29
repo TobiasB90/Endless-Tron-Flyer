@@ -2143,7 +2143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 448793744}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 0
   LerpImageColor: 1
   ColorLerpDuration: 0.1
@@ -2400,7 +2400,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb719bd75fdd9c48a39e90ce16563a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundMng: {fileID: 1457882484}
   ScaleValue: 1.2
   ScalingDuration: 0.1
 --- !u!1 &239235355
@@ -5219,7 +5218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 1511693248}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 0
   LerpImageColor: 1
   ColorLerpDuration: 0.1
@@ -9310,7 +9309,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb719bd75fdd9c48a39e90ce16563a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundMng: {fileID: 1457882484}
   ScaleValue: 1.2
   ScalingDuration: 0.1
 --- !u!1 &694399825
@@ -11222,7 +11220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 474040263}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 1
   LerpImageColor: 0
   ColorLerpDuration: 0
@@ -11578,7 +11576,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb719bd75fdd9c48a39e90ce16563a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundMng: {fileID: 1457882484}
   ScaleValue: 1.2
   ScalingDuration: 0.1
 --- !u!1 &839593242
@@ -13170,7 +13167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 34851909}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 0
   LerpImageColor: 1
   ColorLerpDuration: 0.1
@@ -20242,6 +20239,8 @@ GameObject:
   - component: {fileID: 1457882483}
   - component: {fileID: 1457882482}
   - component: {fileID: 1457882484}
+  - component: {fileID: 1457882486}
+  - component: {fileID: 1457882485}
   m_Layer: 0
   m_Name: _SoundManager
   m_TagString: Untagged
@@ -20359,6 +20358,168 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 44fd40b5a0d27364c9c9008b8255db89, type: 3}
   - {fileID: 8300000, guid: 9af0d2ca79dc8234a86a463cadd6471b, type: 3}
   AudioSource_01: {fileID: 1457882482}
+  MusicSource_01: {fileID: 1457882486}
+  MusicSource_02: {fileID: 1457882485}
+--- !u!82 &1457882485
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1457882481}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d1bc26b5e87397d4791e18f8a2c91a81, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+--- !u!82 &1457882486
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1457882481}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 680d5d423d760314ba526e2cfe424239, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &1458325522
 GameObject:
   m_ObjectHideFlags: 0
@@ -21580,7 +21741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 875843418}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 1
   LerpImageColor: 0
   ColorLerpDuration: 0
@@ -22319,7 +22480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb719bd75fdd9c48a39e90ce16563a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundMng: {fileID: 1457882484}
   ScaleValue: 1.2
   ScalingDuration: 0.1
 --- !u!1 &1582081951
@@ -23573,7 +23733,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb719bd75fdd9c48a39e90ce16563a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundMng: {fileID: 1457882484}
   ScaleValue: 1.2
   ScalingDuration: 0.1
 --- !u!1 &1694445359
@@ -24972,7 +25131,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1811910874
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25005,7 +25164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 1099697258}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 0
   LerpImageColor: 0
   ColorLerpDuration: 0
@@ -26806,7 +26965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 754101397}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 0
   LerpImageColor: 1
   ColorLerpDuration: 0.1
@@ -27467,7 +27626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 1981234645}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 0
   LerpImageColor: 0
   ColorLerpDuration: 0
@@ -27600,7 +27759,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb719bd75fdd9c48a39e90ce16563a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SoundMng: {fileID: 1457882484}
   ScaleValue: 1.2
   ScalingDuration: 0.1
 --- !u!1 &1981234643
@@ -28188,7 +28346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 354342112}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 0
   LerpImageColor: 0
   ColorLerpDuration: 0
@@ -28863,7 +29021,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 550258448}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 0
   LerpImageColor: 0
   ColorLerpDuration: 0
@@ -29853,7 +30011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TextObject: {fileID: 1630766190}
-  SoundMng: {fileID: 1457882484}
+  SoundMng: {fileID: 0}
   CameraLerpAnimation: 0
   LerpImageColor: 0
   ColorLerpDuration: 0

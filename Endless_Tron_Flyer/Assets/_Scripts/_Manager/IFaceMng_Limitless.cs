@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -13,12 +11,15 @@ public class IFaceMng_Limitless : MonoBehaviour {
     public TMP_Text scoreTxt;
     public TMP_Text tunnelsPassedTxt;
     public TMP_Text timeAliveTxt;
-    public GameObject NewHighScoreUI;
+    public TMP_Text UIScore;
+    public TMP_Text HighScoreUI;
+    public GameObject ScoreUI;
+    float scr;
 
     // Use this for initialization
     void Start () {
-		
-	}
+        ScoreUI.SetActive(true);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -30,6 +31,8 @@ public class IFaceMng_Limitless : MonoBehaviour {
         {
             ResumeGame();
         }
+        scr = Mathf.RoundToInt(gameMng.Score);
+        UIScore.text = scr.ToString();
     }
 
     public void ExitGame()
@@ -40,26 +43,28 @@ public class IFaceMng_Limitless : MonoBehaviour {
     public void PauseGame()
     {
         PauseMenuUI.SetActive(true);
-        Time.timeScale = 0;
         Playing = false;
+        Time.timeScale = 0;
     }
 
     public void ResumeGame()
     {
-        PauseMenuUI.SetActive(false);
         Time.timeScale = 1;
+        PauseMenuUI.SetActive(false);
         Playing = true;
     }
 
     public void ScoreScreen()
     {
         Playing = false;
-
+        ScoreUI.SetActive(false);
         float roundedScore = Mathf.Round(gameMng.Score);
         if (roundedScore > PlayerPrefs.GetFloat("HighScore"))
         {
             PlayerPrefs.SetFloat("HighScore", roundedScore);
             gameMng.UpdateHighScore();
+            float scr = Mathf.RoundToInt(PlayerPrefs.GetFloat("HighScore"));
+            HighScoreUI.text = scr.ToString();
         }
         scoreTxt.text = roundedScore.ToString();
         tunnelsPassedTxt.text = gameMng.TunnelSystemsSolved.ToString();
