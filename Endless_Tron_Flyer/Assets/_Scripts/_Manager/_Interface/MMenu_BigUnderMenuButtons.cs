@@ -1,0 +1,35 @@
+﻿using UnityEngine;
+using TMPro;
+using UnityEngine.EventSystems;
+using DG.Tweening;
+
+public class MMenu_BigUnderMenuButtons : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler {
+
+    public SoundManager SoundMng;
+    public float ScaleValue;
+    public float ScalingDuration;
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        transform.DOScale(new Vector3(ScaleValue, ScaleValue, 1), ScalingDuration);
+        SoundMng.MMenu_OnMouseOver();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        transform.DOScale(new Vector3(1, 1, 1), ScalingDuration);
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        //Left Click
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            SoundMng.MMenu_OnMouseEnterWithoutSwoosh();
+        }
+        //Right Click
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+        }
+    }
+}
