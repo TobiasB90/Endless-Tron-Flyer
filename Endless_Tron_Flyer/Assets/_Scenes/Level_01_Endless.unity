@@ -2394,6 +2394,8 @@ MonoBehaviour:
   - {fileID: 1640907969016700, guid: 567c0275f2b87304f8e806ac3d26b1d8, type: 2}
   - {fileID: 1890075547983586, guid: 126c7ebe271a6be4682347c5bd90f28d, type: 2}
   - {fileID: 1423731026194008, guid: 3c62c7ffa1a12b446a79b15c58315157, type: 2}
+  - {fileID: 1056893708066884, guid: 85d3bccf51db96546a71354d92f3446b, type: 2}
+  - {fileID: 1319760862942234, guid: d1da17fba799b734fa08eb23921fb1f0, type: 2}
   - {fileID: 1821012878881714, guid: 6b453905091e5a04699cd74718862f2c, type: 2}
   Environment: {fileID: 558082834}
   FlyingObject: {fileID: 934184957}
@@ -3504,8 +3506,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3553,7 +3555,7 @@ MonoBehaviour:
     lineCount: 0
     pageCount: 0
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -3842,8 +3844,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3891,7 +3893,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
