@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4698751438103328}
   - component: {fileID: 114810475948904738}
   - component: {fileID: 65919956471519162}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tunnel_Curve_Up_v3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 23995335586282438}
   - component: {fileID: 95344159484416838}
   - component: {fileID: 64034149393286986}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: tunnel_UP_pref
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,6 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 367d8406703c82742bce434b1a07e6a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameManager: {fileID: 0}
+  TunnelNumber: 0
   length: 96.3
   width: 112.28
   pivotlength: -300
@@ -178,4 +180,8 @@ MonoBehaviour:
   goingUp: 1
   goingDown: 0
   goingForward: 0
+  NoDirectionalChange: 0
   TunnelDir: 9
+  LMask:
+    serializedVersion: 2
+    m_Bits: 256

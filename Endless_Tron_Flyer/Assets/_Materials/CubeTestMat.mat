@@ -65,12 +65,12 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Parallax: 0.02
+    - _Parallax: 0.0264
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 0
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.41176468, g: 0.75659215, b: 1, a: 1}
-    - _EmissionColor: {r: 0, g: 1.1, b: 1.1, a: 1}
+    - _Color: {r: 1, g: 0.22758624, b: 0, a: 1}
+    - _EmissionColor: {r: 1.2, g: 0.78705883, b: 0.167647, a: 1}
