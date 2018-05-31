@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
 using UnityEngine.PostProcessing.Utilities;
-
+using TMPro;
+using UnityEngine.UI;
 
 public class IFaceMng : MonoBehaviour {
 
@@ -16,12 +16,15 @@ public class IFaceMng : MonoBehaviour {
     public GameObject MainMenu_Options_Obj;
     public GameObject MainMenu_BackButton_Obj;
     public GameObject MainCameraParent;
+    public GameObject MainMenu_UserNameInput_UI;
+    public Button MainMenu_UserNameInput_Button;
+    public TMP_Text MainMenu_UserName_UI;
+    public TMP_Text UserNameInput_Text;
     public float CameraRotationSpeed;
     public PostProcessingController PPController;
     public bool Blurred = false;
     public bool BlurringNow = false;
     Vector3 MainCameraBasePosition;
-    Vector3 MainCameraBaseRotation;
     public SoundManager SoundMng;
     public bool BackButtonAvailable = false;
     public GameObject CirclingSphere1;
@@ -35,9 +38,13 @@ public class IFaceMng : MonoBehaviour {
         MainMenu_PlayerModel_Hover();
         PPController = Camera.main.GetComponent<PostProcessingController>();
         MainCameraBasePosition = Camera.main.transform.position;
-        MainCameraBaseRotation = Camera.main.transform.localEulerAngles;
-
+        MainMenu_UserName_UI.text = PlayerPrefs.GetString("Username");
         SoundMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
+        
+        if(PlayerPrefs.GetString("Username") == "")
+        {
+            MainMenu_UserNameInput_UI.SetActive(true);
+        }
     }
 
     private void Awake()
@@ -50,6 +57,10 @@ public class IFaceMng : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape) && BackButtonAvailable)
         {
             MainMenu_BackButton();
+        }
+        if (Input.GetKeyDown(KeyCode.Return) && MainMenu_UserNameInput_UI.activeSelf == true)
+        {
+            MainMenu_UserNameInput_Button.onClick.Invoke();
         }
 	}
 
@@ -82,9 +93,17 @@ public class IFaceMng : MonoBehaviour {
         SceneManager.LoadScene("Level_01_Endless");
     }
 
-    public void EnterMainMenu()
+    public void UpdateUserName()
     {
-
+        if (!MainMenu_UserNameInput_UI.activeSelf) {
+            MainMenu_UserNameInput_UI.SetActive(true);
+        }
+        else if (MainMenu_UserNameInput_UI.activeSelf) {
+            PlayerPrefs.SetString("Username", UserNameInput_Text.text);
+            MainMenu_UserNameInput_UI.SetActive(false);
+            MainMenu_UserName_UI.text = PlayerPrefs.GetString("Username");
+            Debug.Log("Username changed to: " + PlayerPrefs.GetString("Username"));
+        }
     }
 
     public void MainMenu_Play()

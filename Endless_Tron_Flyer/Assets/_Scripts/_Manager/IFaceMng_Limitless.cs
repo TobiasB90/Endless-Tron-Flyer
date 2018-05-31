@@ -20,9 +20,9 @@ public class IFaceMng_Limitless : MonoBehaviour {
     void Start () {
         ScoreUI.SetActive(true);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update () {
         if (Input.GetKeyDown(KeyCode.Escape) && Playing)
         {
             PauseGame();
@@ -63,9 +63,9 @@ public class IFaceMng_Limitless : MonoBehaviour {
         {
             PlayerPrefs.SetFloat("HighScore", roundedScore);
             gameMng.UpdateHighScore();
-            float scr = Mathf.RoundToInt(PlayerPrefs.GetFloat("HighScore"));
-            HighScoreUI.text = scr.ToString();
         }
+        float scr2 = Mathf.RoundToInt(PlayerPrefs.GetFloat("HighScore"));
+        HighScoreUI.text = scr2.ToString();
         scoreTxt.text = roundedScore.ToString();
         tunnelsPassedTxt.text = gameMng.TunnelSystemsSolved.ToString();
         if(gameMng.TimeAlive >= 60)

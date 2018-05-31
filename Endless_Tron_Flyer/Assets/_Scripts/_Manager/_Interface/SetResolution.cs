@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-
-
 public class SetResolution : MonoBehaviour {
 
-    TMP_Dropdown dropdown;
-    List<TMP_Dropdown.OptionData> odata = new List<TMP_Dropdown.OptionData>();
-    List<string> resstrings = new List<string>();
     Sprite image;
+    TMP_Dropdown dropdown;
+    List<string> resstrings = new List<string>();
 
     void Start()
     {
