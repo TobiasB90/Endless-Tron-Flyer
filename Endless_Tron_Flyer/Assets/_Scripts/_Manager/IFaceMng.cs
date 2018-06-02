@@ -191,6 +191,7 @@ public class IFaceMng : MonoBehaviour {
         Sequence RotatingCamera = DOTween.Sequence();
         RotatingCamera.SetId("RotatingCamera");
         RotatingCamera.Append(MainCameraParent.transform.DORotate(new Vector3(0, 360, 0), CameraRotationSpeed, RotateMode.LocalAxisAdd).SetEase(Ease.Linear));
+        RotatingCamera.SetLoops(-1, LoopType.Restart);
     }
 
     public void LerpBlur()
