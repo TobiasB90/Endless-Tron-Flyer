@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Maximum horizontal rotation")] public float maxHorzRota = 90;
     [Tooltip("Minimum horizontal rotation")] public float minHorzRota = -90;
 
-    public enum TunnelDirection { Forward, Up, Down, Left, Right, UpRight, UpLeft, DownRight, DownLeft, DoNothing };
+    public enum TunnelDirection { Forward, ForwardLeft, ForwardRight, ForwardRotated, Back, Up, UpRotated, Down, DownRotated, Left, LeftRotated, Right, RightRotated, UpRight, UpLeft, RightUp, LeftUp, DownRight, DownLeft, RightDown, LeftDown, NoRotation };
     public TunnelDirection TunnelDir;
 
     private Quaternion OriginalPlayerModelRotation;
@@ -40,32 +40,68 @@ public class PlayerController : MonoBehaviour
             case TunnelDirection.Forward:
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
+            case TunnelDirection.ForwardRotated:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 180), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                break;
+            case TunnelDirection.ForwardLeft:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                break;
+            case TunnelDirection.ForwardRight:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                break;
             case TunnelDirection.Up:
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -transform.rotation.eulerAngles.y), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                break;
+            case TunnelDirection.UpRotated:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -transform.rotation.eulerAngles.y + 180), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                break;
+            case TunnelDirection.LeftUp:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -transform.rotation.eulerAngles.y - 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                break;
+            case TunnelDirection.RightUp:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -transform.rotation.eulerAngles.y + 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                break;            
+            case TunnelDirection.Right:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                break;
+            case TunnelDirection.RightRotated:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 180), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
             case TunnelDirection.UpRight:
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
-            case TunnelDirection.UpLeft:
+            case TunnelDirection.DownRight:
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
-            case TunnelDirection.Down:
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.y), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+            case TunnelDirection.Left:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
-            case TunnelDirection.DownRight:
+            case TunnelDirection.LeftRotated:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 180), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                break;
+            case TunnelDirection.UpLeft:
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
             case TunnelDirection.DownLeft:
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
-            case TunnelDirection.Left:
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+            case TunnelDirection.Down:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.y), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
-            case TunnelDirection.Right:
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+            case TunnelDirection.DownRotated:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.y + 180), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
-            case TunnelDirection.DoNothing:
+            case TunnelDirection.LeftDown:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.y + 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
+            case TunnelDirection.RightDown:
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.y - 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                break;
+            case TunnelDirection.NoRotation:
+                break;
+
+
+
         }
 
         // If we have any movement Input:

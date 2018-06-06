@@ -87,6 +87,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 61449fe531de30c44a11eafa43257306, type: 2}
   m_StaticBatchInfo:
@@ -158,6 +159,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114810475948904738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -181,7 +183,7 @@ MonoBehaviour:
   goingDown: 0
   goingForward: 0
   NoDirectionalChange: 0
-  TunnelDir: 9
+  TunnelDir: 0
   LMask:
     serializedVersion: 2
     m_Bits: 256

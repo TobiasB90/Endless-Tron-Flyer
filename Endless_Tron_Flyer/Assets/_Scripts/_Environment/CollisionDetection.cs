@@ -71,32 +71,65 @@ public class CollisionDetection : MonoBehaviour {
             case ObjectInformation.TunnelDirection.Forward:
                 pcont.TunnelDir = PlayerController.TunnelDirection.Forward;
                 break;
+            case ObjectInformation.TunnelDirection.ForwardRotated:
+                pcont.TunnelDir = PlayerController.TunnelDirection.ForwardRotated;
+                break;
+            case ObjectInformation.TunnelDirection.ForwardLeft:
+                pcont.TunnelDir = PlayerController.TunnelDirection.ForwardLeft;
+                break;
+            case ObjectInformation.TunnelDirection.ForwardRight:
+                pcont.TunnelDir = PlayerController.TunnelDirection.ForwardRight;
+                break;
             case ObjectInformation.TunnelDirection.Up:
                 pcont.TunnelDir = PlayerController.TunnelDirection.Up;
+                break;
+            case ObjectInformation.TunnelDirection.UpRotated:
+                pcont.TunnelDir = PlayerController.TunnelDirection.UpRotated;
+                break;
+            case ObjectInformation.TunnelDirection.LeftUp:
+                pcont.TunnelDir = PlayerController.TunnelDirection.LeftUp;
+                break;
+            case ObjectInformation.TunnelDirection.RightUp:
+                pcont.TunnelDir = PlayerController.TunnelDirection.RightUp;
                 break;
             case ObjectInformation.TunnelDirection.Down:
                 pcont.TunnelDir = PlayerController.TunnelDirection.Down;
                 break;
+            case ObjectInformation.TunnelDirection.DownRotated:
+                pcont.TunnelDir = PlayerController.TunnelDirection.DownRotated;
+                break;
+            case ObjectInformation.TunnelDirection.LeftDown:
+                pcont.TunnelDir = PlayerController.TunnelDirection.LeftDown;
+                break;
+            case ObjectInformation.TunnelDirection.RightDown:
+                pcont.TunnelDir = PlayerController.TunnelDirection.RightDown;
+                break;
             case ObjectInformation.TunnelDirection.Left:
                 pcont.TunnelDir = PlayerController.TunnelDirection.Left;
                 break;
-            case ObjectInformation.TunnelDirection.Right:
-                pcont.TunnelDir = PlayerController.TunnelDirection.Right;
-                break;
-            case ObjectInformation.TunnelDirection.UpLeft:
-                pcont.TunnelDir = PlayerController.TunnelDirection.UpLeft;
-                break;
-            case ObjectInformation.TunnelDirection.UpRight:
-                pcont.TunnelDir = PlayerController.TunnelDirection.UpRight;
+            case ObjectInformation.TunnelDirection.LeftRotated:
+                pcont.TunnelDir = PlayerController.TunnelDirection.LeftRotated;
                 break;
             case ObjectInformation.TunnelDirection.DownLeft:
                 pcont.TunnelDir = PlayerController.TunnelDirection.DownLeft;
                 break;
+            case ObjectInformation.TunnelDirection.UpLeft:
+                pcont.TunnelDir = PlayerController.TunnelDirection.UpLeft;
+                break;
+            case ObjectInformation.TunnelDirection.Right:
+                pcont.TunnelDir = PlayerController.TunnelDirection.Right;
+                break;
+            case ObjectInformation.TunnelDirection.RightRotated:
+                pcont.TunnelDir = PlayerController.TunnelDirection.RightRotated;
+                break;
+            case ObjectInformation.TunnelDirection.UpRight:
+                pcont.TunnelDir = PlayerController.TunnelDirection.UpRight;
+                break;            
             case ObjectInformation.TunnelDirection.DownRight:
                 pcont.TunnelDir = PlayerController.TunnelDirection.DownRight;
                 break;
-            case ObjectInformation.TunnelDirection.DoNothing:
-                pcont.TunnelDir = PlayerController.TunnelDirection.DoNothing;
+            case ObjectInformation.TunnelDirection.NoRotation:
+                pcont.TunnelDir = PlayerController.TunnelDirection.NoRotation;
                 break;
         }
     }

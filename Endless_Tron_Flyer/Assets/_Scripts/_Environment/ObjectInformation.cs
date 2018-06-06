@@ -15,7 +15,7 @@ public class ObjectInformation : MonoBehaviour {
     public bool goingDown;
     public bool goingForward;
     public bool NoDirectionalChange;
-    public enum TunnelDirection { Forward, Up, Down, Left, Right, UpRight, UpLeft, DownRight, DownLeft, DoNothing };
+    public enum TunnelDirection { Forward, ForwardLeft, ForwardRight, ForwardRotated, Back, Up, UpRotated, Down, DownRotated, Left, LeftRotated, Right, RightRotated, UpRight, UpLeft, RightUp, LeftUp, DownRight, DownLeft, RightDown, LeftDown, NoRotation };
     public TunnelDirection TunnelDir;
     [Tooltip("Insert Layer of the PlayerObject.")] [SerializeField] public LayerMask LMask;
 
@@ -32,9 +32,9 @@ public class ObjectInformation : MonoBehaviour {
     {
         if ((LMask & 1 << other.gameObject.layer) == 1 << other.gameObject.layer)
         {
-            Debug.Log("Direction change - adjusting rotation");
             CollisionDetection CDet = other.GetComponent<CollisionDetection>();
-            CDet.ChangeDir(TunnelDir);
+            if (NoDirectionalChange) CDet.ChangeDir(TunnelDir);
+            else CDet.ChangeDir(TunnelDirection.NoRotation);
             GMng.TunnelSystemsSolved++;
         }
     }
