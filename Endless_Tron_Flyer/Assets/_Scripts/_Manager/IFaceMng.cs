@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
-using UnityEngine.PostProcessing.Utilities;
+// using UnityEngine.PostProcessing.Utilities;
 using TMPro;
 using UnityEngine.UI;
 
@@ -21,7 +21,7 @@ public class IFaceMng : MonoBehaviour {
     public TMP_Text MainMenu_UserName_UI;
     public TMP_Text UserNameInput_Text;
     public float CameraRotationSpeed;
-    public PostProcessingController PPController;
+    // public PostProcessingController PPController;
     public bool Blurred = false;
     public bool BlurringNow = false;
     Vector3 MainCameraBasePosition;
@@ -36,7 +36,7 @@ public class IFaceMng : MonoBehaviour {
         MainMenu_RotateCamera();
         MainMenu_Circling_Spheres();
         MainMenu_PlayerModel_Hover();
-        PPController = Camera.main.GetComponent<PostProcessingController>();
+        // PPController = Camera.main.GetComponent<PostProcessingController>();
         MainCameraBasePosition = Camera.main.transform.position;
         MainMenu_UserName_UI.text = PlayerPrefs.GetString("Username");
         SoundMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
@@ -211,7 +211,7 @@ public class IFaceMng : MonoBehaviour {
             DOTween.Pause("RotatingCamera");
             DOTween.Pause("HoveringPlayerModel");
             Sequence Blurring = DOTween.Sequence();
-            Blurring.Append(DOTween.To(() => PPController.depthOfField.focusDistance, x => PPController.depthOfField.focusDistance = x, 0.1f, 0.5f));
+            // Blurring.Append(DOTween.To(() => PPController.depthOfField.focusDistance, x => PPController.depthOfField.focusDistance = x, 0.1f, 0.5f));
             Blurring.Join(Camera.main.transform.DOLocalMove(new Vector3(3, 5, -3), 0.5f));
             Blurring.Join(Camera.main.transform.DOLocalRotate(new Vector3(30, -45, -30), 0.5f));
             Blurred = true;
@@ -223,7 +223,7 @@ public class IFaceMng : MonoBehaviour {
             DOTween.Play("HoveringPlayerModel");
             DOTween.Play("RotatingCamera");
             Sequence ReverseBlurring = DOTween.Sequence();
-            ReverseBlurring.Append(DOTween.To(() => PPController.depthOfField.focusDistance, x => PPController.depthOfField.focusDistance = x, 10, 0.3f));
+            // ReverseBlurring.Append(DOTween.To(() => PPController.depthOfField.focusDistance, x => PPController.depthOfField.focusDistance = x, 10, 0.3f));
             ReverseBlurring.Join(Camera.main.transform.DOLocalMove(MainCameraBasePosition, 0.5f));
             ReverseBlurring.Join(Camera.main.transform.DOLocalRotate(new Vector3(10, 0, 0), 0.5f));
             Blurred = false;
