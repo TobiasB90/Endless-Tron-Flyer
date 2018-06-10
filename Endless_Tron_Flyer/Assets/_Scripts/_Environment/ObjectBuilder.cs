@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEditor;
 
 public class ObjectBuilder : MonoBehaviour
 {
@@ -17,15 +19,19 @@ public class ObjectBuilder : MonoBehaviour
     private UpDownDirection dUpDown;
     private int LastTunnel = 0;
     private int NextTunnel = 0;
-    public int defaulttunnelchance = 70;
+    [SerializeField] private int defaulttunnelchance = 70;
     private ObjectInformation LastTunnelInfo;
     private ObjectInformation NextTunnelInfo;
     private float directioncounterLeftRight = 0;
     private float directioncounterUpDown = 0;
     private int currentHeight;
     private int currentLeftRight;
+    private int currentForward;
     private bool NextTunnelChosen = false;
-    public bool DoubleCurves = false;
+    [SerializeField] private bool DoubleCurves = false;
+    [SerializeField] private bool ScriptedTunnels = false;
+    [SerializeField] private GameObject[] ScriptedTunnelSystems;
+
     private ObjectInformation NTunnel;
     private GameObject NewTunnel;
     [Tooltip("Insert the maximum height (upwards) of the TunnelSystems. (working a little bit)")] public int maxUpHeight;
@@ -39,6 +45,10 @@ public class ObjectBuilder : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        currentHeight = 0;
+        currentLeftRight = 0;
+        currentForward = 0;
+
         // Get InformationScripts of Last and Next TunnelSystem
         LastTunnelInfo = TunnelSystems[LastTunnel].GetComponent<ObjectInformation>();
         NextTunnelInfo = TunnelSystems[NextTunnel].GetComponent<ObjectInformation>();
@@ -329,7 +339,11 @@ public class ObjectBuilder : MonoBehaviour
         {
             case CurrentDirection.Forward:
 
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Forward;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Forward;
+                    currentForward++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Up;
@@ -352,7 +366,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.Up:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Up;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Up;
+                    currentHeight++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Back;
@@ -376,7 +394,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.UpRotated:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRotated;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRotated;
+                    currentHeight++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.ForwardRotated;
@@ -400,7 +422,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.Down:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Down;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Down;
+                    currentHeight--;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Forward;
@@ -424,7 +450,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.DownRotated:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRotated;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRotated;
+                    currentHeight--;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Back;
@@ -449,7 +479,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.Right:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Right;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Right;
+                    currentLeftRight++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.RightUp;
@@ -473,7 +507,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.RightRotated:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightRotated;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightRotated;
+                    currentLeftRight++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.LeftDown;
@@ -497,7 +535,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.Left:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Left;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Left;
+                    currentLeftRight--;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.LeftUp;
@@ -521,7 +563,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.LeftRotated:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftRotated;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftRotated;
+                    currentLeftRight--;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.RightDown;
@@ -545,7 +591,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.LeftUp:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftUp;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftUp;
+                    currentHeight++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Right;
@@ -569,7 +619,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.UpLeft:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpLeft;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpLeft;
+                    currentLeftRight--;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Back;
@@ -593,7 +647,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.LeftDown:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftDown;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftDown;
+                    currentHeight--;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Left;
@@ -617,7 +675,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.DownLeft:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownLeft;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownLeft;
+                    currentLeftRight--;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.ForwardLeft;
@@ -641,7 +703,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.RightUp:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightUp;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightUp;
+                    currentHeight++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Left;
@@ -665,7 +731,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.UpRight:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRight;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRight;
+                    currentLeftRight++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Back;
@@ -689,7 +759,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.RightDown:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightDown;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightDown;
+                    currentHeight--;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Right;
@@ -713,7 +787,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.DownRight:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRight;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRight;
+                    currentLeftRight++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.ForwardRight;
@@ -736,9 +814,12 @@ public class ObjectBuilder : MonoBehaviour
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRotated;
                 }
                 break;
-                //PROBLEM MAYBE
             case CurrentDirection.ForwardLeft:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardLeft;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardLeft;
+                    currentForward++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.UpRight;
@@ -761,7 +842,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.ForwardRight:
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRight;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRight;
+                    currentForward++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.UpLeft;
@@ -784,8 +869,11 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 break;
             case CurrentDirection.ForwardRotated:
-
-                if (LastTunnelInfo.NoDirectionalChange) NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRotated;
+                if (LastTunnelInfo.NoDirectionalChange)
+                {
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRotated;
+                    currentForward++;
+                }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.DownRotated;
