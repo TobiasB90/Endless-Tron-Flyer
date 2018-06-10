@@ -1,0 +1,171 @@
+fileFormatVersion: 2
+guid: 2a527eaea5d97924fbb126f6fe0047e2
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Mesh
+    100004: polySurface28
+    100006: polySurface28 1
+    100008: polySurface41
+    100010: polySurface41 1
+    100012: polySurface5
+    100014: polySurface64
+    100016: polySurface66
+    100018: pPlane1
+    100020: pPlane10
+    100022: pPlane11
+    100024: pPlane2
+    100026: pPlane3
+    100028: pPlane4
+    100030: pPlane5
+    100032: pPlane6
+    100034: pPlane7
+    100036: pPlane8
+    100038: pPlane9
+    100040: transform1
+    100042: transform15
+    100044: transform16
+    100046: transform17
+    100048: transform18
+    100050: transform19
+    100052: transform20
+    100054: transform21
+    100056: transform22
+    100058: transform23
+    100060: transform24
+    100062: transform25
+    100064: transform4
+    100066: transform5
+    100068: transform6
+    100070: transform7
+    100072: transform8
+    100074: transform9
+    400000: //RootNode
+    400002: Mesh
+    400004: polySurface28
+    400006: polySurface28 1
+    400008: polySurface41
+    400010: polySurface41 1
+    400012: polySurface5
+    400014: polySurface64
+    400016: polySurface66
+    400018: pPlane1
+    400020: pPlane10
+    400022: pPlane11
+    400024: pPlane2
+    400026: pPlane3
+    400028: pPlane4
+    400030: pPlane5
+    400032: pPlane6
+    400034: pPlane7
+    400036: pPlane8
+    400038: pPlane9
+    400040: transform1
+    400042: transform15
+    400044: transform16
+    400046: transform17
+    400048: transform18
+    400050: transform19
+    400052: transform20
+    400054: transform21
+    400056: transform22
+    400058: transform23
+    400060: transform24
+    400062: transform25
+    400064: transform4
+    400066: transform5
+    400068: transform6
+    400070: transform7
+    400072: transform8
+    400074: transform9
+    2100000: lambert1
+    2300000: pPlane11
+    3300000: pPlane11
+    4300000: pPlane11
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: f4422f33d9e34fc43955ee27f8974155, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
