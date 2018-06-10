@@ -9,9 +9,11 @@ public class PlayerController : MonoBehaviour
     [Tooltip("The speed at the player's rotation gets adjusted depending on the current tunneldirection")] public float AdjustPlayerRotationToTunnelDirectionSpeed;
 
     private float rotationHorz = 0;
-    [Tooltip("Horizontal rotationspeed (only visuals)")] public float HorzRotaSpeed = 15;
-    [Tooltip("Maximum horizontal rotation")] public float maxHorzRota = 90;
-    [Tooltip("Minimum horizontal rotation")] public float minHorzRota = -90;
+    private float rotationVert = 0;
+
+    [Tooltip("Horizontal rotationspeed (only visuals)")] public float HorzRotaSpeed;
+    [Tooltip("Maximum horizontal rotation")] public float maxHorzRota;
+    [Tooltip("Minimum horizontal rotation")] public float minHorzRota;
 
     public enum TunnelDirection { Forward, ForwardLeft, ForwardRight, ForwardRotated, Back, Up, UpRotated, Down, DownRotated, Left, LeftRotated, Right, RightRotated, UpRight, UpLeft, RightUp, LeftUp, DownRight, DownLeft, RightDown, LeftDown, NoRotation };
     public TunnelDirection TunnelDir;
@@ -23,8 +25,9 @@ public class PlayerController : MonoBehaviour
         OriginalPlayerModelRotation = PlayerModel.transform.rotation;
     }
 
-    private void Update()
+    void Update()
     {
+
         // Multiply every rotational oder positional changingspeed with Time.deltaTime to avoid different results at different framerates
         float AdjustPlayerRotationToTunnelDirectionSpeedDelta = AdjustPlayerRotationToTunnelDirectionSpeed * Time.deltaTime;
         float HorzRotaSpeedDelta = HorzRotaSpeed * Time.deltaTime;
@@ -60,7 +63,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case TunnelDirection.RightUp:
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, -transform.rotation.eulerAngles.y + 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
-                break;            
+                break;
             case TunnelDirection.Right:
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
@@ -95,14 +98,12 @@ public class PlayerController : MonoBehaviour
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.y + 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
             case TunnelDirection.RightDown:
-                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.y - 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, transform.rotation.eulerAngles.y - 90), AdjustPlayerRotationToTunnelDirectionSpeedDelta);
                 break;
             case TunnelDirection.NoRotation:
                 break;
-
-
-
         }
+        
 
         // If we have any movement Input:
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
@@ -114,6 +115,7 @@ public class PlayerController : MonoBehaviour
             rotationHorz += Input.GetAxis("Horizontal") * HorzRotaSpeedDelta;
             rotationHorz = Mathf.Clamp(rotationHorz, minHorzRota, maxHorzRota);
             var HorzQuaternion = Quaternion.AngleAxis(rotationHorz, Vector3.back);
+
             PlayerModel.transform.localRotation = OriginalPlayerModelRotation * HorzQuaternion;
 
         }
@@ -122,8 +124,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Horizontal") == 0)
         {
             // Rotate the PlayerModel back to default rotation (should be '0')
-            PlayerModel.transform.localRotation = Quaternion.Lerp(PlayerModel.transform.localRotation, Quaternion.Euler(PlayerModel.transform.localRotation.x, PlayerModel.transform.localRotation.y, 0), HorzRotaSpeedDelta/75);
-            rotationHorz = Mathf.Lerp(rotationHorz, 0, HorzRotaSpeedDelta/75);
+            PlayerModel.transform.localRotation = Quaternion.Lerp(PlayerModel.transform.localRotation, Quaternion.Euler(PlayerModel.transform.localRotation.x, PlayerModel.transform.localRotation.y, 0), HorzRotaSpeedDelta / 75);
+            rotationHorz = Mathf.Lerp(rotationHorz, 0, HorzRotaSpeedDelta / 75);
+
         }
     }
 }
