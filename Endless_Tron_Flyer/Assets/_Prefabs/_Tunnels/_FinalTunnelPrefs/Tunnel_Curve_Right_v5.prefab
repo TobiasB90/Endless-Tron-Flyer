@@ -20,13 +20,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4111104961202666}
   - component: {fileID: 114225880750686284}
-  m_Layer: 0
+  - component: {fileID: 65968615303089890}
+  m_Layer: 10
   m_Name: Tunnel_Curve_Right_v5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1845700567477096
 GameObject:
   m_ObjectHideFlags: 0
@@ -37,7 +38,8 @@ GameObject:
   - component: {fileID: 4987393486131590}
   - component: {fileID: 33566457340272152}
   - component: {fileID: 23844532358540752}
-  m_Layer: 0
+  - component: {fileID: 64661876413380036}
+  m_Layer: 11
   m_Name: Tunnel_Curve_Right_v5_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1243235666060970}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 596}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4987393486131590}
@@ -65,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1845700567477096}
   m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
-  m_LocalPosition: {x: 123.3, y: 34, z: -121.04}
+  m_LocalPosition: {x: 123.3, y: 34, z: 474.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4111104961202666}
@@ -113,6 +115,32 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1845700567477096}
   m_Mesh: {fileID: 4300000, guid: 5582feeedc3bc2a4d87b8990d82187e4, type: 3}
+--- !u!64 &64661876413380036
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1845700567477096}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 5582feeedc3bc2a4d87b8990d82187e4, type: 3}
+--- !u!65 &65968615303089890
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1243235666060970}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 120, y: 68, z: 5}
+  m_Center: {x: 0, y: 34, z: 302}
 --- !u!114 &114225880750686284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,8 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameManager: {fileID: 0}
   TunnelNumber: 0
-  length: 0
-  width: 0
+  length: 302.26
+  width: 292.572
   pivotlength: -300
   pivotwidth: 0
   goingLeft: 0
