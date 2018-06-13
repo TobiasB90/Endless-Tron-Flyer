@@ -40,7 +40,6 @@ public class IFaceMng : MonoBehaviour {
         MainCameraBasePosition = Camera.main.transform.position;
         MainMenu_UserName_UI.text = PlayerPrefs.GetString("Username");
         SoundMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
-        
         if(PlayerPrefs.GetString("Username") == "")
         {
             MainMenu_UserNameInput_UI.SetActive(true);

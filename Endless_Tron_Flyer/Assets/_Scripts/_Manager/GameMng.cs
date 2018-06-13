@@ -8,6 +8,7 @@ public class GameMng : MonoBehaviour {
     public float TimeAlive;
     public IFaceMng_Limitless IFaceMng;
     public float HighScore;
+    
 
     public int TunnelSystemsSolved
     {

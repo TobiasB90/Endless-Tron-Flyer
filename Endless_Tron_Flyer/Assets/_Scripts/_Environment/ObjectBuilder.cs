@@ -918,105 +918,539 @@ public class ObjectBuilder : MonoBehaviour
             NextTunnelChosen = true;
         }
         // Going Forward -> any direction possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Forward && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Forward && !NextTunnelChosen)
         {
-            int i = Random.Range(0, TunnelSystems.Length);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except RIGHT possible
+            if(currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction except LEFT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except UP possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except DOWN possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = Random.Range(0, TunnelSystems.Length);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }           
         }
         // Going ForwardLeft -> any direction possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.ForwardLeft && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.ForwardLeft && !NextTunnelChosen)
         {
-            int i = Random.Range(0, TunnelSystems.Length);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except UP possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction except DOWN possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except LEFT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except RIGHT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = Random.Range(0, TunnelSystems.Length);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
         // Going ForwardRight -> any direction possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.ForwardRight && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.ForwardRight && !NextTunnelChosen)
         {
-            int i = Random.Range(0, TunnelSystems.Length);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except DOWN possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction except UP possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except RIGHT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except LEFT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = Random.Range(0, TunnelSystems.Length);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }            
         }
-        // Going ForwardRotated -> any direction possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.ForwardRotated && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        // Going ForwardRotated
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.ForwardRotated && !NextTunnelChosen)
         {
-            int i = Random.Range(0, TunnelSystems.Length);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except LEFT possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Right -> any direction except RIGHT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except DOWN possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except UP possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // Any direction possible
+            else
+            {
+                int i = Random.Range(0, TunnelSystems.Length);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went Right --> DOWN/LEFT/UP Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Right && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        // Went Right --> DOWN/LEFT/UP/FORWARD Possible
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Right && !NextTunnelChosen)
         {
-            int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 2);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except FORWARD/RIGHT possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction except RIGHT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except UP/RIGHT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 3, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except DOWN/RIGHT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
         // Went RightRotated --> DOWN/RIGHT/UP Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.RightRotated && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.RightRotated && !NextTunnelChosen)
         {
-            int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 1);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except FORWARD/LEFT possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction except LEFT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except DOWN/LEFT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 3, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except DOWN/LEFT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went Left --> DOWN/RIGHT/UP Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Left && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        // Went Left --> DOWN/RIGHT/UP/FORWARD Possible
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Left && !NextTunnelChosen)
         {
-            int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 1);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except LEFT possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except FORWARD/LEFT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except UP/LEFT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 3, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except DOWN/LEFT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went LeftRotated --> DOWN/LEFT/UP Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.LeftRotated && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        // Went LeftRotated --> DOWN/LEFT/UP/FORWARD Possible
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.LeftRotated && !NextTunnelChosen)
         {
-            int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 2);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except RIGHT possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except FORWARD/RIGHT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except DOWN/RIGHT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except UP/RIGHT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 3, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went Up --> DOWN/LEFT/RIGHT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Up && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        // Went Up --> DOWN/LEFT/RIGHT/FORWARD Possible
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Up && !NextTunnelChosen)
         {
-            int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 3);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except RIGHT/UP possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except LEFT/UP possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except FORWARD/UP possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except UP possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went UpRotated --> UP/LEFT/RIGHT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpRotated && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        // Went UpRotated --> UP/LEFT/RIGHT/FORWARD Possible
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpRotated && !NextTunnelChosen)
         {
-            int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 4);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except LEFT/DOWN possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except RIGHT/DOWN possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except FORWARD/DOWN possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except DOWN possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went Down --> UP/LEFT/RIGHT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Down && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        // Went Down --> UP/LEFT/RIGHT/FORWARD Possible
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Down && !NextTunnelChosen)
         {
-            int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 4);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except RIGHT/DOWN possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except LEFT/DOWN possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except DOWN possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except FORWARD/DOWN possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went DownRotated --> DOWN/LEFT/RIGHT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownRotated && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        // Went DownRotated --> DOWN/LEFT/RIGHT/FORWARD Possible
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownRotated && !NextTunnelChosen)
         {
-            int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 3);
-            NextTunnel = i;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except LEFT/UP possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except RIGHT/UP possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except UP possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except FORWARD/UP possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went UpRight --> DOWN/RIGHT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpRight && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        // Went UpRight --> DOWN/RIGHT/FORWARD Possible
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpRight && !NextTunnelChosen)
         {
-            int i = Random.Range(1, 100);
-            if (i < 50) NextTunnel = 2;
-            else if (i > 50) NextTunnel = 4;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except FORWARD/UP possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except UP possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except LEFT/UP possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except RIGHT/UP possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnelChosen = true;
+            }
         }
-        // Went RightUp --> LEFT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.RightUp && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        // Went RightUp --> LEFT/FORWARD/UP/DOWN Possible
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.RightUp && !NextTunnelChosen)
         {
-            NextTunnel = 1;
-            NextTunnelChosen = true;
+            // At maximum Right -> any direction except DOWN/RIGHT possible
+            if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except RIGHT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except FORWARD/RIGHT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except RIGHT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
         // Went UpLeft --> DOWN/LEFT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpLeft && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpLeft && !NextTunnelChosen)
         {
             int i = Random.Range(1, 100);
             if (i < 50) NextTunnel = 1;
@@ -1024,13 +1458,13 @@ public class ObjectBuilder : MonoBehaviour
             NextTunnelChosen = true;
         }
         // Went LeftUp --> RIGHT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.LeftUp && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.LeftUp && !NextTunnelChosen)
         {
             NextTunnel = 2;
             NextTunnelChosen = true;
         }
         // Went DownRight --> UP/RIGHT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownRight && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownRight && !NextTunnelChosen)
         {
             int i = Random.Range(1, 100);
             if (i < 50) NextTunnel = 2;
@@ -1038,13 +1472,13 @@ public class ObjectBuilder : MonoBehaviour
             NextTunnelChosen = true;
         }
         // Went RightDown --> LEFT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.RightDown && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.RightDown && !NextTunnelChosen)
         {
             NextTunnel = 1;
             NextTunnelChosen = true;
         }
         // Went DownLeft --> UP/LEFT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownLeft && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownLeft && !NextTunnelChosen)
         {
             int i = Random.Range(1, 100);
             if (i < 50) NextTunnel = 1;
@@ -1052,7 +1486,7 @@ public class ObjectBuilder : MonoBehaviour
             NextTunnelChosen = true;
         }
         // Went LeftDown --> RIGHT Possible
-        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.LeftDown && LastTunnelInfo.goingForward && !NextTunnelChosen)
+        else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.LeftDown && !NextTunnelChosen)
         {
             NextTunnel = 2;
             NextTunnelChosen = true;
