@@ -7,9 +7,10 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Security;
+using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class RegisterAndLogin : MonoBehaviour {
-    // {"Name":"asda","Password":"asdsdfsdf","Email":"asdfa@sdfsdf.net"}
 
     public TMP_InputField RegisterUsername;
     public TMP_InputField RegisterPassword;
@@ -19,18 +20,24 @@ public class RegisterAndLogin : MonoBehaviour {
     public TMP_InputField LoginPassword;
     public TMP_InputField LoginEMail;
 
-    public userManager UserManager;
+    public TMP_Text UIMessage;
+    public Color UIMessage_FadeInColor;
+    public Color UIMessage_FadeOutColor;
 
-    // Use this for initialization
-    void Start () {
+    private userManager UserManager;
+    public string userName;
 
-	}
+    private void Start()
+    {
+        UserManager = GameObject.Find("_userManager").GetComponent<userManager>();
+    }
 
     public void LoginUser()
     {
         RegisterData logindata = new RegisterData();
 
         logindata.Name = LoginUsername.text;
+        userName = LoginUsername.text;
 
         var securepw = new SecureString();
         foreach (char c in RegisterPassword.text)
@@ -43,8 +50,6 @@ public class RegisterAndLogin : MonoBehaviour {
 
         string outputJSON = JsonConvert.SerializeObject(logindata, Formatting.None);
         string output = Encrypt(outputJSON);
-        Debug.Log(outputJSON);
-        Debug.Log(output);
 
         try
         {
@@ -52,7 +57,7 @@ public class RegisterAndLogin : MonoBehaviour {
             headers.Add("Content-Type", "application/json");
             byte[] pData = System.Text.Encoding.ASCII.GetBytes(output.ToCharArray());
             WWW api = new WWW("http://deergames.eu-central-1.elasticbeanstalk.com/api/users/login", pData, headers);
-            StartCoroutine(WaitForWWW(api));
+            StartCoroutine(WaitForLoginWWW(api));
         }
         catch (UnityException ex) { Debug.Log(ex.Message); }
     }
@@ -60,16 +65,16 @@ public class RegisterAndLogin : MonoBehaviour {
     public void RegisterUser()
     {
         RegisterData regdata = new RegisterData();
-        regdata.Name = RegisterUsername.text;
+        regdata.Name = LoginUsername.text;
 
         var securepw = new SecureString();
-        foreach (char c in RegisterPassword.text)
+        foreach (char c in LoginPassword.text)
         {
             securepw.AppendChar(c);
         }
 
-        regdata.Password = RegisterPassword.text;
-        regdata.Email = RegisterEMail.text;
+        regdata.Password = LoginPassword.text;
+        regdata.Email = LoginEMail.text;
 
         string outputJSON = JsonConvert.SerializeObject(regdata, Formatting.None);
         string output = Encrypt(outputJSON);
@@ -82,34 +87,33 @@ public class RegisterAndLogin : MonoBehaviour {
             headers.Add("Content-Type", "application/json");
             byte[] pData = System.Text.Encoding.ASCII.GetBytes(output.ToCharArray());
             WWW api = new WWW("http://deergames.eu-central-1.elasticbeanstalk.com/api/users/sign-up", pData, headers);
-            StartCoroutine(WaitForWWW(api));
+            StartCoroutine(WaitForRegisterWWW(api));
         }
         catch (UnityException ex) { Debug.Log(ex.Message); }
     }
 
-    IEnumerator WaitForWWW(WWW www)
+    IEnumerator WaitForRegisterWWW(WWW www)
     {
         yield return www;
-        Debug.Log(getResponseCode(www));
-        Debug.Log(getResponseAuth(www));
-
-        if (getResponseAuth(www) != null)
+        if (getResponseCode(www) == 200)
         {
-            UserManager.sToken = getResponseAuth(www);
+            ShowUIMessage("Registration successful");
         }
-
-        if (string.IsNullOrEmpty(www.error))
-        {
-            Debug.Log(www.text);
-        }
-        else
-            Debug.Log("ERROR");
+        else ShowUIMessage("Unexpected Error: " + getResponseCode(www));
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    IEnumerator WaitForLoginWWW(WWW www)
+    {
+        yield return www;
+        if (getResponseCode(www) == 200)
+        {
+            UserManager.sToken = getResponseAuth(www);
+            UserManager.Username = userName;
+            ShowUIMessage("Login succesful");
+            SceneManager.LoadScene("MainMenu_01");
+        }
+        else ShowUIMessage("Unexpected Error: " + getResponseCode(www));
+    }
 
     public class RegisterData
     {
@@ -239,4 +243,21 @@ public class RegisterAndLogin : MonoBehaviour {
         return ret;
     }
 
+    public void ShowUIMessage(string uimessage)
+    {
+        UIMessage.text = uimessage;
+        Sequence FadeInOut = DOTween.Sequence();
+        FadeInOut.Append(UIMessage.DOColor(UIMessage_FadeInColor, 3f).SetEase(Ease.Linear));
+        FadeInOut.Append(UIMessage.DOColor(UIMessage_FadeOutColor, 3f).SetEase(Ease.Linear));
+    }
+
+    public void StartOfflineMode()
+    {
+        SceneManager.LoadScene("MainMenu_01");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

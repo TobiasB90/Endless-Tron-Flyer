@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using JWT;
 using System.Collections;
 using Newtonsoft.Json;
 using TMPro;
@@ -16,22 +15,19 @@ public class UploadHighscore : MonoBehaviour
     private string uploadHighscoreURL = "";
     HighScoreData highscoredata;
     public ScoreList scoreList;
-    public userManager UserManager;
+    private userManager UserManager;
+    public Scores PersonalScore { get; set; }
 
     private void Start()
     {
+        UserManager = GameObject.Find("_userManager").GetComponent<userManager>();
+        GetPersonalHighscore();
     }
 
-    public void UploadPlayerHighScore()
-    {
-        hScore = Mathf.RoundToInt(PlayerPrefs.GetFloat("HighScore"));
-        CreateToken();
-    }
-
-    private void CreateToken()
+    public void UploadPlayerHighScore(int highscore)
     {
         highscoredata = new HighScoreData();
-        highscoredata.Highscore = hScore;
+        highscoredata.Highscore = highscore;
 
         string outputJSON = JsonConvert.SerializeObject(highscoredata, Formatting.None);
         string output = Encrypt(outputJSON);
@@ -43,6 +39,7 @@ public class UploadHighscore : MonoBehaviour
     IEnumerator WaitForWWW(WWW www)
     {
         yield return www;
+        GetPersonalHighscore();
         Debug.Log(getResponseCode(www));
         if (string.IsNullOrEmpty(www.error))
         {
@@ -59,7 +56,6 @@ public class UploadHighscore : MonoBehaviour
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Content-Type", "application/json");
             headers.Add("Authorization", UserManager.sToken);
-            // byte[] b = System.Text.Encoding.UTF8.GetBytes();
             byte[] pData = System.Text.Encoding.ASCII.GetBytes(UploadData.ToCharArray());
             WWW api = new WWW("http://deergames.eu-central-1.elasticbeanstalk.com/api/ranking/create", pData, headers);
             StartCoroutine(WaitForWWW(api));
@@ -103,6 +99,27 @@ public class UploadHighscore : MonoBehaviour
         {
             Debug.Log("ERROR: " + www.error);
         }
+    }
+
+    public void GetPersonalHighscore()
+    {
+        if (UserManager.Username == "") Debug.Log("OFFLINE MODE: No User Found");
+        else
+        {
+            string url = "http://deergames.eu-central-1.elasticbeanstalk.com/api/ranking/get";
+            WWWForm form = new WWWForm();
+            Dictionary<string, string> headers = form.headers;
+            form.AddField("name", UserManager.Username);
+            byte[] rawFormData = form.data;
+            WWW request = new WWW(url, rawFormData, headers);
+            StartCoroutine(GetPersonalHighscoreResponse(request));
+        }
+    }
+
+    private IEnumerator GetPersonalHighscoreResponse(WWW www)
+    {
+        yield return www;
+        PersonalScore = JsonConvert.DeserializeObject<Scores>(www.text);
     }
 
     public class HighScoreData

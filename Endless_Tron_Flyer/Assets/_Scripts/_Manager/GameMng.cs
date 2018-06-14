@@ -24,7 +24,6 @@ public class GameMng : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        HighScore = PlayerPrefs.GetFloat("HighScore");
         Score = 0;
 	}
 	
@@ -35,10 +34,5 @@ public class GameMng : MonoBehaviour {
             Score += Time.deltaTime * ScoreMultiplier;
             TimeAlive += Time.deltaTime;
         }
-    }
-
-    public void UpdateHighScore()
-    {
-        HighScore = PlayerPrefs.GetFloat("HighScore");
     }
 }

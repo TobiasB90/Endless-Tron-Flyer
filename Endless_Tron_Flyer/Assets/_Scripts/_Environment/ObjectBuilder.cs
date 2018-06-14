@@ -24,9 +24,11 @@ public class ObjectBuilder : MonoBehaviour
     private ObjectInformation NextTunnelInfo;
     private float directioncounterLeftRight = 0;
     private float directioncounterUpDown = 0;
-    private int currentHeight;
+    public int currentHeight;
     private int currentLeftRight;
     private int currentForward;
+    private int antiBuildInYourselfCounter = 0;
+    private int maxCurvesWithoutForward = 3;
     private bool NextTunnelChosen = false;
     [SerializeField] private bool DoubleCurves = false;
     [SerializeField] private bool ScriptedTunnels = false;
@@ -34,8 +36,7 @@ public class ObjectBuilder : MonoBehaviour
 
     private ObjectInformation NTunnel;
     private GameObject NewTunnel;
-    [Tooltip("Insert the maximum height (upwards) of the TunnelSystems. (working a little bit)")] public int maxUpHeight;
-    [Tooltip("Insert the maximum height (downwards) of the TunnelSystems. (working a little bit)")] public int maxDownHeight;
+    [Tooltip("Insert the maximum height (upwards&downwards) of the TunnelSystems. (working a little bit)")] public int maxUpHeight;
     [Tooltip("Insert the maximum Left & Right direction possible. (not working yet)")] public int maxLeftRight;
     [Tooltip("How many 'TunnelSystems' should be built in advance at the start of the game?")] [SerializeField] private int TunnelInAdvance = 0;
     [Tooltip("How many 'DefaultTunnels' should be built at the start?")] [SerializeField] private int DefaultTunnelInAdvance = 0;
@@ -108,11 +109,17 @@ public class ObjectBuilder : MonoBehaviour
         }
         else if(NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Left)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.length, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.width);
+            // SHOULD REALLY WORK NOW OR PROBLEM
+            if (LastTunnelInfo.goingUp) transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.length, transform.localPosition.y - LastTunnelInfo.width, transform.localPosition.z);
+            // PLEASE WORK
+            else if (LastTunnelInfo.goingDown) transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.length, transform.localPosition.y + LastTunnelInfo.width, transform.localPosition.z);
+            else transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.length, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.width);
         }
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.LeftRotated)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.length, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.width);
+            // SHOULD WORK
+            if (LastTunnelInfo.goingUp) transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.length, transform.localPosition.y + LastTunnelInfo.width, transform.localPosition.z);
+            else transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.length, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.width);
         }
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpLeft)
         {
@@ -128,11 +135,15 @@ public class ObjectBuilder : MonoBehaviour
         }
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Right)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.length, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.width);
+            if (LastTunnelInfo.goingDown) transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.length, transform.localPosition.y + LastTunnelInfo.width, transform.localPosition.z);
+            else if (LastTunnelInfo.goingUp) transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.length, transform.localPosition.y - LastTunnelInfo.width, transform.localPosition.z);
+            else transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.length, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.width);
         }
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.RightRotated)
         {
-            transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.length, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.width);
+            // SHOULD WORK
+            if (LastTunnelInfo.goingUp) transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.length, transform.localPosition.y + LastTunnelInfo.width, transform.localPosition.z);
+            else transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.length, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.width);
         }
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpRight)
         {
@@ -149,7 +160,9 @@ public class ObjectBuilder : MonoBehaviour
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Up)
         {
             if (LastTunnelInfo.goingUp) transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y + LastTunnelInfo.length, transform.localPosition.z + LastTunnelInfo.width);
-            else if (LastTunnelInfo.goingLeft) transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.width, transform.localPosition.y + LastTunnelInfo.length, transform.localPosition.z);
+            // SHOULD WORK OR USE ELSE
+            else if (LastTunnelInfo.goingLeft) transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.width, transform.localPosition.y + LastTunnelInfo.length, transform.localPosition.z);
+            else if (LastTunnelInfo.goingRight) transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.width, transform.localPosition.y + LastTunnelInfo.length, transform.localPosition.z);
             else transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.width, transform.localPosition.y + LastTunnelInfo.length, transform.localPosition.z);
         }
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpRotated)
@@ -175,8 +188,10 @@ public class ObjectBuilder : MonoBehaviour
         {
             if (LastTunnelInfo.goingDown) transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z + LastTunnelInfo.width);
             else if (LastTunnelInfo.goingDown) transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.width, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z + LastTunnelInfo.width);
-            else if (LastTunnelInfo.goingRight) transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.width, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z);
-            else if (LastTunnelInfo.goingLeft) transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.width, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z);
+            // SHOULD REALLY WORK
+            else if (LastTunnelInfo.goingRight) transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.width, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z);
+            // SHOULD REALLY WORK
+            else if (LastTunnelInfo.goingLeft) transform.localPosition = new Vector3(transform.localPosition.x + LastTunnelInfo.width, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z);
             else transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.width, transform.localPosition.y - LastTunnelInfo.length, transform.localPosition.z);
         }
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownRotated)
@@ -334,7 +349,7 @@ public class ObjectBuilder : MonoBehaviour
 
         NTunnel = NewTunnel.GetComponent<ObjectInformation>();
 
-        // TunnelDirection for rotationchange
+        // TunnelDirection for rotationchange, currentForward/LeftRight/Height & antiBuildInYourselfCounter (Resets on Forward)
         switch (curDir)
         {
             case CurrentDirection.Forward:
@@ -343,26 +358,35 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Forward;
                     currentForward++;
+                    antiBuildInYourselfCounter = 0;
                 }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.Up;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Up;
+                    currentHeight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.Down;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Down;
+                    currentHeight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.Left;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Left;
+                    currentLeftRight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.Right;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Right;
+                    currentLeftRight++;
+                    antiBuildInYourselfCounter++;
                 }
                 break;
             case CurrentDirection.Up:
@@ -381,16 +405,22 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.Forward;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Forward;
+                    antiBuildInYourselfCounter = 0;
+                    currentForward++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.UpLeft;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpLeft;
+                    antiBuildInYourselfCounter++;
+                    currentLeftRight--;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.UpRight;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRight;
+                    antiBuildInYourselfCounter++;
+                    currentLeftRight++;
                 }
                 break;
             case CurrentDirection.UpRotated:
@@ -403,6 +433,8 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.ForwardRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRotated;
+                    antiBuildInYourselfCounter = 0;
+                    currentForward++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
@@ -414,11 +446,15 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.DownRight;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRight;
+                    antiBuildInYourselfCounter++;
+                    currentLeftRight++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.DownLeft;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownLeft;
+                    antiBuildInYourselfCounter++;
+                    currentLeftRight--;
                 }
                 break;
             case CurrentDirection.Down:
@@ -431,6 +467,8 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.Forward;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Forward;
+                    antiBuildInYourselfCounter = 0;
+                    currentForward++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
@@ -442,11 +480,15 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.DownLeft;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownLeft;
+                    antiBuildInYourselfCounter++;
+                    currentLeftRight--;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.DownRight;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRight;
+                    antiBuildInYourselfCounter++;
+                    currentLeftRight++;
                 }
                 break;
             case CurrentDirection.DownRotated:
@@ -465,17 +507,22 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.ForwardRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRotated;
-                    
+                    antiBuildInYourselfCounter = 0;
+                    currentForward++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.UpRight;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRight;
+                    antiBuildInYourselfCounter++;
+                    currentLeftRight++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.UpLeft;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpLeft;
+                    antiBuildInYourselfCounter++;
+                    currentLeftRight--;
                 }
                 break;
             case CurrentDirection.Right:
@@ -488,16 +535,22 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.RightUp;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightUp;
+                    antiBuildInYourselfCounter++;
+                    currentHeight++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.RightDown;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightDown;
+                    antiBuildInYourselfCounter++;
+                    currentHeight--;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.Forward;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Forward;
+                    antiBuildInYourselfCounter = 0;
+                    currentForward++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
@@ -516,11 +569,15 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.LeftDown;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftDown;
+                    currentHeight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.LeftUp;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftUp;
+                    currentHeight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
@@ -532,6 +589,8 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.ForwardRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRotated;
+                    antiBuildInYourselfCounter = 0;
+                    currentForward++;
                 }
                 break;
             case CurrentDirection.Left:
@@ -544,11 +603,15 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.LeftUp;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftUp;
+                    antiBuildInYourselfCounter++;
+                    currentHeight++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.LeftDown;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftDown;
+                    antiBuildInYourselfCounter++;
+                    currentHeight--;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
@@ -560,6 +623,8 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.Forward;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Forward;
+                    antiBuildInYourselfCounter = 0;
+                    currentForward++;
                 }
                 break;
             case CurrentDirection.LeftRotated:
@@ -572,16 +637,22 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.RightDown;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightDown;
+                    antiBuildInYourselfCounter++;
+                    currentHeight--;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.RightUp;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightUp;
+                    antiBuildInYourselfCounter++;
+                    currentHeight++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.ForwardRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRotated;
+                    currentForward++;
+                    antiBuildInYourselfCounter = 0;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
@@ -598,13 +669,17 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 else if (LastTunnelInfo.goingUp)
                 {
-                    curDir = CurrentDirection.Right;
-                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Right;
+                    curDir = CurrentDirection.RightRotated;
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightRotated;
+                    currentLeftRight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.Left;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Left;
+                    currentLeftRight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
@@ -616,6 +691,8 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.ForwardLeft;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardLeft;
+                    currentForward++;
+                    antiBuildInYourselfCounter = 0;
                 }
                 break;
             case CurrentDirection.UpLeft:
@@ -634,16 +711,22 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.ForwardRight;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRight;
+                    currentForward++;
+                    antiBuildInYourselfCounter = 0;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.DownRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRotated;
+                    currentHeight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.Up;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Up;
+                    currentHeight++;
+                    antiBuildInYourselfCounter++;
                 }
                 break;
             case CurrentDirection.LeftDown:
@@ -656,11 +739,15 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.Left;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Left;
+                    currentLeftRight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.Right;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Right;
+                    currentLeftRight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
@@ -672,6 +759,8 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.ForwardRight;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRight;
+                    currentForward++;
+                    antiBuildInYourselfCounter = 0;
                 }
                 break;
             case CurrentDirection.DownLeft:
@@ -684,6 +773,8 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.ForwardLeft;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardLeft;
+                    currentForward++;
+                    antiBuildInYourselfCounter = 0;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
@@ -695,11 +786,15 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.UpRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRotated;
+                    currentHeight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.Down;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Down;
+                    currentHeight--;
+                    antiBuildInYourselfCounter++;
                 }
                 break;
             case CurrentDirection.RightUp:
@@ -710,18 +805,24 @@ public class ObjectBuilder : MonoBehaviour
                 }
                 else if (LastTunnelInfo.goingUp)
                 {
-                    curDir = CurrentDirection.Left;
-                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Left;
+                    curDir = CurrentDirection.LeftRotated;
+                    NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftRotated;
+                    currentLeftRight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.Right;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Right;
+                    currentLeftRight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.ForwardRight;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRight;
+                    currentForward++;
+                    antiBuildInYourselfCounter = 0;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
@@ -746,16 +847,22 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.ForwardLeft;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardLeft;
+                    currentForward++;
+                    antiBuildInYourselfCounter = 0;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.Up;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Up;
+                    currentHeight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.DownRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRotated;
+                    currentHeight--;
+                    antiBuildInYourselfCounter++;
                 }
                 break;
             case CurrentDirection.RightDown:
@@ -768,16 +875,22 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.Right;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Right;
+                    currentLeftRight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.Left;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Left;
+                    currentLeftRight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.ForwardLeft;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardLeft;
+                    currentForward++;
+                    antiBuildInYourselfCounter = 0;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
@@ -796,6 +909,8 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.ForwardRight;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRight;
+                    currentForward++;
+                    antiBuildInYourselfCounter = 0;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
@@ -807,92 +922,123 @@ public class ObjectBuilder : MonoBehaviour
                 {
                     curDir = CurrentDirection.Down;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.Down;
+                    currentHeight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.UpRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRotated;
+                    currentHeight++;
+                    antiBuildInYourselfCounter++;
                 }
                 break;
             case CurrentDirection.ForwardLeft:
                 if (LastTunnelInfo.NoDirectionalChange)
                 {
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardLeft;
+                    antiBuildInYourselfCounter = 0;
                     currentForward++;
                 }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.UpRight;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRight;
+                    currentLeftRight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.DownLeft;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownLeft;
+                    currentLeftRight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.LeftUp;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftUp;
+                    currentHeight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.RightDown;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightDown;
+                    currentHeight--;
+                    antiBuildInYourselfCounter++;
                 }
                 break;
             case CurrentDirection.ForwardRight:
                 if (LastTunnelInfo.NoDirectionalChange)
                 {
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRight;
+                    antiBuildInYourselfCounter = 0;
                     currentForward++;
                 }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.UpLeft;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpLeft;
+                    currentLeftRight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.DownRight;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRight;
+                    currentLeftRight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.LeftDown;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftDown;
+                    currentHeight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.RightUp;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightUp;
+                    currentHeight++;
+                    antiBuildInYourselfCounter++;
                 }
                 break;
             case CurrentDirection.ForwardRotated:
                 if (LastTunnelInfo.NoDirectionalChange)
                 {
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.ForwardRotated;
+                    antiBuildInYourselfCounter = 0;
                     currentForward++;
                 }
                 else if (LastTunnelInfo.goingUp)
                 {
                     curDir = CurrentDirection.DownRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.DownRotated;
+                    currentHeight--;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingDown)
                 {
                     curDir = CurrentDirection.UpRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.UpRotated;
+                    currentHeight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingLeft)
                 {
                     curDir = CurrentDirection.RightRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.RightRotated;
+                    currentLeftRight++;
+                    antiBuildInYourselfCounter++;
                 }
                 else if (LastTunnelInfo.goingRight)
                 {
                     curDir = CurrentDirection.LeftRotated;
                     NTunnel.TunnelDir = ObjectInformation.TunnelDirection.LeftRotated;
+                    currentLeftRight--;
+                    antiBuildInYourselfCounter++;
                 }
                 break;
 
@@ -935,7 +1081,7 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except UP possible
-            else if (currentHeight >= maxUpHeight)
+            if (currentHeight >= maxUpHeight)
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 3);
                 NextTunnel = i;
@@ -973,7 +1119,7 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except LEFT possible
-            else if (currentHeight >= maxUpHeight)
+            if (currentHeight >= maxUpHeight)
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 1);
                 NextTunnel = i;
@@ -1011,7 +1157,7 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except RIGHT possible
-            else if (currentHeight >= maxUpHeight)
+            if (currentHeight >= maxUpHeight)
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 2);
                 NextTunnel = i;
@@ -1049,7 +1195,7 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except DOWN possible
-            else if (currentHeight >= maxUpHeight)
+            if (currentHeight >= maxUpHeight)
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 4);
                 NextTunnel = i;
@@ -1073,18 +1219,9 @@ public class ObjectBuilder : MonoBehaviour
         // Went Right --> DOWN/LEFT/UP/FORWARD Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Right && !NextTunnelChosen)
         {
-            // At maximum Right -> any direction except FORWARD/RIGHT possible
-            if (currentLeftRight >= maxLeftRight)
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
             {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 2);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At maximum Left -> any direction except RIGHT possible
-            else if (currentLeftRight <= -maxLeftRight)
-            {
-                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
-                NextTunnel = i;
+                NextTunnel = 1;
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except UP/RIGHT possible
@@ -1101,6 +1238,20 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnel = i;
                 NextTunnelChosen = true;
             }
+            // At maximum Right -> any direction except FORWARD/RIGHT possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction except RIGHT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
             else
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 2);
@@ -1111,8 +1262,27 @@ public class ObjectBuilder : MonoBehaviour
         // Went RightRotated --> DOWN/RIGHT/UP Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.RightRotated && !NextTunnelChosen)
         {
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
+            {
+                NextTunnel = 2;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except DOWN/LEFT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except UP/LEFT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 3, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
             // At maximum Right -> any direction except FORWARD/LEFT possible
-            if (currentLeftRight >= maxLeftRight)
+            else if (currentLeftRight >= maxLeftRight)
             {
                 int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 1);
                 NextTunnel = i;
@@ -1122,20 +1292,6 @@ public class ObjectBuilder : MonoBehaviour
             else if (currentLeftRight <= -maxLeftRight)
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 1);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At maximum Height -> any direction except DOWN/LEFT possible
-            else if (currentHeight >= maxUpHeight)
-            {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 3, 1);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At minimum Height -> any direction except DOWN/LEFT possible
-            else if (currentHeight <= -maxUpHeight)
-            {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 1);
                 NextTunnel = i;
                 NextTunnelChosen = true;
             }
@@ -1149,18 +1305,9 @@ public class ObjectBuilder : MonoBehaviour
         // Went Left --> DOWN/RIGHT/UP/FORWARD Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Left && !NextTunnelChosen)
         {
-            // At maximum Right -> any direction except LEFT possible
-            if (currentLeftRight >= maxLeftRight)
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
             {
-                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At maximum Left -> any direction possible except FORWARD/LEFT possible
-            else if (currentLeftRight <= -maxLeftRight)
-            {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 1);
-                NextTunnel = i;
+                NextTunnel = 2;
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except UP/LEFT possible
@@ -1177,6 +1324,20 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnel = i;
                 NextTunnelChosen = true;
             }
+            // At maximum Right -> any direction except LEFT possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except FORWARD/LEFT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
             else
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 1);
@@ -1187,18 +1348,9 @@ public class ObjectBuilder : MonoBehaviour
         // Went LeftRotated --> DOWN/LEFT/UP/FORWARD Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.LeftRotated && !NextTunnelChosen)
         {
-            // At maximum Right -> any direction except RIGHT possible
-            if (currentLeftRight >= maxLeftRight)
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
             {
-                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At maximum Left -> any direction possible except FORWARD/RIGHT possible
-            else if (currentLeftRight <= -maxLeftRight)
-            {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 2);
-                NextTunnel = i;
+                NextTunnel = 1;
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except DOWN/RIGHT possible
@@ -1215,6 +1367,20 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnel = i;
                 NextTunnelChosen = true;
             }
+            // At maximum Right -> any direction except RIGHT possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except FORWARD/RIGHT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
             else
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 2);
@@ -1225,18 +1391,9 @@ public class ObjectBuilder : MonoBehaviour
         // Went Up --> DOWN/LEFT/RIGHT/FORWARD Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Up && !NextTunnelChosen)
         {
-            // At maximum Right -> any direction except RIGHT/UP possible
-            if (currentLeftRight >= maxLeftRight)
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
             {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 3);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At maximum Left -> any direction possible except LEFT/UP possible
-            else if (currentLeftRight <= -maxLeftRight)
-            {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 3);
-                NextTunnel = i;
+                NextTunnel = 4;
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except FORWARD/UP possible
@@ -1253,6 +1410,20 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnel = i;
                 NextTunnelChosen = true;
             }
+            // At maximum Right -> any direction except RIGHT/UP possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except LEFT/UP possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
             else
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 3);
@@ -1263,18 +1434,9 @@ public class ObjectBuilder : MonoBehaviour
         // Went UpRotated --> UP/LEFT/RIGHT/FORWARD Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpRotated && !NextTunnelChosen)
         {
-            // At maximum Right -> any direction except LEFT/DOWN possible
-            if (currentLeftRight >= maxLeftRight)
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
             {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 4);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At maximum Left -> any direction possible except RIGHT/DOWN possible
-            else if (currentLeftRight <= -maxLeftRight)
-            {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 4);
-                NextTunnel = i;
+                NextTunnel = 3;
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except FORWARD/DOWN possible
@@ -1291,6 +1453,20 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnel = i;
                 NextTunnelChosen = true;
             }
+            // At maximum Right -> any direction except LEFT/DOWN possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except RIGHT/DOWN possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
             else
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 4);
@@ -1301,18 +1477,9 @@ public class ObjectBuilder : MonoBehaviour
         // Went Down --> UP/LEFT/RIGHT/FORWARD Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.Down && !NextTunnelChosen)
         {
-            // At maximum Right -> any direction except RIGHT/DOWN possible
-            if (currentLeftRight >= maxLeftRight)
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
             {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 4);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At maximum Left -> any direction possible except LEFT/DOWN possible
-            else if (currentLeftRight <= -maxLeftRight)
-            {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 4);
-                NextTunnel = i;
+                NextTunnel = 3;
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except DOWN possible
@@ -1329,6 +1496,20 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnel = i;
                 NextTunnelChosen = true;
             }
+            // At maximum Right -> any direction except RIGHT/DOWN possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except LEFT/DOWN possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
             else
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 4);
@@ -1339,18 +1520,9 @@ public class ObjectBuilder : MonoBehaviour
         // Went DownRotated --> DOWN/LEFT/RIGHT/FORWARD Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownRotated && !NextTunnelChosen)
         {
-            // At maximum Right -> any direction except LEFT/UP possible
-            if (currentLeftRight >= maxLeftRight)
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
             {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 3);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At maximum Left -> any direction possible except RIGHT/UP possible
-            else if (currentLeftRight <= -maxLeftRight)
-            {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 3);
-                NextTunnel = i;
+                NextTunnel = 4;
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except UP possible
@@ -1367,6 +1539,20 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnel = i;
                 NextTunnelChosen = true;
             }
+            // At maximum Right -> any direction except LEFT/UP possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except RIGHT/UP possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
             else
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 3);
@@ -1377,18 +1563,9 @@ public class ObjectBuilder : MonoBehaviour
         // Went UpRight --> DOWN/RIGHT/FORWARD Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpRight && !NextTunnelChosen)
         {
-            // At maximum Right -> any direction except FORWARD/UP possible
-            if (currentLeftRight >= maxLeftRight)
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
             {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 3);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At maximum Left -> any direction possible except UP possible
-            else if (currentLeftRight <= -maxLeftRight)
-            {
-                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
-                NextTunnel = i;
+                NextTunnel = 4;
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except LEFT/UP possible
@@ -1405,27 +1582,33 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnel = i;
                 NextTunnelChosen = true;
             }
+            // At maximum Right -> any direction except FORWARD/UP possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except UP possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
             else
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
                 NextTunnelChosen = true;
             }
         }
         // Went RightUp --> LEFT/FORWARD/UP/DOWN Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.RightUp && !NextTunnelChosen)
         {
-            // At maximum Right -> any direction except DOWN/RIGHT possible
-            if (currentLeftRight >= maxLeftRight)
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
             {
-                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 2);
-                NextTunnel = i;
-                NextTunnelChosen = true;
-            }
-            // At maximum Left -> any direction possible except RIGHT possible
-            else if (currentLeftRight <= -maxLeftRight)
-            {
-                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
-                NextTunnel = i;
+                NextTunnel = 1;
                 NextTunnelChosen = true;
             }
             // At maximum Height -> any direction except FORWARD/RIGHT possible
@@ -1442,6 +1625,20 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnel = i;
                 NextTunnelChosen = true;
             }
+            // At maximum Right -> any direction except DOWN/RIGHT possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except RIGHT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
             else
             {
                 int i = RandomExceptOne(0, TunnelSystems.Length, 2);
@@ -1449,47 +1646,263 @@ public class ObjectBuilder : MonoBehaviour
                 NextTunnelChosen = true;
             }
         }
-        // Went UpLeft --> DOWN/LEFT Possible
+        // Went UpLeft --> DOWN/LEFT/RIGHT/FORWARD Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.UpLeft && !NextTunnelChosen)
         {
-            int i = Random.Range(1, 100);
-            if (i < 50) NextTunnel = 1;
-            else if (i > 50) NextTunnel = 4;
-            NextTunnelChosen = true;
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
+            {
+                NextTunnel = 4;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except RIGHT/UP possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except LEFT/UP possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Right -> any direction except UP possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except FORWARD/UP possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 3);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went LeftUp --> RIGHT Possible
+        // Went LeftUp --> RIGHT/FORWARD/UP/DOWN Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.LeftUp && !NextTunnelChosen)
         {
-            NextTunnel = 2;
-            NextTunnelChosen = true;
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
+            {
+                NextTunnel = 2;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except FORWARD/LEFT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except LEFT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Right -> any direction except UP/LEFT possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 3, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except DOWN/LEFT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went DownRight --> UP/RIGHT Possible
+        // Went DownRight --> UP/RIGHT/LEFT/FORWARD Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownRight && !NextTunnelChosen)
         {
-            int i = Random.Range(1, 100);
-            if (i < 50) NextTunnel = 2;
-            else if (i > 50) NextTunnel = 3;
-            NextTunnelChosen = true;
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
+            {
+                NextTunnel = 3;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except RIGHT/DOWN possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except LEFT/DOWN possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Right -> any direction except FORWARD/DOWN possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except DOWN possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went RightDown --> LEFT Possible
+        // Went RightDown --> LEFT/FORWARD/UP Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.RightDown && !NextTunnelChosen)
         {
-            NextTunnel = 1;
-            NextTunnelChosen = true;
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
+            {
+                NextTunnel = 1;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except DOWN/RIGHT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except FORWARD/DOWN/RIGHT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptThree(0, TunnelSystems.Length, 0, 4, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Right -> any direction except UP/DOWN/RIGHT possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptThree(0, TunnelSystems.Length, 3, 4, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except DOWN/RIGHT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 2);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went DownLeft --> UP/LEFT Possible
+        // Went DownLeft --> UP/LEFT/FORWARD/RIGHT Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.DownLeft && !NextTunnelChosen)
         {
-            int i = Random.Range(1, 100);
-            if (i < 50) NextTunnel = 1;
-            else if (i > 50) NextTunnel = 3;
-            NextTunnelChosen = true;
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
+            {
+                NextTunnel = 3;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except LEFT/DOWN possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 1, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except RIGHT/DOWN possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 2, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Right -> any direction except DOWN possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except FORWARD/DOWN possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 0, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptOne(0, TunnelSystems.Length, 4);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
-        // Went LeftDown --> RIGHT Possible
+        // Went LeftDown --> FORWARD/UP/RIGHT Possible
         else if (NTunnel.TunnelDir == ObjectInformation.TunnelDirection.LeftDown && !NextTunnelChosen)
         {
-            NextTunnel = 2;
-            NextTunnelChosen = true;
+            if (antiBuildInYourselfCounter >= maxCurvesWithoutForward)
+            {
+                NextTunnel = 2;
+                NextTunnelChosen = true;
+            }
+            // At maximum Height -> any direction except DOWN/LEFT possible
+            else if (currentHeight >= maxUpHeight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At minimum Height -> any direction except FORWARD/DOWN/LEFT possible
+            else if (currentHeight <= -maxUpHeight)
+            {
+                int i = RandomExceptThree(0, TunnelSystems.Length, 0, 4, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Right -> any direction except DOWN/LEFT possible
+            else if (currentLeftRight >= maxLeftRight)
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            // At maximum Left -> any direction possible except UP/DOWN/LEFT possible
+            else if (currentLeftRight <= -maxLeftRight)
+            {
+                int i = RandomExceptThree(0, TunnelSystems.Length, 3, 4, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
+            else
+            {
+                int i = RandomExceptTwo(0, TunnelSystems.Length, 4, 1);
+                NextTunnel = i;
+                NextTunnelChosen = true;
+            }
         }
         NextTunnelInfo = TunnelSystems[NextTunnel].GetComponent<ObjectInformation>();
     }
@@ -1524,6 +1937,19 @@ public class ObjectBuilder : MonoBehaviour
         int randomNr2 = exceptNr2;
 
         while (randomNr == exceptNr1 || randomNr == exceptNr2)
+        {
+            randomNr = Random.Range(fromNr, exclusiveToNr);
+        }
+        return randomNr;
+    }
+
+    private int RandomExceptThree(int fromNr, int exclusiveToNr, int exceptNr1, int exceptNr2, int exceptNr3)
+    {
+        int randomNr = exceptNr1;
+        int randomNr2 = exceptNr2;
+        int randomNr3 = exceptNr3;
+
+        while (randomNr == exceptNr1 || randomNr == exceptNr2 || randomNr == exceptNr3)
         {
             randomNr = Random.Range(fromNr, exclusiveToNr);
         }

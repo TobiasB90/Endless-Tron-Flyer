@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class userManager : MonoBehaviour {
 
@@ -8,13 +6,13 @@ public class userManager : MonoBehaviour {
     public string Username;
     public string sToken;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void Awake()
+    {
+        DontDestroyOnLoad(this);
+
+        if (FindObjectsOfType(GetType()).Length > 1)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
