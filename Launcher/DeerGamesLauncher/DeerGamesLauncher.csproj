@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="BL\Services\DummyGameProvider.cs" />
     <Compile Include="BL\Services\DummyContentProvider.cs" />
+    <Compile Include="BL\Services\EncryptionService.cs" />
     <Compile Include="Converter\NegativeBooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\PathToImageConverter.cs" />
     <Compile Include="Enums\InstallState.cs" />
