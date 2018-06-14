@@ -8,6 +8,7 @@ public class GameMng : MonoBehaviour {
     public float TimeAlive;
     public IFaceMng_Limitless IFaceMng;
     public float HighScore;
+    
 
     public int TunnelSystemsSolved
     {
@@ -23,7 +24,6 @@ public class GameMng : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        HighScore = PlayerPrefs.GetFloat("HighScore");
         Score = 0;
 	}
 	
@@ -34,10 +34,5 @@ public class GameMng : MonoBehaviour {
             Score += Time.deltaTime * ScoreMultiplier;
             TimeAlive += Time.deltaTime;
         }
-    }
-
-    public void UpdateHighScore()
-    {
-        HighScore = PlayerPrefs.GetFloat("HighScore");
     }
 }

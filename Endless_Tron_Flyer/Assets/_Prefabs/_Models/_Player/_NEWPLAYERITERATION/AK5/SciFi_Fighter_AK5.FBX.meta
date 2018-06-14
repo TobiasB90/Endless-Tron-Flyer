@@ -15,7 +15,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: SciFi_Fighter_AK5
-    second: {fileID: 2100000, guid: e1544c8c88fc88548bff78ec36ef4bc5, type: 2}
+    second: {fileID: 2100000, guid: c342d4f855c9dc347b12f32c7fc69740, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

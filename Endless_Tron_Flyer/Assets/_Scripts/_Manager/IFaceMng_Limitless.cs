@@ -14,11 +14,14 @@ public class IFaceMng_Limitless : MonoBehaviour {
     public TMP_Text UIScore;
     public TMP_Text HighScoreUI;
     public GameObject ScoreUI;
+    private userManager UserManager;
+    public UploadHighscore upHScore;
     float scr;
 
     // Use this for initialization
     void Start () {
         ScoreUI.SetActive(true);
+        UserManager = GameObject.Find("_userManager").GetComponent<userManager>();
     }
 
     // Update is called once per frame
@@ -55,18 +58,27 @@ public class IFaceMng_Limitless : MonoBehaviour {
     }
 
     public void ScoreScreen()
-    {
+    {        
         Playing = false;
-        ScoreUI.SetActive(false);
-        float roundedScore = Mathf.Round(gameMng.Score);
-        if (roundedScore > PlayerPrefs.GetFloat("HighScore"))
+        ScoreUI.SetActive(false);                
+        int curscore = Mathf.RoundToInt(gameMng.Score);
+        if (UserManager.Username != "")
         {
-            PlayerPrefs.SetFloat("HighScore", roundedScore);
-            gameMng.UpdateHighScore();
+            upHScore.UploadPlayerHighScore(Mathf.RoundToInt(gameMng.Score));
+            upHScore.GetPersonalHighscore();
+            if (curscore > upHScore.PersonalScore.Score) HighScoreUI.text = curscore.ToString();
+            else HighScoreUI.text = upHScore.PersonalScore.Score.ToString();
         }
-        float scr2 = Mathf.RoundToInt(PlayerPrefs.GetFloat("HighScore"));
-        HighScoreUI.text = scr2.ToString();
-        scoreTxt.text = roundedScore.ToString();
+        else
+        {
+            if (curscore > PlayerPrefs.GetInt("Highscore", 0))
+            {
+                PlayerPrefs.SetInt("Highscore", curscore);
+                HighScoreUI.text = PlayerPrefs.GetInt("Highscore", 0).ToString();
+            }
+            else HighScoreUI.text = PlayerPrefs.GetInt("Highscore", 0).ToString();
+        }
+        scoreTxt.text = curscore.ToString();
         tunnelsPassedTxt.text = gameMng.TunnelSystemsSolved.ToString();
         if(gameMng.TimeAlive >= 60)
         {
@@ -79,7 +91,7 @@ public class IFaceMng_Limitless : MonoBehaviour {
             float timeAlive = Mathf.RoundToInt(gameMng.TimeAlive % 60);
             timeAliveTxt.text = timeAlive.ToString() + " SEC";
         }
-        ScoreScreenUI.SetActive(true);
+        ScoreScreenUI.SetActive(true);        
     }
 
     public void RetryGame()

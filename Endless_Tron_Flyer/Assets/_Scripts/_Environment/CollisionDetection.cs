@@ -7,28 +7,32 @@ public class CollisionDetection : MonoBehaviour {
     [Tooltip("Insert PlayerModelObject Here.")] public GameObject PlayerModel;
 
     [Tooltip("Insert Layer the Player is dying to here.")] public LayerMask LMask;
-    public Mesh PlayerMesh;
+    public Mesh[] PlayerMesh;
     public GameObject CubePrefab;
     public GameObject Parent;
     public GameObject InterfaceManager;
+    public int cube4everyXvert;
+    public int cubescreated = 0;
     IFaceMng_Limitless ifacemng;
 	// Use this for initialization
 	void Start () {
         ifacemng = InterfaceManager.GetComponent<IFaceMng_Limitless>();
-
-        Vector3[] verts = PlayerMesh.vertices;
-
-        Parent.transform.position = PlayerModel.transform.position;
-        for (int i = 0; i < verts.Length; i++)
+        foreach(Mesh PlayerMesh in PlayerMesh)
         {
-            if (i % 2 == 0)
-            {
-                GameObject PlayerCube = Instantiate(CubePrefab, verts[i] + transform.position, PlayerModel.transform.rotation);
-                PlayerCube.transform.parent = Parent.transform;
-            }
-            
-        }
+            Vector3[] verts = PlayerMesh.vertices;
 
+            Parent.transform.position = PlayerModel.transform.position;
+            for (int i = 0; i < verts.Length; i++)
+            {
+                if (i % cube4everyXvert == 0)
+                {
+                    GameObject PlayerCube = Instantiate(CubePrefab, verts[i] + transform.position, PlayerModel.transform.rotation);
+                    PlayerCube.transform.parent = Parent.transform;
+                    cubescreated++;
+                }
+            }
+        }
+        Parent.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         // Parent.transform.rotation = PlayerModel.transform.rotation;
     }
 	
@@ -52,10 +56,10 @@ public class CollisionDetection : MonoBehaviour {
                 int i = Random.Range(1, 100);
                 if (i < 70)
                 {
-                    rbody.AddRelativeForce(Vector3.forward * 1000);
+                    rbody.AddRelativeForce(Vector3.forward * 250);
                 }
-                else if (i > 70) rbody.AddRelativeForce(Vector3.up * 200);
-                child.transform.DOScale(new Vector3(0.25f, 0.25f, 0.25f), 3f);
+                else if (i > 70) rbody.AddRelativeForce(Vector3.up * 500);
+                child.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 3f);
             }
             Destroy(Player.gameObject);
             ifacemng.ScoreScreen();

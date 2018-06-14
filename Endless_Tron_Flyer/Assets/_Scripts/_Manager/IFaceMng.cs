@@ -30,9 +30,11 @@ public class IFaceMng : MonoBehaviour {
     public GameObject CirclingSphere1;
     public GameObject CirclingSphere2;
     public GameObject Player;
+    userManager UserManager;
 
     // Use this for initialization
     void Start () {
+        UserManager = GameObject.Find("_userManager").GetComponent<userManager>();
         MainMenu_RotateCamera();
         MainMenu_Circling_Spheres();
         MainMenu_PlayerModel_Hover();
@@ -40,11 +42,9 @@ public class IFaceMng : MonoBehaviour {
         MainCameraBasePosition = Camera.main.transform.position;
         MainMenu_UserName_UI.text = PlayerPrefs.GetString("Username");
         SoundMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
-        
-        if(PlayerPrefs.GetString("Username") == "")
-        {
-            MainMenu_UserNameInput_UI.SetActive(true);
-        }
+
+        if(UserManager.Username == "") MainMenu_UserName_UI.text = "OFFLINE";
+        else MainMenu_UserName_UI.text = UserManager.Username;
     }
 
     private void Awake()
@@ -63,6 +63,13 @@ public class IFaceMng : MonoBehaviour {
             MainMenu_UserNameInput_Button.onClick.Invoke();
         }
 	}
+
+    public void LogOut()
+    {
+        UserManager.Username = "";
+        UserManager.sToken = "";
+        SceneManager.LoadScene("LoginScreen_01");
+    }
 
     private void MainMenu_Circling_Spheres()
     {

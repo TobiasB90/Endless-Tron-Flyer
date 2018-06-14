@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using JWT;
-using JWT.Algorithms;
-using JWT.Serializers;
 using System.Collections;
 using Newtonsoft.Json;
 using TMPro;
@@ -14,44 +11,23 @@ public class UploadHighscore : MonoBehaviour
 {
     public GameObject HighScoreOBJ_Parent;
     public GameObject HighScoreOBJ_Prefab;
-    public string uName;
     public int hScore;
     private string uploadHighscoreURL = "";
     HighScoreData highscoredata;
     public ScoreList scoreList;
+    private userManager UserManager;
+    public Scores PersonalScore { get; set; }
 
     private void Start()
     {
+        UserManager = GameObject.Find("_userManager").GetComponent<userManager>();
+        GetPersonalHighscore();
     }
 
-    public void UploadPlayerHighScore()
+    public void UploadPlayerHighScore(int highscore)
     {
-        hScore = Mathf.RoundToInt(PlayerPrefs.GetFloat("HighScore"));
-        uName = PlayerPrefs.GetString("Username");
-        CreateToken();
-    }
-
-    private void CreateToken()
-    {
-        uName = uName.Substring(0, uName.Length - 1);
-        var payload = new Dictionary<string, object>
-        {
-            { "Username", uName },
-            { "Highscore", hScore }
-        };
-        //const string secret = "deergames1337";
-        //byte[] secretbytes = System.Text.Encoding.ASCII.GetBytes(secret.ToCharArray());
-
-        //IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
-        //IJsonSerializer serializer = new JsonNetSerializer();
-        //IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
-        //IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
-
-        //string token = encoder.Encode(payload, secret);
-
         highscoredata = new HighScoreData();
-        highscoredata.Username = uName;
-        highscoredata.Highscore = hScore;
+        highscoredata.Highscore = highscore;
 
         string outputJSON = JsonConvert.SerializeObject(highscoredata, Formatting.None);
         string output = Encrypt(outputJSON);
@@ -63,7 +39,8 @@ public class UploadHighscore : MonoBehaviour
     IEnumerator WaitForWWW(WWW www)
     {
         yield return www;
-
+        GetPersonalHighscore();
+        Debug.Log(getResponseCode(www));
         if (string.IsNullOrEmpty(www.error))
         {
             Debug.Log(www.text);
@@ -78,7 +55,7 @@ public class UploadHighscore : MonoBehaviour
         {
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Content-Type", "application/json");
-            // byte[] b = System.Text.Encoding.UTF8.GetBytes();
+            headers.Add("Authorization", UserManager.sToken);
             byte[] pData = System.Text.Encoding.ASCII.GetBytes(UploadData.ToCharArray());
             WWW api = new WWW("http://deergames.eu-central-1.elasticbeanstalk.com/api/ranking/create", pData, headers);
             StartCoroutine(WaitForWWW(api));
@@ -96,6 +73,7 @@ public class UploadHighscore : MonoBehaviour
         string url = "http://deergames.eu-central-1.elasticbeanstalk.com/api/ranking/get";
         WWW www = new WWW(url);
         yield return www;
+        Debug.Log(getResponseCode(www));
         if (www.error == null)
         {
             Debug.Log(www.text);
@@ -123,10 +101,30 @@ public class UploadHighscore : MonoBehaviour
         }
     }
 
+    public void GetPersonalHighscore()
+    {
+        if (UserManager.Username == "") Debug.Log("OFFLINE MODE: No User Found");
+        else
+        {
+            string url = "http://deergames.eu-central-1.elasticbeanstalk.com/api/ranking/get";
+            WWWForm form = new WWWForm();
+            Dictionary<string, string> headers = form.headers;
+            form.AddField("name", UserManager.Username);
+            byte[] rawFormData = form.data;
+            WWW request = new WWW(url, rawFormData, headers);
+            StartCoroutine(GetPersonalHighscoreResponse(request));
+        }
+    }
+
+    private IEnumerator GetPersonalHighscoreResponse(WWW www)
+    {
+        yield return www;
+        PersonalScore = JsonConvert.DeserializeObject<Scores>(www.text);
+    }
+
     public class HighScoreData
     {
-        public string Username;
-        public int Highscore;
+        public int Highscore { get; set; }
     }
 
     public class ScoreList
@@ -201,6 +199,48 @@ public class UploadHighscore : MonoBehaviour
             return csp.CreateEncryptor();
         }
         return csp.CreateDecryptor();
+    }
+
+    public static int getResponseCode(WWW request)
+    {
+        int ret = 0;
+        if (request.responseHeaders == null)
+        {
+            Debug.LogError("no response headers.");
+        }
+        else
+        {
+            if (!request.responseHeaders.ContainsKey("STATUS"))
+            {
+                Debug.LogError("response headers has no STATUS.");
+            }
+            else
+            {
+                ret = parseResponseCode(request.responseHeaders["STATUS"]);
+            }
+        }
+
+        return ret;
+    }
+
+    public static int parseResponseCode(string statusLine)
+    {
+        int ret = 0;
+
+        string[] components = statusLine.Split(' ');
+        if (components.Length < 3)
+        {
+            Debug.LogError("invalid response status: " + statusLine);
+        }
+        else
+        {
+            if (!int.TryParse(components[1], out ret))
+            {
+                Debug.LogError("invalid response code: " + components[1]);
+            }
+        }
+
+        return ret;
     }
 
 }
