@@ -16,7 +16,7 @@ public class UploadHighscore : MonoBehaviour
     HighScoreData highscoredata;
     public ScoreList scoreList;
     private userManager UserManager;
-    public Scores PersonalScore { get; set; }
+    public Scores PersonalScore = new Scores();
 
     private void Start()
     {
@@ -116,10 +116,16 @@ public class UploadHighscore : MonoBehaviour
         }
     }
 
-    private IEnumerator GetPersonalHighscoreResponse(WWW www)
+    public IEnumerator GetPersonalHighscoreResponse(WWW www)
     {
         yield return www;
-        PersonalScore = JsonConvert.DeserializeObject<Scores>(www.text);
+        if(www.text != "null") PersonalScore = JsonConvert.DeserializeObject<Scores>(www.text);
+        if(www.text == "null")
+        {
+            PersonalScore.Name = UserManager.Username;
+            PersonalScore.Rank = 0;
+            PersonalScore.Score = 0;
+        }
     }
 
     public class HighScoreData
