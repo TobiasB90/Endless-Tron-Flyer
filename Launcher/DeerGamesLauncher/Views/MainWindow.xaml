@@ -59,10 +59,26 @@
         </Grid.RowDefinitions>
         <Image Grid.RowSpan="2" Source="../Images/141340.png" Width="1280" Height="720" VerticalAlignment="Top" HorizontalAlignment="Center" />
         <Border Background="#A1000000" Height="70">
-            <StackPanel Orientation="Horizontal">
-                <Image Source="../Images/deergame_logo/deergame_logo_name_200x80.png" Margin="20 5 0 0" SnapsToDevicePixels="True"/>
-                <!--<TextBlock Margin="10 5 0 0"  Text="DEER GAMES" Foreground="White" FontSize="36" VerticalAlignment="Center"></TextBlock>-->
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image Source="../Images/deergame_logo/deergame_logo_name_200x80.png" Margin="20 5 0 0" Grid.Column="0" SnapsToDevicePixels="True"/>
+                <Grid HorizontalAlignment="Right" Grid.Column="1" Margin="0 5 5 5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Vertical" Margin="0 0 10 0" VerticalAlignment="Bottom">
+                        <TextBlock Text="Welcome," Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+                        <TextBlock Text="#Usernameasdfasdfasdfasdf" Foreground="White" HorizontalAlignment="Left" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                    <Button Content="AdminPanel" Grid.Column="1" Height="32" VerticalAlignment="Bottom" Width="80" Margin="0 0 10 0"/>
+                    <Button Content="Logout" Grid.Column="2" Height="32" VerticalAlignment="Bottom" Width="80" Command="{Binding Logout}"/>
+                </Grid>
+            </Grid>
         </Border>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -225,7 +241,7 @@ Nam facilisis mauris vitae nisl porta, vel vehicula leo malesuada. Sed purus odi
                                                 </Style>
                                             </DataGridTextColumn.ElementStyle>
                                         </DataGridTextColumn>
-                                        <DataGridTextColumn Binding="{Binding PlayerName}"  Header="Name" Width="*" CanUserSort="False" CanUserReorder="False" CanUserResize="False" IsReadOnly="True" />
+                                        <DataGridTextColumn Binding="{Binding Name}"  Header="Name" Width="*" CanUserSort="False" CanUserReorder="False" CanUserResize="False" IsReadOnly="True" />
                                         <DataGridTextColumn Binding="{Binding Score}" Header="Score" Width="100" CanUserSort="False" CanUserReorder="False" CanUserResize="False" IsReadOnly="True">
                                             <DataGridTextColumn.ElementStyle>
                                                 <Style TargetType="TextBlock">

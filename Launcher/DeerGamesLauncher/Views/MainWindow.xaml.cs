@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DeerGamesCommonLibrary.Services;
 using DeerGamesLauncher.Enums;
 using DeerGamesLauncher.ViewModel;
 using MahApps.Metro.Controls;
@@ -23,14 +25,36 @@ namespace DeerGamesLauncher
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        public MainWindow()
+        private MainWindowViewModel viewModel;
+
+        public MainWindow(MainWindowViewModel viewModel)
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
+
+            this.viewModel = viewModel;
+
+            this.viewModel.WindowCloseHandler += this.Close;
+
+            this.DataContext = this.viewModel;
         }
+
         private void MainWindow_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            // check if any game process from launcher is still running
+
+            // No process running
+
+            if (!ConfigurationService.Instance.CredentialsSaved)
+            {
+                ConfigurationService.Instance.Token = string.Empty;
+            }
+
+            base.OnClosing(e);
         }
     }
 

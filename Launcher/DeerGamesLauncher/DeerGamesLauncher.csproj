@@ -64,6 +64,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,14 +78,19 @@
     </Compile>
     <Compile Include="BL\Services\DummyGameProvider.cs" />
     <Compile Include="BL\Services\DummyContentProvider.cs" />
-    <Compile Include="BL\Services\EncryptionService.cs" />
     <Compile Include="Converter\NegativeBooleanToVisibilityConverter.cs" />
     <Compile Include="Converter\PathToImageConverter.cs" />
+    <Compile Include="Converter\TextInputToVisibilityConverter.cs" />
     <Compile Include="Enums\InstallState.cs" />
     <Compile Include="Helper\NotifyPropertyChangedImpl.cs" />
+    <Compile Include="Helper\PasswordBoxBindingBehavior.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="ViewModel\GameViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="Views\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -91,7 +100,6 @@
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\IGame.cs" />
     <Compile Include="Models\RankedGame.cs" />
-    <Compile Include="Models\Ranking.cs" />
     <Compile Include="Models\UnrankedGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -147,6 +155,12 @@
     <Content Include="Resources\gameicons\default-game-icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeerGamesCommonLibrary\DeerGamesCommonLibrary.csproj">
+      <Project>{F93ABCC5-876A-4974-BBD0-8F2179BA922A}</Project>
+      <Name>DeerGamesCommonLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

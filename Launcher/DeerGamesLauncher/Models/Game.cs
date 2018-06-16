@@ -17,6 +17,8 @@ namespace DeerGamesLauncher.Models
 
         public string Name { get; set; }
 
+        public string Identifier { get; set; }
+
         public InstallState InstallState { get; set; }
 
         public string InstallFolder { get; set; }

@@ -46,3 +46,6 @@
 /Launcher/DeerGamesLauncher/obj/*
 /Launcher/DeerGamesLauncher/.vs/*
 /Launcher/.vs/*
+/Launcher/DeerGamesCommonLibrary/bin/*
+/Launcher/DeerGamesCommonLibrary/obj/*
+/Launcher/DeerGamesCommonLibrary/.vs/*

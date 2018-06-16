@@ -6,9 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using DeerGamesCommonLibrary.Services.Rankings;
 using DeerGamesLauncher.Enums;
 using DeerGamesLauncher.Helper;
+using DeerGamesLauncher;
 using DeerGamesLauncher.Models;
+using Ranking = DeerGamesCommonLibrary.Models.Ranking;
 
 namespace DeerGamesLauncher.ViewModel
 {
@@ -16,6 +19,7 @@ namespace DeerGamesLauncher.ViewModel
     {
         private Game _model;
         private ObservableCollection<Ranking> _rankings;
+        private bool _isLoading;
 
         public GameViewModel(Game game)
         {
@@ -32,6 +36,16 @@ namespace DeerGamesLauncher.ViewModel
             }
         }
 
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
         public bool IsRankedGame
         {
             get { return this._model.RankingsAvailable; }
@@ -43,11 +57,29 @@ namespace DeerGamesLauncher.ViewModel
             {
                 if (_rankings == null && this._model.RankingsAvailable)
                 {
-                    _rankings = new ObservableCollection<Ranking>(((RankedGame) this._model).Rankings);
+                    this.LoadData();
                 }
 
                 return _rankings;
             }
+            set
+            {
+                this._rankings = value;
+                this.RaisePropertyChanged();
+            }
+        }
+
+        public async void LoadData()
+        {
+            this.IsLoading = true;
+
+            var rankingService = RankingProvider.Instance.GetRankingProvider(this._model.Identifier);
+
+            var rankings = await rankingService.GetRankings();
+
+            this.Rankings = new ObservableCollection<Ranking>(rankings);
+
+            this.IsLoading = false;
         }
 
         public InstallState InstallState
