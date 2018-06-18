@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114399254675189532}
   - component: {fileID: 65218331207461368}
   m_Layer: 10
-  m_Name: DE_NEWHexler 1
+  m_Name: Hexleralt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

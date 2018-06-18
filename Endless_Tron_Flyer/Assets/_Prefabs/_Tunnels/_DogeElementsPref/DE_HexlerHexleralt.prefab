@@ -245,7 +245,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4710983186740174}
   m_Layer: 0
-  m_Name: DE_Hexler
+  m_Name: DE_HexlerHexleralt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
