@@ -65,26 +65,32 @@ public class UploadHighscore : MonoBehaviour
 
     public void GetHighscores()
     {
-        StartCoroutine(GetHighscoreData());
+        if (UserManager.Username == "") Debug.Log("OFFLINE MODE: No User Found");
+        else
+        {
+            string url = "http://deergames.eu-central-1.elasticbeanstalk.com/api/ranking/get";
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", UserManager.sToken);
+            WWW request = new WWW(url, null, headers);
+            StartCoroutine(GetHighscoreData(request));
+        }
     }
 
-    public IEnumerator GetHighscoreData()
+    public IEnumerator GetHighscoreData(WWW www)
     {
-        string url = "http://deergames.eu-central-1.elasticbeanstalk.com/api/ranking/get";
-        WWW www = new WWW(url);
         yield return www;
-        Debug.Log(getResponseCode(www));
-        if (www.error == null)
+        Debug.Log(www.text);
+        if (getResponseCode(www) == 200)
         {
-            Debug.Log(www.text);
-            scoreList = JsonConvert.DeserializeObject<ScoreList>(www.text);
+            string decryptedscoreList = Decrypt(www.text);
+            scoreList = JsonConvert.DeserializeObject<ScoreList>(decryptedscoreList);
             int childcount = HighScoreOBJ_Parent.transform.childCount;
-            for(int i = 0; i < childcount; i++)
+            for (int i = 0; i < childcount; i++)
             {
                 GameObject child = HighScoreOBJ_Parent.transform.GetChild(i).gameObject;
                 Destroy(child);
             }
-            foreach(Scores score in scoreList.Scores)
+            foreach (Scores score in scoreList.Scores)
             {
                 GameObject HighScoreOBJ = Instantiate(HighScoreOBJ_Prefab, HighScoreOBJ_Parent.transform, false);
                 TMP_Text Rank = HighScoreOBJ.transform.GetChild(0).GetComponent<TMP_Text>();
@@ -95,10 +101,7 @@ public class UploadHighscore : MonoBehaviour
                 Score.text = score.Score.ToString();
             }
         }
-        else
-        {
-            Debug.Log("ERROR: " + www.error);
-        }
+        else Debug.Log("GetHighscoreData Error: " + getResponseCode(www));
     }
 
     public void GetPersonalHighscore()
@@ -106,12 +109,11 @@ public class UploadHighscore : MonoBehaviour
         if (UserManager.Username == "") Debug.Log("OFFLINE MODE: No User Found");
         else
         {
-            string url = "http://deergames.eu-central-1.elasticbeanstalk.com/api/ranking/get";
-            WWWForm form = new WWWForm();
-            Dictionary<string, string> headers = form.headers;
-            form.AddField("name", UserManager.Username);
-            byte[] rawFormData = form.data;
-            WWW request = new WWW(url, rawFormData, headers);
+            string url = "http://deergames.eu-central-1.elasticbeanstalk.com/api/ranking/get/personal";
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", UserManager.sToken);
+            // byte[] rawFormData = Encoding.ASCII.GetBytes(headers.data);
+            WWW request = new WWW(url, null, headers);
             StartCoroutine(GetPersonalHighscoreResponse(request));
         }
     }
@@ -119,8 +121,12 @@ public class UploadHighscore : MonoBehaviour
     public IEnumerator GetPersonalHighscoreResponse(WWW www)
     {
         yield return www;
-        if(www.text != "null") PersonalScore = JsonConvert.DeserializeObject<Scores>(www.text);
-        if(www.text == "null")
+        if(Decrypt(www.text) != "null")
+        {
+            string decrypteddata = Decrypt(www.text);
+            PersonalScore = JsonConvert.DeserializeObject<Scores>(decrypteddata);
+        }
+        if (Decrypt(www.text) == "null")
         {
             PersonalScore.Name = UserManager.Username;
             PersonalScore.Rank = 0;
@@ -143,18 +149,6 @@ public class UploadHighscore : MonoBehaviour
         public string Name { get; set; }
         public int Rank { get; set; }
         public int Score { get; set; }
-    }
-
-    private static void Main(string[] args)
-    {
-        string encrypted = Encrypt("Something to decrypt");
-        Console.Out.WriteLine(encrypted);
-
-        string decrypted = Decrypt(encrypted);
-        Console.Out.WriteLine(decrypted);
-
-        Console.Out.WriteLine("Press any key to continue");
-        Console.ReadKey();
     }
 
     private static string Encrypt(string raw)

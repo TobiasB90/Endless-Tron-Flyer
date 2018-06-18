@@ -2,7 +2,6 @@
 
 public class userManager : MonoBehaviour {
 
-
     public string Username;
     public string sToken;
 

@@ -46,7 +46,7 @@ public class RegisterAndLogin : MonoBehaviour {
         }
 
         logindata.Password = LoginPassword.text;
-        logindata.Email = LoginEMail.text;
+        // logindata.Email = LoginEMail.text;
 
         string outputJSON = JsonConvert.SerializeObject(logindata, Formatting.None);
         string output = Encrypt(outputJSON);
@@ -74,7 +74,7 @@ public class RegisterAndLogin : MonoBehaviour {
         }
 
         regdata.Password = LoginPassword.text;
-        regdata.Email = LoginEMail.text;
+        regdata.Email = RegisterEMail.text;
 
         string outputJSON = JsonConvert.SerializeObject(regdata, Formatting.None);
         string output = Encrypt(outputJSON);
@@ -99,7 +99,11 @@ public class RegisterAndLogin : MonoBehaviour {
         {
             ShowUIMessage("Registration successful");
         }
-        else ShowUIMessage("Unexpected Error: " + getResponseCode(www));
+        else
+        {
+            ShowUIMessage("Unexpected Error: " + getResponseCode(www));
+            Debug.Log(www.text);
+        }
     }
 
     IEnumerator WaitForLoginWWW(WWW www)
@@ -126,7 +130,7 @@ public class RegisterAndLogin : MonoBehaviour {
     {
         public string Name { get; set; }
         public string Password { get; set; }
-        public string Email { get; set; }
+        // public string Email { get; set; }
     }
 
     private static string Encrypt(string raw)
