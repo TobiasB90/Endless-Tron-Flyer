@@ -16,12 +16,14 @@ public class IFaceMng_Limitless : MonoBehaviour {
     public GameObject ScoreUI;
     private userManager UserManager;
     public UploadHighscore upHScore;
+    public SoundManager sndMng;
     float scr;
 
     // Use this for initialization
     void Start () {
         ScoreUI.SetActive(true);
         UserManager = GameObject.Find("_userManager").GetComponent<userManager>();
+        sndMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,11 @@ public class IFaceMng_Limitless : MonoBehaviour {
         }
         scr = Mathf.RoundToInt(gameMng.Score);
         UIScore.text = scr.ToString();
+    }
+
+    public void Awake()
+    {
+        sndMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
     }
 
     public void ExitGame()
@@ -103,6 +110,8 @@ public class IFaceMng_Limitless : MonoBehaviour {
 
     public void MainMenu()
     {
+        sndMng.GameScene = false;
+        sndMng.playingmusic = false;
         ScoreScreenUI.SetActive(false);
         PauseMenuUI.SetActive(false);
         SceneManager.LoadScene("MainMenu_01");

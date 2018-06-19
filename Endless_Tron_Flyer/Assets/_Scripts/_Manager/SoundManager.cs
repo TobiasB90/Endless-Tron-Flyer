@@ -2,6 +2,8 @@
 
 public class SoundManager : MonoBehaviour {
 
+    public bool GameScene = false;
+    public bool playingmusic = false;
     public AudioClip[] AudioClips_01;
 
     public AudioSource AudioSource_01;
@@ -18,11 +20,34 @@ public class SoundManager : MonoBehaviour {
         }
     }
 
+    private void Update()
+    {
+        if (GameScene && !playingmusic)
+        {
+            MusicSource_02.Stop();
+            MusicSource_01.Play();
+            playingmusic = true;
+        }
+        else if (!GameScene && !playingmusic)
+        {
+            MusicSource_01.Stop();
+            MusicSource_02.Play();
+            playingmusic = true;
+        }
+    }
+
     private void Start()
     {
-        int i = Random.Range(0, 1);
-        if (i == 1) MusicSource_01.Play();
-        else MusicSource_02.Play();
+        if (GameScene)
+        {
+            MusicSource_02.Stop();
+            MusicSource_01.Play();
+        }
+        else
+        {
+            MusicSource_01.Stop();
+            MusicSource_02.Play();
+        }
     }
 
     public void MMenu_OnMouseOver()

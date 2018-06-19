@@ -97,6 +97,8 @@ public class IFaceMng : MonoBehaviour {
 
     public void EnterEndlessFlyerScene()
     {
+        SoundMng.GameScene = true;
+        SoundMng.playingmusic = false;
         SceneManager.LoadScene("Level_01_Endless");
     }
 

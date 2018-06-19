@@ -13,6 +13,7 @@ public class CollisionDetection : MonoBehaviour {
     public GameObject InterfaceManager;
     public int cube4everyXvert;
     public int cubescreated = 0;
+    bool dead = false;
     IFaceMng_Limitless ifacemng;
 	// Use this for initialization
 	void Start () {
@@ -33,7 +34,6 @@ public class CollisionDetection : MonoBehaviour {
             }
         }
         Parent.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-        // Parent.transform.rotation = PlayerModel.transform.rotation;
     }
 	
 	// Update is called once per frame
@@ -45,24 +45,28 @@ public class CollisionDetection : MonoBehaviour {
     {
         if ((LMask & 1 << c.gameObject.layer) == 1 << c.gameObject.layer)
         {
-            Debug.Log("PlayerCollision - Game Over");
-
-            Parent.transform.position = PlayerModel.transform.position;
-            Parent.transform.rotation = PlayerModel.transform.rotation;
-            Parent.SetActive(true);
-            foreach (Transform child in Parent.transform)
+            if (!dead)
             {
-                Rigidbody rbody = child.GetComponent<Rigidbody>();
-                int i = Random.Range(1, 100);
-                if (i < 70)
+                Debug.Log("PlayerCollision - Game Over");
+
+                Parent.transform.position = PlayerModel.transform.position;
+                Parent.transform.rotation = PlayerModel.transform.rotation;
+                Parent.SetActive(true);
+                foreach (Transform child in Parent.transform)
                 {
-                    rbody.AddRelativeForce(Vector3.forward * 250);
+                    Rigidbody rbody = child.GetComponent<Rigidbody>();
+                    int i = Random.Range(1, 100);
+                    if (i < 70)
+                    {
+                        rbody.AddRelativeForce(Vector3.forward * 250);
+                    }
+                    else if (i > 70) rbody.AddRelativeForce(Vector3.up * 500);
+                    child.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 3f);
                 }
-                else if (i > 70) rbody.AddRelativeForce(Vector3.up * 500);
-                child.transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 3f);
+                Destroy(Player.gameObject);
+                ifacemng.ScoreScreen();
+                dead = true;
             }
-            Destroy(Player.gameObject);
-            ifacemng.ScoreScreen();
         }
             
     }
