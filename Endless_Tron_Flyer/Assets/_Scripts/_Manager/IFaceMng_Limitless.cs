@@ -1,12 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.EventSystems;
+using System.Collections;
 
 public class IFaceMng_Limitless : MonoBehaviour {
 
     public GameObject PauseMenuUI;
+    public Button PauseMenuUI_Button_Resume;
+    public Button PauseMenuUI_Button_Retry;
+
     public GameObject ScoreScreenUI;
+    public Button ScoreScreenUI_Button_Retry;
+    public Button ScoreScreenUI_Button_MainMenu;
+
     public bool Playing = true;
+    bool ScoreScreenActive = false;
+
     public GameMng gameMng;
     public TMP_Text scoreTxt;
     public TMP_Text tunnelsPassedTxt;
@@ -16,7 +27,7 @@ public class IFaceMng_Limitless : MonoBehaviour {
     public GameObject ScoreUI;
     private userManager UserManager;
     public UploadHighscore upHScore;
-    public SoundManager sndMng;
+    private SoundManager sndMng;
     float scr;
 
     // Use this for initialization
@@ -28,11 +39,11 @@ public class IFaceMng_Limitless : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Escape) && Playing)
+        if (Input.GetKeyDown(KeyCode.Escape) && Playing && !ScoreScreenActive)
         {
             PauseGame();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && !Playing)
+        else if (Input.GetKeyDown(KeyCode.Escape) && !Playing && !ScoreScreenActive) 
         {
             ResumeGame();
         }
@@ -53,6 +64,8 @@ public class IFaceMng_Limitless : MonoBehaviour {
     public void PauseGame()
     {
         PauseMenuUI.SetActive(true);
+        PauseMenuUI_Button_Retry.Select();
+        PauseMenuUI_Button_Resume.Select();
         Playing = false;
         Time.timeScale = 0;
     }
@@ -67,7 +80,8 @@ public class IFaceMng_Limitless : MonoBehaviour {
     public void ScoreScreen()
     {        
         Playing = false;
-        ScoreUI.SetActive(false);                
+        ScoreScreenActive = true;
+        ScoreUI.SetActive(false);
         int curscore = Mathf.RoundToInt(gameMng.Score);
         if (UserManager.Username != "")
         {
@@ -98,13 +112,16 @@ public class IFaceMng_Limitless : MonoBehaviour {
             float timeAlive = Mathf.RoundToInt(gameMng.TimeAlive % 60);
             timeAliveTxt.text = timeAlive.ToString() + " SEC";
         }
-        ScoreScreenUI.SetActive(true);        
+        ScoreScreenUI.SetActive(true);
+        ScoreScreenUI_Button_Retry.Select();
     }
 
     public void RetryGame()
     {
+        ScoreScreenActive = false;
         ScoreScreenUI.SetActive(false);
         PauseMenuUI.SetActive(false);
+        Time.timeScale = 1;
         SceneManager.LoadScene("Level_01_Endless");
     }
 
@@ -114,6 +131,7 @@ public class IFaceMng_Limitless : MonoBehaviour {
         sndMng.playingmusic = false;
         ScoreScreenUI.SetActive(false);
         PauseMenuUI.SetActive(false);
+        Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu_01");
     }
 }

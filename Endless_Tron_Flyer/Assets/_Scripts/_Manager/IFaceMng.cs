@@ -10,6 +10,7 @@ public class IFaceMng : MonoBehaviour {
 
     public GameObject MainMenu_Obj;
     public GameObject MainMenu_Play_Obj;
+    public Button MainMenu_Play_Button;
     public GameObject MainMenu_HighScore_Obj;
     public GameObject MainMenu_Achievements_Obj;
     public GameObject MainMenu_Skins_Obj;
@@ -45,6 +46,7 @@ public class IFaceMng : MonoBehaviour {
 
         if(UserManager.Username == "") MainMenu_UserName_UI.text = "OFFLINE";
         else MainMenu_UserName_UI.text = UserManager.Username;
+        MainMenu_Play_Button.Select();
     }
 
     private void Awake()
@@ -180,6 +182,7 @@ public class IFaceMng : MonoBehaviour {
         if (BlurringNow == false)
         {
             MainMenu_Obj.SetActive(true);
+            MainMenu_Play_Button.Select();
             MainMenu_BackButton_Obj.SetActive(false);
             MainMenu_Play_Obj.SetActive(false);
             MainMenu_HighScore_Obj.SetActive(false);

@@ -1,5 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using System.Collections;
+
 
 public class CollisionDetection : MonoBehaviour {
 

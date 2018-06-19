@@ -19,10 +19,12 @@ public class PlayerController : MonoBehaviour
     public TunnelDirection TunnelDir;
 
     private Quaternion OriginalPlayerModelRotation;
+    private userManager usrMng;
 
     private void Start()
     {
         OriginalPlayerModelRotation = PlayerModel.transform.rotation;
+        usrMng = GameObject.Find("_userManager").GetComponent<userManager>();
     }
 
     void Update()
@@ -109,8 +111,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             // Rotate the Player depending on input and rotationspeed, impact on the flyingdirection
-            transform.Rotate(-Input.GetAxis("Vertical") * rotationspeedDelta, Input.GetAxis("Horizontal") * rotationspeedDelta, 0, Space.Self);
-
+            if(!usrMng.invertedmovement) transform.Rotate(-Input.GetAxis("Vertical") * rotationspeedDelta, Input.GetAxis("Horizontal") * rotationspeedDelta, 0, Space.Self);
+            else transform.Rotate(Input.GetAxis("Vertical") * rotationspeedDelta, Input.GetAxis("Horizontal") * rotationspeedDelta, 0, Space.Self);
             // Rotate the PlayerModel on horizontal input (Left & Right) just for visuals, no impact on the flying direction
             rotationHorz += Input.GetAxis("Horizontal") * HorzRotaSpeedDelta;
             rotationHorz = Mathf.Clamp(rotationHorz, minHorzRota, maxHorzRota);

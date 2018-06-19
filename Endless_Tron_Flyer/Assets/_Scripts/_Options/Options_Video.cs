@@ -29,6 +29,7 @@ public class Options_Video : MonoBehaviour {
     {
         UpdateResolutionDropdown();
         // GetAvailableDisplays();
+
     }
 
     public void ApplyChanges()
@@ -92,6 +93,15 @@ public class Options_Video : MonoBehaviour {
         ResLabel.text = Screen.width + " X " + Screen.height;
         Resolution_Dropdown.value = 0;
         
+        if(Screen.fullScreenMode == FullScreenMode.FullScreenWindow)
+        {
+            DisplayMode_Dropdown.value = 0;
+        }
+        else if (Screen.fullScreenMode == FullScreenMode.Windowed)
+        {
+            DisplayMode_Dropdown.value = 1;
+        }
+        Debug.Log(Screen.fullScreenMode);
     }
 
     public IEnumerator ChangeDisplaySettings()
