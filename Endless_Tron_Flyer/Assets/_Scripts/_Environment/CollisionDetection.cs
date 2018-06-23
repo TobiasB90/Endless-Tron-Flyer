@@ -17,6 +17,7 @@ public class CollisionDetection : MonoBehaviour {
     public int cubescreated = 0;
     bool dead = false;
     IFaceMng_Limitless ifacemng;
+
 	// Use this for initialization
 	void Start () {
         ifacemng = InterfaceManager.GetComponent<IFaceMng_Limitless>();
@@ -40,7 +41,7 @@ public class CollisionDetection : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
     public void OnTriggerEnter(Collider c)

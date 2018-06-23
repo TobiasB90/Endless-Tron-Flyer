@@ -5,94 +5,46 @@ public class CameraController : MonoBehaviour
 
     public Camera MainCamera;
     public float camdistance;
+    [HideInInspector] public float basecamdistance;
+    public float increasingspeed_maxdistance;
+    public float TargetCamToPlayerDistance;
     public float camupoffset;
     public float smoothtime;
-
-    // Old:
-    // PlayerController pcont;
-    // private int updownoffsetvector;
+    userManager usrMng;
 
     private void Start()
     {
-        // Old:
-        // pcont = Player.GetComponent<PlayerController>();
+        usrMng = GameObject.Find("_userManager").GetComponent<userManager>();
+        basecamdistance = camdistance;
         if (MainCamera == null)
         {
             MainCamera = Camera.main;
         }
     }
 
-    private void LateUpdate()
+    void FixedUpdate()
     {
+        switch (usrMng.CameraDistance)
+        {
+            case userManager.Option_CameraDistance.Close:
+                TargetCamToPlayerDistance = usrMng.PlayerViewOptions[0].CamDistance;
+                Debug.Log(usrMng.PlayerViewOptions[0].CamDistance);
+                break;
+            case userManager.Option_CameraDistance.Medium:
+                TargetCamToPlayerDistance = usrMng.PlayerViewOptions[1].CamDistance;
+                Debug.Log(usrMng.PlayerViewOptions[1].CamDistance);
+                break;
+            case userManager.Option_CameraDistance.Far:
+                TargetCamToPlayerDistance = usrMng.PlayerViewOptions[2].CamDistance;
+                Debug.Log(usrMng.PlayerViewOptions[2].CamDistance);
+                break;
+        }
+
         Vector3 moveCamTo = transform.position - transform.forward * camdistance + camupoffset * transform.up;
-        float smoothtimedelta = smoothtime * Time.deltaTime;
-        MainCamera.transform.position = Vector3.Lerp(MainCamera.transform.position, moveCamTo, smoothtimedelta);
+
+        MainCamera.transform.position = Vector3.Lerp(MainCamera.transform.position, moveCamTo, smoothtime);
+
         MainCamera.transform.localRotation = transform.localRotation;
-
-        // Old: Change updownoffset based on current tunneldirection (WorldSpace)
-
-        //switch (pcont.TunnelDir)
-        //{
-        //    case PlayerController.TunnelDirection.Forward:
-        //        updownoffsetvector = transform.up * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.ForwardRotated:
-        //        updownoffsetvector = Vector3.down * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.ForwardLeft:
-        //        updownoffsetvector = Vector3.right * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.ForwardRight:
-        //        updownoffsetvector = Vector3.left * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.Up:
-        //        updownoffsetvector = Vector3.back * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.UpRotated:
-        //        updownoffsetvector = Vector3.forward * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.LeftUp:
-        //        updownoffsetvector = Vector3.right * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.RightUp:
-        //        updownoffsetvector = Vector3.left * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.Right:
-        //        updownoffsetvector = Vector3.up * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.RightRotated:
-        //        updownoffsetvector = Vector3.down * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.UpRight:
-        //        updownoffsetvector = Vector3.back * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.DownRight:
-        //        updownoffsetvector = Vector3.forward * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.Left:
-        //        updownoffsetvector = Vector3.up * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.LeftRotated:
-        //        updownoffsetvector = Vector3.down * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.UpLeft:
-        //        updownoffsetvector = Vector3.back * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.DownLeft:
-        //        updownoffsetvector = Vector3.forward * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.Down:
-        //        updownoffsetvector = Vector3.forward * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.DownRotated:
-        //        updownoffsetvector = Vector3.back * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.LeftDown:
-        //        updownoffsetvector = Vector3.left * updownoffset;
-        //        break;
-        //    case PlayerController.TunnelDirection.RightDown:
-        //        updownoffsetvector = Vector3.right * updownoffset;
-        //        break;
-        //}
+        Debug.Log(this.transform.position.z - Camera.main.transform.position.z);        
     }
 }

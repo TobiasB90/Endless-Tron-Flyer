@@ -102,7 +102,7 @@ Material:
     - _Blend: 0
     - _BumpScale: 1
     - _Cull: 0
-    - _Cutoff: 0.687
+    - _Cutoff: 0.325
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _GlossMapScale: 0.5
@@ -122,7 +122,7 @@ Material:
     - _Smoothness0: 0.5
     - _Smoothness1: 0.5
     - _Smoothness2: 0.5
-    - _Smoothness3: 1
+    - _Smoothness3: 0
     - _SmoothnessTextureChannel: 1
     - _SpecSource: 1
     - _SpecularHighlights: 0
@@ -132,6 +132,6 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 0.047058694, g: 0.07843118, b: 0.121568434, a: 0.19607843}
-    - _EmissionColor: {r: 0, g: 2.2768323, b: 2.3506756, a: 1}
+    - _Color: {r: 0.04705876, g: 0.078431286, b: 0.12156852, a: 0.19607843}
+    - _EmissionColor: {r: 0, g: 2.063088, b: 2.1185474, a: 1}
     - _SpecColor: {r: 0.047058824, g: 0.078431375, b: 0.12156863, a: 1}
