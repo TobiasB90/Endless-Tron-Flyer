@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour
     {
         usrMng = GameObject.Find("_userManager").GetComponent<userManager>();
         basecamdistance = camdistance;
+
         if (MainCamera == null)
         {
             MainCamera = Camera.main;
@@ -28,15 +29,12 @@ public class CameraController : MonoBehaviour
         {
             case userManager.Option_CameraDistance.Close:
                 TargetCamToPlayerDistance = usrMng.PlayerViewOptions[0].CamDistance;
-                Debug.Log(usrMng.PlayerViewOptions[0].CamDistance);
                 break;
             case userManager.Option_CameraDistance.Medium:
                 TargetCamToPlayerDistance = usrMng.PlayerViewOptions[1].CamDistance;
-                Debug.Log(usrMng.PlayerViewOptions[1].CamDistance);
                 break;
             case userManager.Option_CameraDistance.Far:
                 TargetCamToPlayerDistance = usrMng.PlayerViewOptions[2].CamDistance;
-                Debug.Log(usrMng.PlayerViewOptions[2].CamDistance);
                 break;
         }
 
@@ -45,6 +43,5 @@ public class CameraController : MonoBehaviour
         MainCamera.transform.position = Vector3.Lerp(MainCamera.transform.position, moveCamTo, smoothtime);
 
         MainCamera.transform.localRotation = transform.localRotation;
-        Debug.Log(this.transform.position.z - Camera.main.transform.position.z);        
     }
 }

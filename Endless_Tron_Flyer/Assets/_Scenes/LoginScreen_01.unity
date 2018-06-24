@@ -1267,12 +1267,12 @@ MonoBehaviour:
   Username: 
   sToken: 
   PlayerViewOptions:
-  - Name: CLOSE
-    CamDistance: 10
-  - Name: MEDIUM
-    CamDistance: 15
-  - Name: FAR
-    CamDistance: 20
+  - Name: 
+    CamDistance: 0
+  - Name: 
+    CamDistance: 0
+  - Name: 
+    CamDistance: 0
   CameraDistance: 0
   invertedmovement: 0
 --- !u!1 &404018866

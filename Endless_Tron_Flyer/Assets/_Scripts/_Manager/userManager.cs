@@ -5,7 +5,7 @@ public class userManager : MonoBehaviour {
 
     public string Username;
     public string sToken;
-    public CharViewList[] PlayerViewOptions;
+    [NonSerialized] public CharViewList[] PlayerViewOptions = new CharViewList[3];
 
     public enum Option_CameraDistance { Close, Medium, Far };
     public Option_CameraDistance CameraDistance;
@@ -15,6 +15,18 @@ public class userManager : MonoBehaviour {
 
     public void Start()
     {
+        PlayerViewOptions[0] = new CharViewList();
+        PlayerViewOptions[0].Name = "CLOSE";
+        PlayerViewOptions[0].CamDistance = 10;
+
+        PlayerViewOptions[1] = new CharViewList();
+        PlayerViewOptions[1].Name = "MEDIUM";
+        PlayerViewOptions[1].CamDistance = 15;
+
+        PlayerViewOptions[2] = new CharViewList();
+        PlayerViewOptions[2].Name = "FAR";
+        PlayerViewOptions[2].CamDistance = 20;
+
         if (PlayerPrefs.GetInt("InvertedMovement") == 0) invertedmovement = false;
         else if (PlayerPrefs.GetInt("InvertedMovement") == 1) invertedmovement = true;
 
@@ -45,7 +57,7 @@ public class userManager : MonoBehaviour {
     }
 
     [Serializable]
-    public struct CharViewList
+    public class CharViewList
     {
         public string Name;
         public float CamDistance;
