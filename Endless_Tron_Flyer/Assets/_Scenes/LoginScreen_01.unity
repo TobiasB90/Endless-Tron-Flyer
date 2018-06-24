@@ -90,7 +90,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1266,6 +1266,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Username: 
   sToken: 
+  PlayerViewOptions:
+  - Name: CLOSE
+    CamDistance: 10
+  - Name: MEDIUM
+    CamDistance: 15
+  - Name: FAR
+    CamDistance: 20
+  CameraDistance: 0
+  invertedmovement: 0
 --- !u!1 &404018866
 GameObject:
   m_ObjectHideFlags: 0
