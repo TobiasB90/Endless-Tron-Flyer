@@ -21,15 +21,34 @@ public class PlayerController : MonoBehaviour
     private Quaternion OriginalPlayerModelRotation;
     private userManager usrMng;
 
+    public bool IncreasingSpeed;
+    public float MinSpeed;
+    public float MaxSpeed;
+    public float MinToMaxSpeedTime;
+    float MinToMaxSpeedTimeDelta;
+    public bool tframedebug;
+
+    CameraController camcont;
+    Vector3 previous;
+
     private void Start()
     {
+        camcont = GetComponent<CameraController>();
+        if (tframedebug) Application.targetFrameRate = 10;
         OriginalPlayerModelRotation = PlayerModel.transform.rotation;
         usrMng = GameObject.Find("_userManager").GetComponent<userManager>();
     }
 
     void Update()
     {
+        if (Input.GetButtonDown("Jump"))
+        {
+            usrMng.ToggleCameraView();
+        }
+    }
 
+    void FixedUpdate()
+    {
         // Multiply every rotational oder positional changingspeed with Time.deltaTime to avoid different results at different framerates
         float AdjustPlayerRotationToTunnelDirectionSpeedDelta = AdjustPlayerRotationToTunnelDirectionSpeed * Time.deltaTime;
         float HorzRotaSpeedDelta = HorzRotaSpeed * Time.deltaTime;
@@ -37,7 +56,19 @@ public class PlayerController : MonoBehaviour
         float FlyingSpeedDelta = FlyingSpeed * Time.deltaTime;
 
         // Player always moving forward at flyingspeed * Time.deltaTime
-        transform.position += transform.forward * FlyingSpeedDelta;
+        if (!IncreasingSpeed)
+        {
+            transform.position += transform.forward * FlyingSpeedDelta;
+            camcont.camdistance = -0.38f * FlyingSpeed + camcont.TargetCamToPlayerDistance;
+        }
+        else if (IncreasingSpeed)
+        {
+            MinToMaxSpeedTimeDelta += MinToMaxSpeedTime * Time.deltaTime;
+            FlyingSpeed = Mathf.Lerp(MinSpeed, MaxSpeed, MinToMaxSpeedTimeDelta);
+            float curspeed = FlyingSpeed * Time.deltaTime;
+            transform.position += transform.forward * curspeed;
+            camcont.camdistance = -0.38f * FlyingSpeed + camcont.TargetCamToPlayerDistance;
+        }
 
         // Player rotation gets adjusted depending on the current TunnelDirection (known problem: no adjustments during horizontal or vertical inputs)
         switch (TunnelDir)
@@ -104,8 +135,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case TunnelDirection.NoRotation:
                 break;
-        }
-        
+        }        
 
         // If we have any movement Input:
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
@@ -128,7 +158,6 @@ public class PlayerController : MonoBehaviour
             // Rotate the PlayerModel back to default rotation (should be '0')
             PlayerModel.transform.localRotation = Quaternion.Lerp(PlayerModel.transform.localRotation, Quaternion.Euler(PlayerModel.transform.localRotation.x, PlayerModel.transform.localRotation.y, 0), HorzRotaSpeedDelta / 75);
             rotationHorz = Mathf.Lerp(rotationHorz, 0, HorzRotaSpeedDelta / 75);
-
         }
     }
 }

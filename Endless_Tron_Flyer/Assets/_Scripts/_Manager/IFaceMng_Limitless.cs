@@ -32,6 +32,7 @@ public class IFaceMng_Limitless : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        Cursor.visible = false;
         ScoreUI.SetActive(true);
         UserManager = GameObject.Find("_userManager").GetComponent<userManager>();
         sndMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
@@ -63,6 +64,7 @@ public class IFaceMng_Limitless : MonoBehaviour {
 
     public void PauseGame()
     {
+        Cursor.visible = true;
         PauseMenuUI.SetActive(true);
         PauseMenuUI_Button_Retry.Select();
         PauseMenuUI_Button_Resume.Select();
@@ -72,13 +74,15 @@ public class IFaceMng_Limitless : MonoBehaviour {
 
     public void ResumeGame()
     {
+        Cursor.visible = false;
         Time.timeScale = 1;
         PauseMenuUI.SetActive(false);
         Playing = true;
     }
 
     public void ScoreScreen()
-    {        
+    {
+        Cursor.visible = true;
         Playing = false;
         ScoreScreenActive = true;
         ScoreUI.SetActive(false);
@@ -118,6 +122,7 @@ public class IFaceMng_Limitless : MonoBehaviour {
 
     public void RetryGame()
     {
+        Cursor.visible = false;
         ScoreScreenActive = false;
         ScoreScreenUI.SetActive(false);
         PauseMenuUI.SetActive(false);
@@ -127,6 +132,7 @@ public class IFaceMng_Limitless : MonoBehaviour {
 
     public void MainMenu()
     {
+        Cursor.visible = true;
         sndMng.GameScene = false;
         sndMng.playingmusic = false;
         ScoreScreenUI.SetActive(false);

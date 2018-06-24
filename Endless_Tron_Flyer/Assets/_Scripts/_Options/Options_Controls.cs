@@ -10,26 +10,23 @@ public class Options_Controls : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         usrMng = GameObject.Find("_userManager").GetComponent<userManager>();
-        if (usrMng.invertedmovement == true)
+        if (PlayerPrefs.GetInt("InvertedMovement") == 0)
         {
-            Invertedmovement_Dropdown.value = 1;
+            Invertedmovement_Dropdown.value = 0;
         }
-        else Invertedmovement_Dropdown.value = 0;
+        else Invertedmovement_Dropdown.value = 1;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void ApplyChanges()
     {
         if (Invertedmovement_Dropdown.value == 0)
         {
+            PlayerPrefs.SetInt("InvertedMovement", 0);
             usrMng.invertedmovement = false;
         }
         else if (Invertedmovement_Dropdown.value == 1)
         {
+            PlayerPrefs.SetInt("InvertedMovement", 1);
             usrMng.invertedmovement = true;
         }
     }
