@@ -10460,29 +10460,29 @@ Transform:
   m_LocalPosition: {x: -5.203, y: 3863.25, z: 0.9300006}
   m_LocalScale: {x: 0.00038632515, y: 3.8632512, z: 0.00061689824}
   m_Children:
-  - {fileID: 2126353679}
+  - {fileID: 600685075}
+  - {fileID: 1384794671}
   - {fileID: 1485461223}
   - {fileID: 459842640}
   - {fileID: 158291338}
   - {fileID: 1198520197}
+  - {fileID: 1610519552}
   - {fileID: 1814425749}
   - {fileID: 1854901360}
+  - {fileID: 2126353679}
   - {fileID: 946783237}
-  - {fileID: 1384794671}
+  - {fileID: 1024418629}
   - {fileID: 475627166}
-  - {fileID: 1610519552}
-  - {fileID: 1848629067}
+  - {fileID: 699089796}
   - {fileID: 1321965630}
   - {fileID: 240537078}
-  - {fileID: 699089796}
-  - {fileID: 600685075}
-  - {fileID: 1024418629}
-  - {fileID: 1535451171}
+  - {fileID: 1848629067}
   - {fileID: 292471616}
-  - {fileID: 357477096}
+  - {fileID: 1535451171}
   - {fileID: 1003839022}
-  - {fileID: 1842875852}
+  - {fileID: 357477096}
   - {fileID: 703641514}
+  - {fileID: 1842875852}
   - {fileID: 33503730}
   - {fileID: 2123006836}
   - {fileID: 438994402}
@@ -25270,14 +25270,7 @@ MonoBehaviour:
   - {fileID: 1887130117843640, guid: 5cbe171e76f16b34591552b001c763f7, type: 2}
   - {fileID: 1915533123023166, guid: 6dba542d96549f746a9e3faf7129c934, type: 2}
   DogeTunnelSystems:
-  - {fileID: 1319760862942234, guid: d1da17fba799b734fa08eb23921fb1f0, type: 2}
-  - {fileID: 1056893708066884, guid: 85d3bccf51db96546a71354d92f3446b, type: 2}
-  - {fileID: 1550806461456780, guid: 68c438e61b56f11439a9ac2b37cba4a6, type: 2}
-  - {fileID: 1890075547983586, guid: 126c7ebe271a6be4682347c5bd90f28d, type: 2}
-  - {fileID: 1640907969016700, guid: 567c0275f2b87304f8e806ac3d26b1d8, type: 2}
-  - {fileID: 1821012878881714, guid: 6b453905091e5a04699cd74718862f2c, type: 2}
-  - {fileID: 1028138831802062, guid: 22ef18f19e719714c92a19aabed56516, type: 2}
-  - {fileID: 1595029513216698, guid: 188c72139fa36d348bc4cbfa58596e2a, type: 2}
+  - {fileID: 1073228894107718, guid: d7aaec7b08ca82d44bbe446ace0b0ecc, type: 2}
   Environment: {fileID: 558082834}
   FlyingObject: {fileID: 934184957}
   defaulttunnelchance: 50
@@ -25287,8 +25280,8 @@ MonoBehaviour:
   ScriptedTunnelSystems: []
   maxUpHeight: 2
   maxLeftRight: 4
-  TunnelInAdvance: 50
-  DefaultTunnelInAdvance: 50
+  TunnelInAdvance: 5
+  DefaultTunnelInAdvance: 1
 --- !u!1001 &818301031
 Prefab:
   m_ObjectHideFlags: 0
