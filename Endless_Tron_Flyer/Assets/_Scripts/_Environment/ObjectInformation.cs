@@ -2,9 +2,10 @@
 
 public class ObjectInformation : MonoBehaviour {
 
-    [Tooltip("Insert _GameManager Object.")] public GameObject GameManager;
+    [Tooltip("Insert _GameManager Object.")] private GameObject GameManager;
     private GameMng GMng;
-    public int TunnelNumber = 1;
+    [HideInInspector] public int TunnelNumber = 1;
+    [Range(1, 10)] public int TunnelDifficulty;
     public float length;
     public float width;
     public float pivotlength;

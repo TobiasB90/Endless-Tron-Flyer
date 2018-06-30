@@ -21,8 +21,9 @@ GameObject:
   - component: {fileID: 4845195257587710}
   - component: {fileID: 33193455199623162}
   - component: {fileID: 23029069805433254}
+  - component: {fileID: 114931107838368516}
   - component: {fileID: 65234373649168026}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Rechteck_pref
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,3 +97,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 320, y: 1599.9999, z: 320}
   m_Center: {x: 0, y: 800.2214, z: 0}
+--- !u!114 &114931107838368516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1238031878329442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33c527b7334c3ad44b21c931e70c886e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startScale: 0
+  _maxScale: 0
+  _useBuffer: 1
+  _red: 0
+  _green: 0
+  _blue: 0
