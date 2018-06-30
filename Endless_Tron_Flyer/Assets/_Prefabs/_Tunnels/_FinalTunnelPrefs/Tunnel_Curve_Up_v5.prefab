@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33323135309246950}
   - component: {fileID: 23967138852484258}
   - component: {fileID: 64093793682980942}
+  - component: {fileID: 114229818460765194}
+  - component: {fileID: 54745950934081884}
   m_Layer: 11
   m_Name: Tunnel_Curve_Up_v5_Mesh
   m_TagString: Untagged
@@ -115,6 +117,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1600315737650510}
   m_Mesh: {fileID: 4300000, guid: 68faafebcd1c89e49aab4c843f9b8576, type: 3}
+--- !u!54 &54745950934081884
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1600315737650510}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!64 &64093793682980942
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -141,6 +158,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 120, y: 68, z: 5}
   m_Center: {x: 0, y: 34, z: 302}
+--- !u!114 &114229818460765194
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1600315737650510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de10c793e68dae54c906ea3522e75e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!114 &114729986154488644
 MonoBehaviour:
   m_ObjectHideFlags: 1
