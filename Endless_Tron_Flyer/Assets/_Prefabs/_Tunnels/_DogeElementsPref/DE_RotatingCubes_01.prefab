@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 114753070185306928}
   - component: {fileID: 65247852611702722}
   m_Layer: 10
-  m_Name: DE_RotatingCubes
+  m_Name: DE_RotatingCubes_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,7 +128,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1890075547983586}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 23.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4652455731457678}
@@ -269,6 +269,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CubeObj: {fileID: 1563843945059354}
+  Sequence_01: 0
+  Sequence_02: 0
+  Sequence_03: 0
 --- !u!114 &114753070185306928
 MonoBehaviour:
   m_ObjectHideFlags: 1

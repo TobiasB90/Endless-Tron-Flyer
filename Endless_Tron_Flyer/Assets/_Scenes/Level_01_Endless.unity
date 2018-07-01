@@ -3382,26 +3382,24 @@ MonoBehaviour:
   - {fileID: 1056893708066884, guid: 85d3bccf51db96546a71354d92f3446b, type: 2}
   - {fileID: 1877208628798710, guid: 99e8dfe19d7e3a04aad47ed57236434c, type: 2}
   - {fileID: 1890075547983586, guid: 126c7ebe271a6be4682347c5bd90f28d, type: 2}
+  - {fileID: 1517716551580082, guid: 20c146f0849b38042a03097b8a5d3e79, type: 2}
+  - {fileID: 1799381612396272, guid: 26bd017c624b6064f82ea012dba8876d, type: 2}
   Environment: {fileID: 1375447823}
   FlyingObject: {fileID: 934184957}
   currentHeight: 0
   zones:
   - Zone_TunnelNumber: 5
     TunnelDifficulty_Easy_Chance: 80
+    TunnelDifficulty_Easy_FromTo: {x: 1, y: 1}
+    TunnelDifficulty_Hard_FromTo: {x: 1, y: 2}
+  - Zone_TunnelNumber: 5
+    TunnelDifficulty_Easy_Chance: 80
     TunnelDifficulty_Easy_FromTo: {x: 1, y: 2}
     TunnelDifficulty_Hard_FromTo: {x: 2, y: 3}
   - Zone_TunnelNumber: 5
     TunnelDifficulty_Easy_Chance: 80
-    TunnelDifficulty_Easy_FromTo: {x: 2, y: 3}
-    TunnelDifficulty_Hard_FromTo: {x: 3, y: 4}
-  - Zone_TunnelNumber: 5
-    TunnelDifficulty_Easy_Chance: 80
-    TunnelDifficulty_Easy_FromTo: {x: 2, y: 4}
-    TunnelDifficulty_Hard_FromTo: {x: 3, y: 5}
-  - Zone_TunnelNumber: 5
-    TunnelDifficulty_Easy_Chance: 80
-    TunnelDifficulty_Easy_FromTo: {x: 1, y: 4}
-    TunnelDifficulty_Hard_FromTo: {x: 4, y: 5}
+    TunnelDifficulty_Easy_FromTo: {x: 1, y: 2}
+    TunnelDifficulty_Hard_FromTo: {x: 3, y: 3}
   DoubleCurves: 0
   ScriptedTunnels: 0
   ScriptedTunnelSystems: []
