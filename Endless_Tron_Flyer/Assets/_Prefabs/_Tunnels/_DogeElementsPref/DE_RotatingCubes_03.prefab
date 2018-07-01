@@ -545,7 +545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TunnelNumber: 0
-  TunnelDifficulty: 3
+  TunnelDifficulty: 2
   length: 600
   width: 0
   pivotlength: 300

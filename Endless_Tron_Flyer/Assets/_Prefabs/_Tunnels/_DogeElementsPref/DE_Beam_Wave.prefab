@@ -232,7 +232,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1056893708066884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59.678844, y: 311.14902, z: -999.5218}
+  m_LocalPosition: {x: -351.8392, y: 2634.9336, z: -4512.485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4277402343251756}
@@ -902,7 +902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TunnelNumber: 0
-  TunnelDifficulty: 3
+  TunnelDifficulty: 2
   length: 600
   width: 0
   pivotlength: 300
