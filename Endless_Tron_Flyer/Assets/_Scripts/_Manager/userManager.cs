@@ -9,7 +9,8 @@ public class userManager : MonoBehaviour {
 
     public enum Option_CameraDistance { Close, Medium, Far };
     public Option_CameraDistance CameraDistance;
-    
+
+    public bool FirstGamesceneStart = true;    
 
     public bool invertedmovement = false;
 

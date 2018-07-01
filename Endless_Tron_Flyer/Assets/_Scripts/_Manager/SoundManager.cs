@@ -22,13 +22,9 @@ public class SoundManager : MonoBehaviour {
 
     private void Update()
     {
-        if (GameScene && !playingmusic)
-        {
-            MusicSource_02.Stop();
-            MusicSource_01.Play();
-            playingmusic = true;
-        }
-        else if (!GameScene && !playingmusic)
+        if (GameScene && !playingmusic) MusicSource_02.Stop();
+        StartGamingMusic();
+        if (!GameScene && !playingmusic)
         {
             MusicSource_01.Stop();
             MusicSource_02.Play();
@@ -69,5 +65,14 @@ public class SoundManager : MonoBehaviour {
     public void MMenu_ReverseSwoosh()
     {
         AudioSource_01.PlayOneShot(AudioClips_01[3]);
+    }
+
+    public void StartGamingMusic()
+    {
+        if (GameScene && !playingmusic)
+        {
+            MusicSource_01.Play();
+            playingmusic = true;
+        }
     }
 }

@@ -15,7 +15,7 @@ public class IFaceMng_Limitless : MonoBehaviour {
     public Button ScoreScreenUI_Button_Retry;
     public Button ScoreScreenUI_Button_MainMenu;
 
-    public bool Playing = true;
+    public bool Playing = false;
     bool ScoreScreenActive = false;
 
     public GameMng gameMng;
@@ -33,7 +33,6 @@ public class IFaceMng_Limitless : MonoBehaviour {
     // Use this for initialization
     void Start () {
         Cursor.visible = false;
-        ScoreUI.SetActive(true);
         UserManager = GameObject.Find("_userManager").GetComponent<userManager>();
         sndMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
     }
@@ -132,6 +131,7 @@ public class IFaceMng_Limitless : MonoBehaviour {
 
     public void MainMenu()
     {
+        UserManager.FirstGamesceneStart = true;
         Cursor.visible = true;
         sndMng.GameScene = false;
         sndMng.playingmusic = false;

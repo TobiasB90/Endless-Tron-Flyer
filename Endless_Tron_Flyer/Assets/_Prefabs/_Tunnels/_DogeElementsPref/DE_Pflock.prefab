@@ -3398,4 +3398,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802d73b40df81584282f8647b5ee530c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TunnelDistanceToPlayer: 7
+  TunnelDistanceToPlayer: 10

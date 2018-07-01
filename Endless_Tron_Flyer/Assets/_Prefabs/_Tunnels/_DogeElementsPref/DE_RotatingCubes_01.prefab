@@ -269,9 +269,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CubeObj: {fileID: 1563843945059354}
-  Sequence_01: 0
+  Sequence_01: 1
   Sequence_02: 0
-  Sequence_03: 0
 --- !u!114 &114753070185306928
 MonoBehaviour:
   m_ObjectHideFlags: 1
