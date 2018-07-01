@@ -76,6 +76,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4053082946754788}
   - component: {fileID: 95442871981922656}
+  - component: {fileID: 114646738405722214}
   m_Layer: 0
   m_Name: Newhexler
   m_TagString: Untagged
@@ -92,6 +93,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4168337869216516}
   - component: {fileID: 95537632690676156}
+  - component: {fileID: 114874187621496638}
   m_Layer: 0
   m_Name: Newhexler (1)
   m_TagString: Untagged
@@ -136,7 +138,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1366837126609682}
-  m_LocalRotation: {x: -0.63685125, y: 0.3072791, z: -0.63685125, w: 0.3072791}
+  m_LocalRotation: {x: -0.6368513, y: 0.30727914, z: -0.6368513, w: 0.30727914}
   m_LocalPosition: {x: -150, y: 0, z: 0}
   m_LocalScale: {x: 1.0000017, y: 1, z: 1.0000017}
   m_Children:
@@ -430,6 +432,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114646738405722214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1250499855636884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 802d73b40df81584282f8647b5ee530c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInformation_Object: {fileID: 114913498033957044}
+  AnimationName: hexler
+  TunnelDistanceToPlayer: 10
 --- !u!114 &114722202949599710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -444,6 +460,20 @@ MonoBehaviour:
   BuildingLayer:
     serializedVersion: 2
     m_Bits: 4096
+--- !u!114 &114874187621496638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1366837126609682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 802d73b40df81584282f8647b5ee530c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInformation_Object: {fileID: 114913498033957044}
+  AnimationName: hexler
+  TunnelDistanceToPlayer: 10
 --- !u!114 &114913498033957044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -456,7 +486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TunnelNumber: 0
-  TunnelDifficulty: 3
+  TunnelDifficulty: 1
   length: 600
   width: 0
   pivotlength: 300

@@ -15,9 +15,11 @@ public class GameMng : MonoBehaviour {
     public CameraController camcont;
     public TMP_Text Countdown_Text;
     private userManager usrMng;
+    private SoundManager sndMng;
     public Camera MainCamera;
     public InterpolatedTransform MCam_Interpol;
     public InterpolatedTransformUpdater MCam_Interpol_Updater;
+    public ObjectBuilder TunnelBuilder;
 
     public int TunnelSystemsSolved
     {
@@ -33,6 +35,7 @@ public class GameMng : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        sndMng = GameObject.Find("_SoundManager").GetComponent<SoundManager>();
         usrMng = GameObject.Find("_userManager").GetComponent<userManager>();
         pcont.enabled = false;
         camcont.enabled = false;
@@ -56,8 +59,6 @@ public class GameMng : MonoBehaviour {
             StartCoroutine(CameraSequence(1));
         }
         StartCoroutine(SequenceTimer(11));
-        // Deactive PlayerController until SequenceTimer = 0;
-
     }
 
     public IEnumerator SequenceTimer(float SequenceTimer)
@@ -71,15 +72,17 @@ public class GameMng : MonoBehaviour {
         Countdown_Text.text = "3";
         CD3.Append(Countdown_Text.gameObject.transform.DOScale(0.5f, 1f));
         CD3.Join(Countdown_Text.gameObject.transform.DOScale(0.5f, 1f));
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
+        sndMng.AudioSource_01.PlayOneShot(sndMng.AudioClips_01[4]);
+        yield return new WaitForSeconds(1.1f);
         Countdown_Text.text = "2";
         CD3.Append(Countdown_Text.gameObject.transform.DOScale(1f, 0f));
         CD3.Join(Countdown_Text.gameObject.transform.DOScale(0.5f, 1f));
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.1f);
         Countdown_Text.text = "1";
         CD3.Append(Countdown_Text.gameObject.transform.DOScale(1f, 0f));
         CD3.Join(Countdown_Text.gameObject.transform.DOScale(0.5f, 1f));
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
         Countdown_Text.text = "GO";
         CD3.Append(Countdown_Text.gameObject.transform.DOScale(1f, 0f));
         CD3.Append(Countdown_Text.DOFade(0f, 1f));
@@ -105,5 +108,15 @@ public class GameMng : MonoBehaviour {
         yield return new WaitForSeconds(4);
         MainCamera.transform.position = new Vector3(0, 2019, -65);
         MainCamera.transform.localRotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    public void TunnelBuilder_buildTunnel()
+    {
+        TunnelBuilder.InstantiateTunnel();
+    }
+
+    public void TunnelBuilder_destroyTunnel()
+    {
+        TunnelBuilder.DestroyTunnel();
     }
 }

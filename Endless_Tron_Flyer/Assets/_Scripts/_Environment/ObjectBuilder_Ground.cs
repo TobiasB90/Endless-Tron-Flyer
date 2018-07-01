@@ -9,6 +9,7 @@ public class ObjectBuilder_Ground : MonoBehaviour {
     public GameObject Player;
     public float OffsetZ;
     public float InstantiateThreshold_Distance;
+    public int DestroyDifference = 3;
 
 	// Use this for initialization
 	void Start () {
@@ -27,5 +28,12 @@ public class ObjectBuilder_Ground : MonoBehaviour {
         transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z + OffsetZ);
         GameObject Instantiated_Tunnel = Instantiate(GroundPrefab, transform.position, transform.rotation);
         Instantiated_Tunnel.transform.parent = Environment.transform;
+        DestroyDifference--;
+        if(DestroyDifference <= 0) DeleteGround();
+    }
+
+    public void DeleteGround()
+    {
+        Destroy(Environment.transform.GetChild(0).gameObject);
     }
 }

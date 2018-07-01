@@ -54,6 +54,7 @@ public class ObjectBuilder : MonoBehaviour
     [Tooltip("How many 'DefaultTunnels' should be built at the start?")] [SerializeField] private int DefaultTunnelInAdvance = 0;
 
     private int timesbuilt = 0;
+    public int StartDestroyTunnelAsPlayerHitsTunnelNumber = 50;
 
     // Use this for initialization
     private void Start()
@@ -83,8 +84,12 @@ public class ObjectBuilder : MonoBehaviour
             InstantiateTunnel();
             TunnelInAdvance--;
         }
+    }
 
-        InvokeRepeating("InstantiateTunnel", 1f, 1f);
+    public void DestroyTunnel()
+    {
+        if (StartDestroyTunnelAsPlayerHitsTunnelNumber <= 0) Destroy(Environment.transform.GetChild(0).gameObject);
+        else StartDestroyTunnelAsPlayerHitsTunnelNumber--;
     }
 
     private void UpdateBuilderPosition()

@@ -5794,6 +5794,7 @@ MonoBehaviour:
   MainCamera: {fileID: 1062286076}
   MCam_Interpol: {fileID: 1062286080}
   MCam_Interpol_Updater: {fileID: 1062286079}
+  TunnelBuilder: {fileID: 812764590}
 --- !u!114 &342188630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6473,6 +6474,7 @@ MonoBehaviour:
   Player: {fileID: 1379860820}
   OffsetZ: 16210
   InstantiateThreshold_Distance: 16210
+  DestroyDifference: 4
 --- !u!1 &513729199
 GameObject:
   m_ObjectHideFlags: 0
@@ -6606,6 +6608,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5a43c7c6a37724e47834e5a9534a2a6a, type: 3}
   - {fileID: 8300000, guid: 44fd40b5a0d27364c9c9008b8255db89, type: 3}
   - {fileID: 8300000, guid: 9af0d2ca79dc8234a86a463cadd6471b, type: 3}
+  - {fileID: 8300000, guid: 331f873001273c94cbdadd340e4f4783, type: 3}
   AudioSource_01: {fileID: 513729200}
   MusicSource_01: {fileID: 513729203}
   MusicSource_02: {fileID: 513729204}
@@ -7812,8 +7815,9 @@ MonoBehaviour:
   ScriptedTunnelSystems: []
   maxUpHeight: 2
   maxLeftRight: 4
-  TunnelInAdvance: 50
+  TunnelInAdvance: 100
   DefaultTunnelInAdvance: 3
+  StartDestroyTunnelAsPlayerHitsTunnelNumber: 15
 --- !u!1 &839847133
 GameObject:
   m_ObjectHideFlags: 0

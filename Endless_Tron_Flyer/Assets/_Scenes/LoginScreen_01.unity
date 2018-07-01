@@ -5341,6 +5341,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5a43c7c6a37724e47834e5a9534a2a6a, type: 3}
   - {fileID: 8300000, guid: 44fd40b5a0d27364c9c9008b8255db89, type: 3}
   - {fileID: 8300000, guid: 9af0d2ca79dc8234a86a463cadd6471b, type: 3}
+  - {fileID: 8300000, guid: 331f873001273c94cbdadd340e4f4783, type: 3}
   AudioSource_01: {fileID: 1669168434}
   MusicSource_01: {fileID: 1669168432}
   MusicSource_02: {fileID: 1669168431}
@@ -5355,7 +5356,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 0
   Mute: 0

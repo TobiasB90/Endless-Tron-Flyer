@@ -40,6 +40,8 @@ public class ObjectInformation : MonoBehaviour {
                 if (NoDirectionalChange) CDet.ChangeDir(TunnelDir);
                 else CDet.ChangeDir(TunnelDirection.NoRotation);
                 GMng.TunnelSystemsSolved++;
+                GMng.TunnelBuilder_buildTunnel();
+                GMng.TunnelBuilder_destroyTunnel();
                 touched = true;
             }
         }
