@@ -539,6 +539,7 @@ MonoBehaviour:
   Username: 
   sToken: 
   CameraDistance: 0
+  FirstGamesceneStart: 1
   invertedmovement: 0
 --- !u!4 &36511043
 Transform:
@@ -12684,7 +12685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &718074450
 RectTransform:
   m_ObjectHideFlags: 0

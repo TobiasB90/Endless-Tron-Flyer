@@ -184,6 +184,8 @@ GameObject:
   - component: {fileID: 33026225957998686}
   - component: {fileID: 23012494774676752}
   - component: {fileID: 64369022635127902}
+  - component: {fileID: 54846673302196352}
+  - component: {fileID: 114176324225150012}
   m_Layer: 11
   m_Name: Default_Tunnel_v2_Mesh
   m_TagString: Untagged
@@ -959,6 +961,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1175671329011440}
   m_Mesh: {fileID: 4300000, guid: d02361939d382894c87ece35b6d58411, type: 3}
+--- !u!54 &54846673302196352
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1542505002991612}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!64 &64117389783025530
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -1184,3 +1201,17 @@ MonoBehaviour:
   LMask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &114176324225150012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1542505002991612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de10c793e68dae54c906ea3522e75e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingLayer:
+    serializedVersion: 2
+    m_Bits: 4096

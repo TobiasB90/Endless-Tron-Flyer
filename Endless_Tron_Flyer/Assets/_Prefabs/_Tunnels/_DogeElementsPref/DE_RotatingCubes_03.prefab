@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 23000659165268074}
   - component: {fileID: 64508869522128958}
   - component: {fileID: 54398740157140888}
+  - component: {fileID: 114948112023412644}
   m_Layer: 11
   m_Name: Tunnel_gerade
   m_TagString: Untagged
@@ -574,3 +575,17 @@ MonoBehaviour:
   CubeObj: {fileID: 1843898538800600}
   Sequence_01: 0
   Sequence_02: 1
+--- !u!114 &114948112023412644
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1669061797762144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de10c793e68dae54c906ea3522e75e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingLayer:
+    serializedVersion: 2
+    m_Bits: 4096

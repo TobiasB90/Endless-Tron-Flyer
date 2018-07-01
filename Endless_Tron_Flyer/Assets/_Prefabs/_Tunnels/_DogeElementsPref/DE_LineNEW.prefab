@@ -152,6 +152,8 @@ GameObject:
   - component: {fileID: 33299283722523586}
   - component: {fileID: 23745197865647048}
   - component: {fileID: 64522675532552154}
+  - component: {fileID: 54205269043226758}
+  - component: {fileID: 114863908493167796}
   m_Layer: 11
   m_Name: Tunnel_gerade
   m_TagString: Untagged
@@ -595,6 +597,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1619592307233884}
   m_Mesh: {fileID: 4300000, guid: 9f6dfd94480e0814b8da910f3c57f1d0, type: 3}
+--- !u!54 &54205269043226758
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1628063220421902}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!64 &64522675532552154
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -747,6 +764,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114863908493167796
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1628063220421902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de10c793e68dae54c906ea3522e75e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingLayer:
+    serializedVersion: 2
+    m_Bits: 4096
 --- !u!114 &114933825213461296
 MonoBehaviour:
   m_ObjectHideFlags: 1
