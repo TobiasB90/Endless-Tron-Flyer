@@ -19,17 +19,29 @@ public class ObjectBuilder : MonoBehaviour
     private UpDownDirection dUpDown;
     private int LastTunnel = 0;
     private int NextTunnel = 0;
-    [SerializeField] private int defaulttunnelchance = 70;
+    private int defaulttunnelchance = 70;
     private ObjectInformation LastTunnelInfo;
     private ObjectInformation NextTunnelInfo;
     private float directioncounterLeftRight = 0;
     private float directioncounterUpDown = 0;
-    public int currentHeight;
+    [HideInInspector] public int currentHeight;
     private int currentLeftRight;
     private int currentForward;
     private int antiBuildInYourselfCounter = 0;
     private int maxCurvesWithoutForward = 3;
     private bool NextTunnelChosen = false;
+
+    [System.Serializable] public struct zone_number
+    {
+        public int Zone_TunnelNumber;
+        public int TunnelDifficulty_Easy_Chance;
+        public Vector2 TunnelDifficulty_Easy_FromTo;
+        public Vector2 TunnelDifficulty_Hard_FromTo;
+    }
+    public zone_number[] zones;
+    private int zone_current;
+    private int zone_tunnel_counter;
+
     [SerializeField] private bool DoubleCurves = false;
     [SerializeField] private bool ScriptedTunnels = false;
     [SerializeField] private GameObject[] ScriptedTunnelSystems;
@@ -46,6 +58,7 @@ public class ObjectBuilder : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        zone_current = 0;
         currentHeight = 0;
         currentLeftRight = 0;
         currentForward = 0;
@@ -263,10 +276,7 @@ public class ObjectBuilder : MonoBehaviour
         }
         else if (NextTunnel == 0 && DefaultTunnelInAdvance == 0)
         {
-            int i = Random.Range(0, DogeTunnelSystems.Length);
-            NewTunnel = Instantiate(DogeTunnelSystems[i], transform.localPosition, transform.localRotation);
-            LastTunnel = NextTunnel;
-            LastTunnelInfo = DogeTunnelSystems[i].GetComponent<ObjectInformation>();
+            ChooseDodgeTunnel();
         }
 
         NextTunnelChosen = false;
@@ -1907,6 +1917,43 @@ public class ObjectBuilder : MonoBehaviour
         NextTunnelInfo = TunnelSystems[NextTunnel].GetComponent<ObjectInformation>();
     }
 
+    private void ChooseDodgeTunnel()
+    {
+        if(zone_tunnel_counter == zones[zone_current].Zone_TunnelNumber && zone_current != zones.Length - 1)
+        {
+            zone_current++;
+            zone_tunnel_counter = 0;
+        }
+
+        int i = Random.Range(0, DogeTunnelSystems.Length);
+        int chance = Random.Range(1, 100);
+        if (chance <= zones[zone_current].TunnelDifficulty_Easy_Chance)
+        {
+            i = Random.Range(0, DogeTunnelSystems.Length);
+            ObjectInformation tunnelInfo = DogeTunnelSystems[i].GetComponent<ObjectInformation>();
+            while (isBetween(tunnelInfo.TunnelDifficulty, zones[zone_current].TunnelDifficulty_Easy_FromTo) == false)
+            {
+                i = Random.Range(0, DogeTunnelSystems.Length);
+                tunnelInfo = DogeTunnelSystems[i].GetComponent<ObjectInformation>();
+            }
+        }
+        else
+        {
+            i = Random.Range(0, DogeTunnelSystems.Length);
+            ObjectInformation tunnelInfo = DogeTunnelSystems[i].GetComponent<ObjectInformation>();
+            while (isBetween(tunnelInfo.TunnelDifficulty, zones[zone_current].TunnelDifficulty_Hard_FromTo) == false)
+            {
+                i = Random.Range(0, DogeTunnelSystems.Length);
+                tunnelInfo = DogeTunnelSystems[i].GetComponent<ObjectInformation>();
+            }
+        }
+
+        NewTunnel = Instantiate(DogeTunnelSystems[i], transform.localPosition, transform.localRotation);
+        LastTunnel = NextTunnel;
+        LastTunnelInfo = DogeTunnelSystems[i].GetComponent<ObjectInformation>();
+        zone_tunnel_counter++;
+    }
+
     public void InstantiateDefaultTunnel()
     {
         Vector3 NewPosition;
@@ -1917,6 +1964,17 @@ public class ObjectBuilder : MonoBehaviour
         NewTunnel.transform.parent = Environment.transform;
         transform.Translate(-NewPosition, Space.World);
         transform.localPosition = new Vector3(transform.localPosition.x - LastTunnelInfo.width, transform.localPosition.y, transform.localPosition.z + LastTunnelInfo.length);
+    }
+
+    private bool isBetween(int input, params Vector2[] intervals)
+    {
+        for (int i = 0; i < intervals.Length; i++)
+        {
+            if (input >= intervals[i].x && input <= intervals[i].y)
+                return true;
+        }
+
+        return false;
     }
 
     private int RandomExceptOne(int fromNr, int exclusiveToNr, int exceptNr)
@@ -1955,6 +2013,5 @@ public class ObjectBuilder : MonoBehaviour
         }
         return randomNr;
     }
-
 
 }

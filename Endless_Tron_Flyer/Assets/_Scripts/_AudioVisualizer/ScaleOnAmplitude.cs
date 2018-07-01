@@ -13,8 +13,6 @@ public class ScaleOnAmplitude : MonoBehaviour
     void Start()
     {
         _material = GetComponent<MeshRenderer>().materials[0];
-        _startScale = Random.Range(0f, 2f);
-        _maxScale = Random.Range(2, 5);
     }
 
     // Update is called once per frame
@@ -28,7 +26,7 @@ public class ScaleOnAmplitude : MonoBehaviour
         }
         if (_useBuffer)
         {
-            transform.localScale = new Vector3(transform.localScale.x, (AudioPeer._AmplitudeBuffer * _maxScale) + _startScale, transform.localScale.z);
+            transform.localScale = new Vector3((AudioPeer._AmplitudeBuffer * _maxScale) + _startScale, transform.localScale.y, transform.localScale.z);
             //Color _color = new Color(_red * AudioPeer._AmplitudeBuffer, _green * AudioPeer._AmplitudeBuffer, _blue * AudioPeer._AmplitudeBuffer);
             //_material.SetColor("_EmissionColor", _color);
         }
