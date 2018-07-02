@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.18039216, g: 0, b: 0.27869117, a: 1}
+  m_FogColor: {r: 0.018022425, g: 0.04530739, b: 0.14150941, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.0001
   m_LinearFogStart: 0
@@ -7794,6 +7794,7 @@ MonoBehaviour:
   - {fileID: 1517716551580082, guid: 20c146f0849b38042a03097b8a5d3e79, type: 2}
   - {fileID: 1799381612396272, guid: 26bd017c624b6064f82ea012dba8876d, type: 2}
   - {fileID: 1821012878881714, guid: 6b453905091e5a04699cd74718862f2c, type: 2}
+  - {fileID: 1482610234255708, guid: e44cddb6fc2a00247a1157df0b38539c, type: 2}
   Environment: {fileID: 1375447823}
   FlyingObject: {fileID: 0}
   currentHeight: 0

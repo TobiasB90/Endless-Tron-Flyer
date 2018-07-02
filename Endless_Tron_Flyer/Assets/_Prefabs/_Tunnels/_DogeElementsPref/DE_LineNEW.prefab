@@ -790,7 +790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TunnelNumber: 0
-  TunnelDifficulty: 2
+  TunnelDifficulty: 1
   length: 600
   width: 0
   pivotlength: 300
