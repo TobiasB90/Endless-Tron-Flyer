@@ -135,13 +135,13 @@ public class PlayerController : MonoBehaviour
                 break;
             case TunnelDirection.NoRotation:
                 break;
-        }        
+        }
 
         // If we have any movement Input:
         if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
         {
             // Rotate the Player depending on input and rotationspeed, impact on the flyingdirection
-            if(!usrMng.invertedmovement) transform.Rotate(-Input.GetAxis("Vertical") * rotationspeedDelta, Input.GetAxis("Horizontal") * rotationspeedDelta, 0, Space.Self);
+            if (!usrMng.invertedmovement) transform.Rotate(-Input.GetAxis("Vertical") * rotationspeedDelta, Input.GetAxis("Horizontal") * rotationspeedDelta, 0, Space.Self);
             else transform.Rotate(Input.GetAxis("Vertical") * rotationspeedDelta, Input.GetAxis("Horizontal") * rotationspeedDelta, 0, Space.Self);
             // Rotate the PlayerModel on horizontal input (Left & Right) just for visuals, no impact on the flying direction
             rotationHorz += Input.GetAxis("Horizontal") * HorzRotaSpeedDelta;
@@ -149,7 +149,6 @@ public class PlayerController : MonoBehaviour
             var HorzQuaternion = Quaternion.AngleAxis(rotationHorz, Vector3.back);
 
             PlayerModel.transform.localRotation = OriginalPlayerModelRotation * HorzQuaternion;
-
         }
 
         // If we dont have any horizontal (left & right) inputs
@@ -159,5 +158,5 @@ public class PlayerController : MonoBehaviour
             PlayerModel.transform.localRotation = Quaternion.Lerp(PlayerModel.transform.localRotation, Quaternion.Euler(PlayerModel.transform.localRotation.x, PlayerModel.transform.localRotation.y, 0), HorzRotaSpeedDelta / 75);
             rotationHorz = Mathf.Lerp(rotationHorz, 0, HorzRotaSpeedDelta / 75);
         }
-    }
+    }    
 }

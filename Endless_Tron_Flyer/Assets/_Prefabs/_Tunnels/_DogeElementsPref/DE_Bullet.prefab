@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4851637721022000}
   - component: {fileID: 95384285710009536}
+  - component: {fileID: 114718030337073378}
   m_Layer: 11
   m_Name: DodgeGrp
   m_TagString: Untagged
@@ -570,7 +571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TunnelNumber: 0
-  TunnelDifficulty: 1
+  TunnelDifficulty: 2
   length: 600
   width: 0
   pivotlength: 300
@@ -599,3 +600,17 @@ MonoBehaviour:
   BuildingLayer:
     serializedVersion: 2
     m_Bits: 4096
+--- !u!114 &114718030337073378
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1893086272335932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 802d73b40df81584282f8647b5ee530c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectInformation_Object: {fileID: 114281529896850684}
+  AnimationName: bullet1
+  TunnelDistanceToPlayer: 1
