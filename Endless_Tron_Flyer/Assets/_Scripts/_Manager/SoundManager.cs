@@ -5,10 +5,14 @@ public class SoundManager : MonoBehaviour {
     public bool GameScene = false;
     public bool playingmusic = false;
     public AudioClip[] AudioClips_01;
+    public AudioClip[] MusicClips_01_Menu;
+    public AudioClip[] MusicClips_01_Game;
 
     public AudioSource AudioSource_01;
     public AudioSource MusicSource_01;
     public AudioSource MusicSource_02;
+    public AudioSource MusicSource_03;
+    public AudioSource MusicSource_04;
 
     public void Awake()
     {
@@ -22,8 +26,12 @@ public class SoundManager : MonoBehaviour {
 
     private void Update()
     {
-        if (GameScene && !playingmusic) MusicSource_02.Stop();
-        StartGamingMusic();
+        // if (MusicSource_01.isPlaying == false || MusicSource_02.isPlaying == false) playingmusic = false;
+        if (GameScene && MusicSource_01.isPlaying == false)
+        {
+            MusicSource_02.Stop();
+            StartGamingMusic();
+        }
         if (!GameScene && !playingmusic)
         {
             MusicSource_01.Stop();
@@ -37,7 +45,7 @@ public class SoundManager : MonoBehaviour {
         if (GameScene)
         {
             MusicSource_02.Stop();
-            MusicSource_01.Play();
+            // StartGamingMusic();
         }
         else
         {
@@ -69,8 +77,9 @@ public class SoundManager : MonoBehaviour {
 
     public void StartGamingMusic()
     {
-        if (GameScene && !playingmusic)
+        if (GameScene)
         {
+            MusicSource_01.clip = MusicClips_01_Game[Random.Range(0, 2)];
             MusicSource_01.Play();
             playingmusic = true;
         }

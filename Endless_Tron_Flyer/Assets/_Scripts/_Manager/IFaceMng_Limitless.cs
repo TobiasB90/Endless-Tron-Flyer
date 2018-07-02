@@ -28,6 +28,7 @@ public class IFaceMng_Limitless : MonoBehaviour {
     private userManager UserManager;
     public UploadHighscore upHScore;
     private SoundManager sndMng;
+    public GameMng gMng;
     float scr;
 
     // Use this for initialization
@@ -39,11 +40,11 @@ public class IFaceMng_Limitless : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.Escape) && Playing && !ScoreScreenActive)
+        if (Input.GetKeyDown(KeyCode.Escape) && Playing && !ScoreScreenActive && !gMng.CountDownSequence)
         {
             PauseGame();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && !Playing && !ScoreScreenActive) 
+        else if (Input.GetKeyDown(KeyCode.Escape) && !Playing && !ScoreScreenActive && !gMng.CountDownSequence) 
         {
             ResumeGame();
         }

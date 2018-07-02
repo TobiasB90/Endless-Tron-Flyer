@@ -20,6 +20,7 @@ public class GameMng : MonoBehaviour {
     public InterpolatedTransform MCam_Interpol;
     public InterpolatedTransformUpdater MCam_Interpol_Updater;
     public ObjectBuilder TunnelBuilder;
+    public bool CountDownSequence = false;
 
     public int TunnelSystemsSolved
     {
@@ -63,6 +64,7 @@ public class GameMng : MonoBehaviour {
 
     public IEnumerator SequenceTimer(float SequenceTimer)
     {
+        CountDownSequence = true;
         if (usrMng.FirstGamesceneStart)
         {
             yield return new WaitForSeconds(SequenceTimer - 2);
@@ -92,6 +94,7 @@ public class GameMng : MonoBehaviour {
         camcont.enabled = true;
         IFaceMng.ScoreUI.SetActive(true);
         IFaceMng.Playing = true;
+        CountDownSequence = false;
     }
 
     public IEnumerator CameraSequence(float CamSequenceTimer)

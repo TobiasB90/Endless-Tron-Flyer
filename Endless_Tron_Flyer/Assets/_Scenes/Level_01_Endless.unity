@@ -91,7 +91,7 @@ LightmapSettings:
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 112000002, guid: 31ffaa6f3809ab84bbfda0c446fc1502,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -5795,6 +5795,7 @@ MonoBehaviour:
   MCam_Interpol: {fileID: 1062286080}
   MCam_Interpol_Updater: {fileID: 1062286079}
   TunnelBuilder: {fileID: 812764590}
+  CountDownSequence: 0
 --- !u!114 &342188630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6609,9 +6610,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 44fd40b5a0d27364c9c9008b8255db89, type: 3}
   - {fileID: 8300000, guid: 9af0d2ca79dc8234a86a463cadd6471b, type: 3}
   - {fileID: 8300000, guid: 331f873001273c94cbdadd340e4f4783, type: 3}
+  MusicClips_01_Menu:
+  - {fileID: 8300000, guid: cb96f8fc29dadcd48bc16135abbf4e57, type: 3}
+  MusicClips_01_Game:
+  - {fileID: 8300000, guid: 4dbee8f8a5ddef9458ed8177b330d301, type: 3}
+  - {fileID: 8300000, guid: 9386a82d15d6b4c4487d7399bcd80dad, type: 3}
+  - {fileID: 8300000, guid: a03bbbcc1801efb468c10243ae4dab2a, type: 3}
   AudioSource_01: {fileID: 513729200}
   MusicSource_01: {fileID: 513729203}
   MusicSource_02: {fileID: 513729204}
+  MusicSource_03: {fileID: 0}
+  MusicSource_04: {fileID: 0}
 --- !u!4 &513729202
 Transform:
   m_ObjectHideFlags: 0
@@ -15160,6 +15169,7 @@ MonoBehaviour:
   HighScoreUI: {fileID: 1112967400}
   ScoreUI: {fileID: 2132886946}
   upHScore: {fileID: 342188630}
+  gMng: {fileID: 342188629}
 --- !u!114 &1739814949
 MonoBehaviour:
   m_ObjectHideFlags: 0
