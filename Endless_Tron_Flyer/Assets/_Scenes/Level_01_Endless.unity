@@ -7815,7 +7815,7 @@ MonoBehaviour:
   ScriptedTunnelSystems: []
   maxUpHeight: 2
   maxLeftRight: 4
-  TunnelInAdvance: 100
+  TunnelInAdvance: 50
   DefaultTunnelInAdvance: 3
   StartDestroyTunnelAsPlayerHitsTunnelNumber: 15
 --- !u!1 &839847133
@@ -14125,7 +14125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerModel: {fileID: 721666952}
-  FlyingSpeed: 250
+  FlyingSpeed: 400
   RotationSpeed: 65
   AdjustPlayerRotationToTunnelDirectionSpeed: 2
   HorzRotaSpeed: 160
@@ -14135,7 +14135,7 @@ MonoBehaviour:
   IncreasingSpeed: 1
   MinSpeed: 200
   MaxSpeed: 400
-  MinToMaxSpeedTime: 0.001
+  MinToMaxSpeedTime: 0.0015
   tframedebug: 0
 --- !u!114 &1379860822
 MonoBehaviour:

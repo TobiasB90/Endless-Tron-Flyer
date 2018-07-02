@@ -3431,4 +3431,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectInformation_Object: {fileID: 114329977280626564}
   AnimationName: Pflock
-  TunnelDistanceToPlayer: 12
+  TunnelDistanceToPlayer: 1

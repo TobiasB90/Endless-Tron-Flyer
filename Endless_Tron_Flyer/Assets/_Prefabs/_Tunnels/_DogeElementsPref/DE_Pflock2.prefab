@@ -4672,7 +4672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectInformation_Object: {fileID: 114922164333816766}
   AnimationName: pflock2
-  TunnelDistanceToPlayer: 12
+  TunnelDistanceToPlayer: 1
 --- !u!114 &114922164333816766
 MonoBehaviour:
   m_ObjectHideFlags: 1
