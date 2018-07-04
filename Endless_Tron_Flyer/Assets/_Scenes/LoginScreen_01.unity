@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -90,7 +90,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2502,7 +2502,7 @@ MonoBehaviour:
   m_CharacterValidation: 7
   m_RegexValue: 
   m_GlobalPointSize: 30
-  m_CharacterLimit: 20
+  m_CharacterLimit: 50
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -5347,7 +5347,7 @@ MonoBehaviour:
   MusicClips_01_Menu:
   - {fileID: 8300000, guid: cb96f8fc29dadcd48bc16135abbf4e57, type: 3}
   MusicClips_01_Game:
-  - {fileID: 8300000, guid: 4dbee8f8a5ddef9458ed8177b330d301, type: 3}
+  - {fileID: 0}
   - {fileID: 8300000, guid: 9386a82d15d6b4c4487d7399bcd80dad, type: 3}
   - {fileID: 8300000, guid: a03bbbcc1801efb468c10243ae4dab2a, type: 3}
   AudioSource_01: {fileID: 1669168434}
